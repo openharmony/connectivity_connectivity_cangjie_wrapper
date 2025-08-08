@@ -1,0 +1,48 @@
+{
+    "name": "@ohos/connectivity_cangjie_api",
+    "description": "Provides basic Bluetooth, BLE, WIFI functions for applications",
+    "version": "6.0",
+    "license": "Apache-2.0",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "foundation/communication/connectivity_cangjie_api"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+        "name": "connectivity_cangjie_api",
+        "subsystem": "communication",
+        "syscap": [
+            "SystemCapability.Communication.Bluetooth.Core",
+            "SystemCapability.Communication.WiFi.STA",
+            "SystemCapability.Communication.WiFi.P2P",
+            "SystemCapability.Communication.WiFi.Core"
+        ],
+        "features": [],
+        "adapted_system_type": [
+            "standard"
+        ],
+        "rom": "30000KB",
+        "ram": "100000KB",
+        "deps": {
+            "components": [
+                "cangjie_api"
+            ]
+        },
+        "build": {
+            "sub_component": [
+                "//foundation/communication/connectivity_cangjie_api/ohos/bluetooth:ohos.bluetooth",
+                "//foundation/communication/connectivity_cangjie_api/ohos/bluetooth/baseProfile:ohos.bluetooth.baseProfile",
+                "//foundation/communication/connectivity_cangjie_api/ohos/bluetooth/ble:ohos.bluetooth.ble",
+                "//foundation/communication/connectivity_cangjie_api/ohos/bluetooth/connection:ohos.bluetooth.connection",
+                "//foundation/communication/connectivity_cangjie_api/ohos/bluetooth/constant:ohos.bluetooth.constant",
+                "//foundation/communication/connectivity_cangjie_api/ohos/wifi_manager:ohos.wifi_manager",
+                "//foundation/communication/connectivity_cangjie_api/kit/ConnectivityKit:kit.ConnectivityKit"
+            ],
+            "inner_kits": [
+            ],
+            "test": [
+            ]
+        }
+    }
+}
