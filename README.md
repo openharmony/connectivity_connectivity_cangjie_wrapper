@@ -1,0 +1,3 @@
+# connectivity_connectivity_cangjie_wrapper
+
+WLAN服务能力、蓝牙服务等模块仓颉封装层
