@@ -23,10 +23,10 @@ ohos_cj_library("ohos.bluetooth.connection") {
   external_deps = [ "bluetooth:cj_bluetooth_connection_ffi" ]
 
   cj_external_deps = [
-    "arkui_cangjie_api:ohos.base",
-    "cangjie_api:ohos.ffi",
-    "cangjie_api:ohos.labels",
-    "hiviewdfx_cangjie_api:ohos.hilog",
+    "arkui_cangjie_wrapper:ohos.base",
+    "cangjie_ark_interop:ohos.ffi",
+    "cangjie_ark_interop:ohos.labels",
+    "hiviewdfx_cangjie_wrapper:ohos.hilog",
   ]
 
   cj_deps = [
@@ -34,6 +34,6 @@ ohos_cj_library("ohos.bluetooth.connection") {
   ]
 
   subsystem_name = "communication"
-  part_name = "connectivity_cangjie_api"
+  part_name = "connectivity_cangjie_wrapper"
   lib_name = "bluetooth.connection"
 }

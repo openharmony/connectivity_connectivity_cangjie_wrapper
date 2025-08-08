@@ -20,8 +20,8 @@ ohos_cj_library("ohos.bluetooth.baseProfile") {
   external_deps = []
 
   cj_external_deps = [
-    "arkui_cangjie_api:ohos.base",
-    "cangjie_api:ohos.labels",
+    "arkui_cangjie_wrapper:ohos.base",
+    "cangjie_ark_interop:ohos.labels",
   ]
 
   cj_deps = [
@@ -29,6 +29,6 @@ ohos_cj_library("ohos.bluetooth.baseProfile") {
   ]
 
   subsystem_name = "communication"
-  part_name = "connectivity_cangjie_api"
+  part_name = "connectivity_cangjie_wrapper"
   lib_name = "bluetooth.baseProfile"
 }

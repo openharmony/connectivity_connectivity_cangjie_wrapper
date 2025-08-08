@@ -24,7 +24,7 @@ WLAN服务：为用户提供WLAN基础功能、P2P（peer-to-peer）功能和WLA
 分布式软总线子系统主要代码目录结构如下：
 
 ```
-foundation/communication/connectivity_cangjie_api
+foundation/communication/connectivity_cangjie_wrapper
 ├── ohos             # 仓颉分布式软总线接口实现
 ├── kit              # 仓颉kit化代码
 ├── figures          # 存放readme中的架构图
@@ -66,4 +66,4 @@ foundation/communication/connectivity_cangjie_api
 
 **分布式软总线子系统**
 
-connectivity_cangjie_api
+connectivity_cangjie_wrapper
