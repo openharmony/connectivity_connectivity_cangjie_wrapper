@@ -30,5 +30,4 @@ ohos_cj_library("ohos.bluetooth.baseProfile") {
 
   subsystem_name = "communication"
   part_name = "connectivity_cangjie_wrapper"
-  lib_name = "bluetooth.baseProfile"
 }
