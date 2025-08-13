@@ -1,27 +1,23 @@
-# 分布式软总线子系统
+# 基础通信仓颉
 
 ## 简介
 
-分布式软总线子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力、软总线、进程间通信RPC（Remote Procedure Call）等通信能力。
+基础通信仓颉旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力、软总线、进程间通信RPC（Remote Procedure Call）等通信能力。
 
 WLAN服务：为用户提供WLAN基础功能、P2P（peer-to-peer）功能和WLAN消息通知的相应服务，让应用可以通过WLAN和其他设备互联互通。
 
 蓝牙服务：为应用提供传统蓝牙以及低功耗蓝牙相关功能和服务。
 
-软总线：为应用和系统提供近场设备间分布式通信的能力，提供不区分通信方式的设备发现，连接，组网和传输功能。
-
-进程间通信：提供不区分设备内或设备间的进程间通信能力。
-
 ## 系统架构
 
-**图 1**  分布式软总线子系统架构图
+**图 1**  基础通信仓颉架构图
 
 
-![](figures/zh-cn_image_0000001162307895.png)
+![](figures/connectivity_cangjie_wrapper_architecture.png)
 
 ## 目录
 
-分布式软总线子系统主要代码目录结构如下：
+基础通信仓颉主要代码目录结构如下：
 
 ```
 foundation/communication/connectivity_cangjie_wrapper
@@ -30,20 +26,7 @@ foundation/communication/connectivity_cangjie_wrapper
 ├── figures          # 存放readme中的架构图
 ```
 
-## 约束
-
--   组网限制：必须确保设备在同一个局域网中。
-
 ## 使用说明
-
-### 进程间通信
-
-在使用RPC时，请求服务的一端进程可获取提供服务一端所在进程的代理 （Proxy），并通过此代理读写数据来实现进程间的数据通信，其详细过程如下：
-
-1.  实现服务端及其提供的能力。
-2.  请求服务的一端会建立一个服务提供端的代理对象，这个代理对象具备和服务提供端一样的功能，若想访问服务提供端中的某个方法，只需要访问代理对象中对应的方法即可。
-3.  服务提供端处理接收到的请求，处理完之后通过驱动返回处理结果给代理对象。
-4.  代理对象将请求结果进一步返回给请求服务端。
 
 ### 软总线
 
@@ -64,6 +47,6 @@ foundation/communication/connectivity_cangjie_wrapper
 
 ## 相关仓
 
-**分布式软总线子系统**
+**基础通信仓颉**
 
 connectivity_cangjie_wrapper
