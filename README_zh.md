@@ -1,8 +1,8 @@
-# 基础通信仓颉
+# 基础通信仓颉接口
 
 ## 简介
 
-基础通信仓颉旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力、软总线、进程间通信RPC（Remote Procedure Call）等通信能力。
+基础通信仓颉接口是在 OpenHarmony 上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力、软总线、进程间通信RPC（Remote Procedure Call）等通信能力。
 
 WLAN服务：为用户提供WLAN基础功能、P2P（peer-to-peer）功能和WLAN消息通知的相应服务，让应用可以通过WLAN和其他设备互联互通。
 
@@ -49,4 +49,6 @@ foundation/communication/connectivity_cangjie_wrapper
 
 **基础通信仓颉**
 
-connectivity_cangjie_wrapper
+[communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README.md)
+
+[communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README.md)
