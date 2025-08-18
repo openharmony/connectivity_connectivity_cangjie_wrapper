@@ -1,24 +1,19 @@
-# DSoftBus
+# connectivity_cangjie_wrapper
 
 ## Introduction
 
-The DSoftBus subsystem provides the following communication capabilities for OpenHarmony:
+The communication_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony:
 
 - WLAN: basic WLAN functions, peer-to-peer (P2P) connection, and WLAN notification, enabling your application to communicate with other devices through a WLAN.
 
 - Bluetooth: classic Bluetooth and Bluetooth Low Energy (BLE).
 
-- DSoftBus: distributed communications between near-field devices, and device discovery, connection setup, networking, and data transmission capabilities regardless of communication modes.
-
-- Remote procedure call (RPC): communications between processes on a device or across devices.
-
-
 ## Architecture
 
-**Figure 1** DSoftBus architecture
+**Figure 1**
 
 
-![](figures/dsoftbus.png)
+![](figures/connectivity_cangjie_wrapper_architecture_en.png)
 
 ## Directory Structure
 
@@ -36,15 +31,6 @@ foundation/communication/connectivity_cangjie_wrapper
 The devices must be in the same LAN.
 
 ## Usage
-
-### RPC
-
-In an RPC, the client process obtains the proxy of the process that provides the service (server). Through the proxy, the two processes communicate with each other.
-
-1.  Implement the server capabilities.
-2.  The client obtains a proxy of the server. This proxy provides the same capabilities as the server. To call a method of the server, the client only needs to call the same method of the proxy.
-3.  The server processes the received request and returns the result to the proxy via the driver.
-4.  The proxy returns the result to the client.
 
 ### DSoftBus
 
@@ -65,6 +51,6 @@ In an RPC, the client process obtains the proxy of the process that provides the
 
 ## Repositories Involved
 
-**DSoftBus subsystem**
+[communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README.md)
 
-connectivity_cangjie_wrapper
+[communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README.md)
