@@ -47,8 +47,6 @@ foundation/communication/connectivity_cangjie_wrapper
 
 ## 相关仓
 
-**基础通信仓颉**
-
 [communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README_zh.md)
 
 [communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README_zh.md)
