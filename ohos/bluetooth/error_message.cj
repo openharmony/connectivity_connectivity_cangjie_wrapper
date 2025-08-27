@@ -15,10 +15,11 @@
 
 package ohos.bluetooth
 
-import std.collection.HashMap
-import ohos.hilog.*
-import ohos.base.*
+import ohos.business_exception.{BusinessException, getUniversalErrorMsg}
 import ohos.ffi.*
+import ohos.hilog.HilogChannel
+
+import std.collection.HashMap
 
 protected let BLUETOOTH_LOG = HilogChannel(0, 0xD000101, "CJ-Bluetooth")
 protected const SERVICE_STOPPED = 2900001i32

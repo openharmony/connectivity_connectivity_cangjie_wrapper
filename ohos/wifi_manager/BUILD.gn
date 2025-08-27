@@ -14,18 +14,20 @@
 import("//build/ohos.gni")
 import("//build/cangjie/cjc.gni")
 
-ohos_cj_library("ohos.wifi_manager") {
+ohos_cangjie_shared_library("ohos.wifi_manager") {
   sources = [
     "common.cj",
     "error_code.cj",
     "ip_info.cj",
     "wifi_info_elem.cj",
+    "wifi_p2p_config.cj",
     "wifi_scan_info.cj",
     "wifi.cj",
   ]
 
   cj_external_deps = [
-    "arkui_cangjie_wrapper:ohos.base",
+    "cangjie_ark_interop:ohos.business_exception",
+    "cangjie_ark_interop:ohos.callback_invoke",
     "cangjie_ark_interop:ohos.ffi",
     "cangjie_ark_interop:ohos.labels",
     "hiviewdfx_cangjie_wrapper:ohos.hilog",
@@ -35,5 +37,4 @@ ohos_cj_library("ohos.wifi_manager") {
 
   subsystem_name = "communication"
   part_name = "connectivity_cangjie_wrapper"
-  lib_name = "wifi_manager"
 }
