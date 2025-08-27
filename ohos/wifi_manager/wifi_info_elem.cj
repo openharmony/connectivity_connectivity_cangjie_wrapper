@@ -16,29 +16,44 @@
 package ohos.wifi_manager
 
 import ohos.labels.*
-import ohos.base.*
 import ohos.ffi.*
 
+/**
+ * Wi-Fi information elements.
+ * @relation interface WifiInfoElem
+ */
 @!APILevel[
     21,
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
-public class WifiInfoElem <: ToString {
-    WifiInfoElem(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.WiFi.STA"
-        ]
-        public let eid: UInt32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.WiFi.STA"
-        ]
-        public let content: Array<UInt8>
-    ) {}
+public class WifiInfoElem {
+    /**
+     * Element id
+     * @relation eid: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.WiFi.STA"
+    ]
+    public let eid: UInt32
+
+    /**
+     * Element content
+     * @relation content: Uint8Array
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.WiFi.STA"
+    ]
+    public let content: Array<UInt8>
+
+    init(eid: UInt32, content: Array<UInt8>) {
+        this.eid = eid
+        this.content = content
+    }
 
     init(info: CWifiInfoElem) {
         this.eid = info.eid
@@ -47,14 +62,5 @@ public class WifiInfoElem <: ToString {
                 i => i
             }
         }
-    }
-
-    @!APILevel[
-        21,
-        stagemodelonly: true,
-        syscap: "SystemCapability.Communication.WiFi.STA"
-    ]
-    public func toString(): String {
-        "eid: ${eid}, content: ${content}"
     }
 }

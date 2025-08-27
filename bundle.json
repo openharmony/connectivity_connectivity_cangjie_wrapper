@@ -32,10 +32,12 @@
         "build": {
             "sub_component": [
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth:ohos.bluetooth",
-                "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/baseProfile:ohos.bluetooth.baseProfile",
+                "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/a2dp:ohos.bluetooth.a2dp",
+                "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/base_profile:ohos.bluetooth.base_profile",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/ble:ohos.bluetooth.ble",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/connection:ohos.bluetooth.connection",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/constant:ohos.bluetooth.constant",
+                "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/hfp:ohos.bluetooth.hfp",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/wifi_manager:ohos.wifi_manager",
                 "//foundation/communication/connectivity_cangjie_wrapper/kit/ConnectivityKit:kit.ConnectivityKit"
             ],

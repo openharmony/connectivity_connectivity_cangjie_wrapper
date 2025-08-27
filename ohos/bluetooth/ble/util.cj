@@ -15,11 +15,11 @@
 
 package ohos.bluetooth.ble
 
-import std.deriving.*
 import ohos.labels.*
 import ohos.ffi.*
-import ohos.base.*
-import std.collection.{ArrayList, HashMap}
+
+import std.collection.HashMap
+import std.deriving.Derive
 
 const BLE_ADV_DEFAULT_INTERVAL: UInt16 = 1600
 const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
@@ -27,8 +27,7 @@ const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
 /**
  * Describes the criteria for filtering scanning results can be set.
  *
- * @typedef ScanFilter
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ScanFilter
  */
 @!APILevel[
     21,
@@ -39,150 +38,168 @@ public class ScanFilter {
     /**
      * The address of a BLE peripheral device
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation deviceId?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var deviceId: ?String = None
+    public var deviceId: String
+
     /**
      * The name of a BLE peripheral device
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation name?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var name: ?String = None
+    public var name: String
+
     /**
      * The service UUID of a BLE peripheral device
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceUuid?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: ?String = None
+    public var serviceUuid: String
 
     /**
      * Service UUID mask.
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceUuidMask?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuidMask: ?String = None
+    public var serviceUuidMask: String
 
     /**
      * Service solicitation UUID.
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceSolicitationUuid?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceSolicitationUuid: ?String = None
+    public var serviceSolicitationUuid: String
 
     /**
      * Service solicitation UUID mask.
      *
-     * @type { ?String }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceSolicitationUuidMask?: string
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceSolicitationUuidMask: ?String = None
+    public var serviceSolicitationUuidMask: String
 
     /**
      * Service data.
      *
-     * @type { ?Array<Byte> }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceData?: ArrayBuffer
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceData: ?Array<Byte> = None
+    public var serviceData: Array<Byte>
 
     /**
      * Service data mask.
      *
-     * @type { ?Array<Byte> }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation serviceDataMask?: ArrayBuffer
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceDataMask: ?Array<Byte> = None
+    public var serviceDataMask: Array<Byte>
 
     /**
      * Manufacture id.
      *
-     * @type { UInt16 }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation manufactureId?: number
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var manufactureId: UInt16 = 0
+    public var manufactureId: UInt16
 
     /**
      * Manufacture data.
      *
-     * @type { ?Array<Byte> }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation manufactureData?: ArrayBuffer
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var manufactureData: ?Array<Byte> = None
+    public var manufactureData: Array<Byte>
 
     /**
      * Manufacture data mask.
      *
-     * @type { ?Array<Byte> }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation manufactureDataMask?: ArrayBuffer
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var manufactureDataMask: ?Array<Byte> = None
+    public var manufactureDataMask: Array<Byte>
 
+    /**
+     * ScanFilter constructor.
+     */    
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public init() {}
+    public init(
+        deviceId!: String = "",
+        name!: String = "",
+        serviceUuid!: String = "",
+        serviceUuidMask!: String = "",
+        serviceSolicitationUuid!: String = "",
+        serviceSolicitationUuidMask!: String = "",
+        serviceData!: Array<Byte> = [],
+        serviceDataMask!: Array<Byte> = [],
+        manufactureId!: UInt16 = 0,
+        manufactureData!: Array<Byte> = [],
+        manufactureDataMask!: Array<Byte> = []
+    ) {
+        this.deviceId = deviceId
+        this.name = name
+        this.serviceUuid = serviceUuid
+        this.serviceUuidMask = serviceUuidMask
+        this.serviceSolicitationUuid = serviceSolicitationUuid
+        this.serviceSolicitationUuidMask = serviceSolicitationUuidMask
+        this.serviceData = serviceData
+        this.serviceDataMask = serviceDataMask
+        this.manufactureId = manufactureId
+        this.manufactureData = manufactureData
+        this.manufactureDataMask = manufactureDataMask
+    }
 
     func toNative(): NativeScanFilter {
         unsafe {
@@ -197,45 +214,16 @@ public class ScanFilter {
             var cManufactureData = CArrUI8(CPointer<UInt8>(), 0)
             var cManufactureDataMask = CArrUI8(CPointer<UInt8>(), 0)
             try {
-                if (let Some(v) <- deviceId) {
-                    cDeviceId = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- name) {
-                    cName = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- serviceUuid) {
-                    cServiceUuid = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- serviceUuidMask) {
-                    cServiceUuidMask = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- serviceSolicitationUuid) {
-                    cServiceSolicitationUuid = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- serviceSolicitationUuidMask) {
-                    cServiceSolicitationUuidMask = LibC.mallocCString(v)
-                }
-
-                if (let Some(v) <- serviceData) {
-                    cServiceData = CArrUI8(cjArr2CArr<UInt8, UInt8>(v, {i => i}), v.size)
-                }
-
-                if (let Some(v) <- serviceDataMask) {
-                    cServiceDataMask = CArrUI8(cjArr2CArr<UInt8, UInt8>(v, {i => i}), v.size)
-                }
-
-                if (let Some(v) <- manufactureData) {
-                    cManufactureData = CArrUI8(cjArr2CArr<UInt8, UInt8>(v, {i => i}), v.size)
-                }
-
-                if (let Some(v) <- manufactureDataMask) {
-                    cManufactureDataMask = CArrUI8(cjArr2CArr<UInt8, UInt8>(v, {i => i}), v.size)
-                }
+                cDeviceId = LibC.mallocCString(deviceId)
+                cName = LibC.mallocCString(name)
+                cServiceUuid = LibC.mallocCString(serviceUuid)
+                cServiceUuidMask = LibC.mallocCString(serviceUuidMask)
+                cServiceSolicitationUuid = LibC.mallocCString(serviceSolicitationUuid)
+                cServiceSolicitationUuidMask = LibC.mallocCString(serviceSolicitationUuidMask)
+                cServiceData = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceData, {i => i}), serviceData.size)
+                cServiceDataMask = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceDataMask, {i => i}), serviceDataMask.size)
+                cManufactureData = CArrUI8(cjArr2CArr<UInt8, UInt8>(manufactureData, {i => i}), manufactureData.size)
+                cManufactureDataMask = CArrUI8(cjArr2CArr<UInt8, UInt8>(manufactureDataMask, {i => i}), manufactureDataMask.size)
 
                 return NativeScanFilter(
                     cDeviceId,
@@ -327,8 +315,7 @@ struct NativeScanOptions {
 /**
  * Describes the parameters for scan.
  *
- * @typedef ScanOptions
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ScanOptions
  */
 @!APILevel[
     21,
@@ -339,64 +326,76 @@ public class ScanOptions {
     /**
      * Time of delay for reporting the scan result
      *
-     * @type { Int32 }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation interval?: number
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var interval: Int32 = 0
+    public var interval: Int32
 
     /**
      * Bluetooth LE scan mode
      *
-     * @type { ScanDuty }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation dutyMode?: ScanDuty
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var dutyMode: ScanDuty = SCAN_MODE_LOW_POWER
+    public var dutyMode: ScanDuty
 
     /**
      * Match mode for Bluetooth LE scan filters hardware match
      *
-     * @type { MatchMode }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation matchMode?: MatchMode
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var matchMode: MatchMode = MATCH_MODE_AGGRESSIVE
+    public var matchMode: MatchMode
 
     /**
      * Physical Layer used during scan.
      *
-     * @type { PhyType }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation phyType?: PhyType
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var phyType: PhyType = PHY_LE_1M
+    public var phyType: PhyType
+
+    var reportMode: ScanReportMode
+
+    /**
+     * ScanOptions constructor.
+     */    
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public init(interval: Int32, dutyMode: ScanDuty, matchMode: MatchMode, phyType: PhyType) {
+    public init(
+        interval!: Int32 = 0,
+        dutyMode!: ScanDuty = ScanModeLowPower,
+        matchMode!: MatchMode = MatchModeAggressive,
+        phyType!: PhyType = PhyLe1M,
+        reportMode!: ScanReportMode = Normal
+    ) {
         this.interval = interval
         this.dutyMode = dutyMode
         this.matchMode = matchMode
         this.phyType = phyType
+        if (reportMode != Normal) {
+            throw IllegalArgumentException("the feature is temporarily not supported.")
+        }
+        this.reportMode = reportMode
     }
 
     func toNative(): NativeScanOptions {
@@ -421,8 +420,7 @@ struct NativeAdvertiseSetting {
 /**
  * Describes the settings for BLE advertising.
  *
- * @typedef AdvertiseSetting
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface AdvertiseSetting
  */
 @!APILevel[
     21,
@@ -431,53 +429,54 @@ struct NativeAdvertiseSetting {
 ]
 public class AdvertiseSetting {
     /**
-     * Minimum slot value for the advertising interval, which is {@code 32} (20 ms)
-     * Maximum slot value for the advertising interval, which is {@code 16777215} (10485.759375s)
-     * Default slot value for the advertising interval, which is {@code 1600} (1s)
+     * Minimum slot value for the advertising interval, which is 32 (20 ms)
+     * Maximum slot value for the advertising interval, which is 16777215} (10485.759375s)
+     * Default slot value for the advertising interval, which is 1600 (1s)
      *
-     * @type { UInt16 }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation interval?: number
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var interval: UInt16 = BLE_ADV_DEFAULT_INTERVAL
+    public var interval: UInt16
 
     /**
-     * Minimum transmission power level for advertising, which is {@code -127}
-     * Maximum transmission power level for advertising, which is {@code 1}
-     * Default transmission power level for advertising, which is {@code -7}
+     * Minimum transmission power level for advertising, which is -127
+     * Maximum transmission power level for advertising, which is 1
+     * Default transmission power level for advertising, which is -7
      *
-     * @type { Int8 }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation txPower?: number
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var txPower: Int8 = BLE_ADV_TX_POWER_MEDIUM_VALUE
+    public var txPower: Int8
 
     /**
-     * Indicates whether the BLE is connectable, default is {@code true}
+     * Indicates whether the BLE is connectable, default is true
      *
-     * @type { Bool }
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation connectable?: boolean
      */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var connectable: Bool = true
+    public var connectable: Bool
+    
+    /**
+     * AdvertiseSetting constructor.
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public init(interval: UInt16, txPower: Int8, connectable: Bool) {
+    public init(interval!: UInt16 = BLE_ADV_DEFAULT_INTERVAL, txPower!: Int8 = BLE_ADV_TX_POWER_MEDIUM_VALUE, connectable!: Bool = true) {
         this.interval = interval
         this.txPower = txPower
         this.connectable = connectable
@@ -557,8 +556,7 @@ struct NativeAdvertiseData {
 /**
  * Describes the advertising data.
  *
- * @typedef AdvertiseData
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface AdvertiseData
  */
 @!APILevel[
     21,
@@ -566,37 +564,77 @@ struct NativeAdvertiseData {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertiseData {
+    /**
+     * The specified service UUID list to this advertisement
+     *
+     * @relation serviceUuids: Array<string>
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public AdvertiseData(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuids: Array<String>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var manufactureData: Array<ManufactureData>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceData: Array<ServiceData>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var includeDeviceName!: Bool = false
-    ) {}
+    public var serviceUuids: Array<String>
+    /**
+     * The specified manufacturer data list to this advertisement
+     *
+     * @relation manufactureData: Array<ManufactureData>
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var manufactureData: Array<ManufactureData>
+    /**
+     * The specified service data list to this advertisement
+     *
+     * @relation serviceData: Array<ServiceData>
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceData: Array<ServiceData>
+    /**
+     * Indicates whether the device name will be included in the advertisement packet.
+     *
+     * @relation includeDeviceName?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var includeDeviceName: Bool
+
+    var includeTxPower: Bool
+
+    /**
+     * AdvertiseData constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuids: Array<String>,
+        manufactureData: Array<ManufactureData>,
+        serviceData: Array<ServiceData>,
+        includeDeviceName!: Bool = false,
+        includeTxPower!: Bool = false
+    ) {
+        this.serviceUuids = serviceUuids
+        this.manufactureData = manufactureData
+        this.serviceData = serviceData
+        this.includeDeviceName = includeDeviceName
+        if (includeTxPower != false) {
+            throw IllegalArgumentException("the feature is temporarily not supported.")
+        }
+        this.includeTxPower = includeTxPower
+    }
 
     func toNative(): NativeAdvertiseData {
         var cServiceUuids: CArrString = CArrString(CPointer(), 0)
@@ -642,8 +680,7 @@ struct NativeManufactureData {
 /**
  * Describes the manufacturer data.
  *
- * @typedef ManufactureData
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ManufactureData
  */
 @!APILevel[
     21,
@@ -651,25 +688,44 @@ struct NativeManufactureData {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ManufactureData {
+    /**
+     * Indicates the manufacturer ID assigned by Bluetooth SIG
+     *
+     * @relation manufactureId: number
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public ManufactureData(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var manufactureId: UInt16,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var manufactureValue: Array<Byte>
-    ) {}
+    public var manufactureId: UInt16
+    /**
+     * Indicates the manufacturer data to add
+     *
+     * @relation manufactureValue: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var manufactureValue: Array<Byte>
+
+    /**
+     * ManufactureData constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        manufactureId: UInt16,
+        manufactureValue: Array<Byte>
+    ) {
+        this.manufactureId = manufactureId
+        this.manufactureValue = manufactureValue
+    }
 
     func toNative(): NativeManufactureData {
         unsafe {
@@ -697,8 +753,7 @@ struct NativeServiceData {
 /**
  * Describes the service data.
  *
- * @typedef ServiceData
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ServiceData
  */
 @!APILevel[
     21,
@@ -706,25 +761,44 @@ struct NativeServiceData {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ServiceData {
+    /**
+     * Indicates the UUID of the service data to add
+     *
+     * @relation serviceUuid: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public ServiceData(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceValue: Array<Byte>
-    ) {}
+    public var serviceUuid: String
+    /**
+     * Indicates the service data to add
+     *
+     * @relation serviceValue: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceValue: Array<Byte>
+
+    /**
+     * ServiceData constructor
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuid: String,
+        serviceValue: Array<Byte>
+    ) {
+        this.serviceUuid = serviceUuid
+        this.serviceValue = serviceValue
+    }
 
     func toNative(): NativeServiceData {
         var cUuid: CString = CString(CPointer())
@@ -735,7 +809,7 @@ public class ServiceData {
                 cValue = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceValue, {i => i}), serviceValue.size)
                 return NativeServiceData(cUuid, cValue)
             } catch (e: Exception) {
-                cUuid.free()
+                LibC.free(cUuid)
                 cValue.free()
                 throw e
             }
@@ -758,43 +832,83 @@ struct NativeAdvertisingParams {
     }
 }
 
+/**
+ * Describes the advertising parameters.
+ *
+ * @relation interface AdvertisingParams
+ */
 @!APILevel[
     21,
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertisingParams {
+    /**
+     * Indicates the advertising settings.
+     *
+     * @relation advertisingSettings: AdvertiseSetting
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public AdvertisingParams(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var advertisingSettings: AdvertiseSetting,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var advertisingData: AdvertiseData,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var advertisingResponse: AdvertiseData,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var duration!: UInt16 = 0
-    ) {}
+    public var advertisingSettings: AdvertiseSetting
+    /**
+     * Indicates the advertising data.
+     *
+     * @relation advertisingData: AdvertiseData
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var advertisingData: AdvertiseData
+    /**
+     * Indicates the advertising response.
+     *
+     * @relation advertisingResponse?: AdvertiseData
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var advertisingResponse: AdvertiseData
+    /**
+     * Indicates the duration for advertising continuously.
+     * The duration, in 10ms unit. Valid range is from 1 (10ms) to 65535 (655,350 ms).
+     * If this parameter is not specified or is set to 0, advertisement is continuously sent.
+     *
+     * @relation duration?: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var duration: UInt16
+
+    /**
+     * AdvertisingParams constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        advertisingSettings: AdvertiseSetting,
+        advertisingData: AdvertiseData,
+        advertisingResponse!: AdvertiseData = AdvertiseData([], [], []),
+        duration!: UInt16 = 0
+    ) {
+        this.advertisingSettings = advertisingSettings
+        this.advertisingData = advertisingData
+        this.advertisingResponse = advertisingResponse
+        this.duration = duration
+    }
 
     func toNative(): NativeAdvertisingParams {
         var cAdvertisingData: NativeAdvertiseData = advertisingData.toNative()
@@ -833,8 +947,7 @@ struct CAdvertisingStateChangeInfo {
 /**
  * Advertising state change information.
  *
- * @typedef AdvertisingStateChangeInfo
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface AdvertisingStateChangeInfo
  */
 @!APILevel[
     21,
@@ -842,20 +955,33 @@ struct CAdvertisingStateChangeInfo {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertisingStateChangeInfo {
-    AdvertisingStateChangeInfo(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var advertisingId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var state: AdvertisingState
-    ) {}
+    /**
+     * Indicates the ID of current advertising.
+     *
+     * @relation advertisingId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var advertisingId: Int32
+    /**
+     * Indicates the advertising state.
+     *
+     * @relation state: AdvertisingState
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var state: AdvertisingState
+
+    init(advertisingId: Int32, state: AdvertisingState) {
+        this.advertisingId = advertisingId
+        this.state = state
+    }
 }
 
 @C
@@ -884,8 +1010,7 @@ struct NativeScanResult {
 /**
  * Describes the contents of the scan results.
  *
- * @typedef ScanResult
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ScanResult
  */
 @!APILevel[
     21,
@@ -893,44 +1018,81 @@ struct NativeScanResult {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ScanResult {
-    ScanResult(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let rssi: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let data: Array<Byte>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceName: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let connectable: Bool
-    ) {}
+    /**
+     * Address of the scanned device
+     *
+     * @relation deviceId: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var deviceId: String
+    /**
+     * RSSI of the remote device
+     *
+     * @relation rssi: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var rssi: Int32
+    /**
+     * The raw data of broadcast packet
+     *
+     * @relation data: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var data: Array<Byte>
+    /**
+     * The local name of the BLE device
+     *
+     * @relation deviceName: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var deviceName: String
+    /**
+     * Connectable of the remote device
+     *
+     * @relation connectable: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var connectable: Bool
+
+    init(
+        deviceId: String,
+        rssi: Int32,
+        data: Array<Byte>,
+        deviceName: String,
+        connectable: Bool
+    ) {
+        this.deviceId = deviceId
+        this.rssi = rssi
+        this.data = data
+        this.deviceName = deviceName
+        this.connectable = connectable
+    }
 }
 
 /**
  * The enum of scan duty.
  *
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation enum ScanDuty
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -939,31 +1101,51 @@ public class ScanResult {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ScanDuty {
+    /**
+     * low power mode
+     *
+     * @relation SCAN_MODE_LOW_POWER = 0
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    SCAN_MODE_LOW_POWER
-    | @!APILevel[
+    ScanModeLowPower
+    | 
+    /**
+     * balanced power mode
+     *
+     * @relation SCAN_MODE_BALANCED = 1
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    SCAN_MODE_BALANCED
-    | @!APILevel[
+    ScanModeBalanced
+    | 
+    /**
+     * Scan using highest duty cycle
+     *
+     * @relation SCAN_MODE_LOW_LATENCY = 2
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    SCAN_MODE_LOW_LATENCY
+    ScanModeLowLatency
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case SCAN_MODE_LOW_POWER => 0
-            case SCAN_MODE_BALANCED => 1
-            case SCAN_MODE_LOW_LATENCY => 2
+            case ScanModeLowPower => 0
+            case ScanModeBalanced => 1
+            case ScanModeLowLatency => 2
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
@@ -972,7 +1154,7 @@ public enum ScanDuty {
 /**
  * The enum of BLE match mode.
  *
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation enum MatchMode
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -981,24 +1163,38 @@ public enum ScanDuty {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum MatchMode {
+    /**
+     * aggressive mode
+     *
+     * @relation MATCH_MODE_AGGRESSIVE = 1
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    MATCH_MODE_AGGRESSIVE
-    | @!APILevel[
+    MatchModeAggressive
+    | 
+    /**
+     * sticky mode
+     *
+     * @relation MATCH_MODE_STICKY = 2
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    MATCH_MODE_STICKY
+    MatchModeSticky
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case MATCH_MODE_AGGRESSIVE => 1
-            case MATCH_MODE_STICKY => 2
+            case MatchModeAggressive => 1
+            case MatchModeSticky => 2
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
@@ -1006,17 +1202,17 @@ public enum MatchMode {
 
 let ADVERTISING_STATE_MAP = HashMap<Int32, AdvertisingState>(
     [
-        (1, STARTED),
-        (2, ENABLED),
-        (3, DISABLED),
-        (4, STOPPED)
+        (1, Started),
+        (2, Enabled),
+        (3, Disabled),
+        (4, Stopped)
     ]
 )
 
 /**
  * The enum of BLE advertising state.
  *
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation enum AdvertisingState
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1025,32 +1221,59 @@ let ADVERTISING_STATE_MAP = HashMap<Int32, AdvertisingState>(
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum AdvertisingState {
+    /**
+     * advertising started.
+     *
+     * @relation STARTED = 1
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    STARTED
-    | @!APILevel[
+    Started
+    | 
+    /**
+     * advertising temporarily enabled.
+     *
+     * @relation ENABLED = 2
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ENABLED
-    | @!APILevel[
+    Enabled
+    | 
+    /**
+     * advertising temporarily disabled.
+     *
+     * @relation DISABLED = 3
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    DISABLED
-    | @!APILevel[
+    Disabled
+    | 
+    /**
+     * advertising stopped.
+     *
+     * @relation STOPPED = 4
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    STOPPED
+    Stopped
     | ...
 
+
+    /**
+     * @throws NoneValueException - Value conversion failed.
+     */
     static func parse(state: Int32) {
         ADVERTISING_STATE_MAP.get(state) ?? throw NoneValueException("Unknown state value")
     }
@@ -1059,7 +1282,7 @@ public enum AdvertisingState {
 /**
  * Phy type used during scan.
  *
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation enum PhyType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1068,57 +1291,81 @@ public enum AdvertisingState {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum PhyType {
+    /**
+     * Use 1M phy for scanning.
+     *
+     * @relation PHY_LE_1M = 1
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    PHY_LE_1M
-    | @!APILevel[
+    PhyLe1M
+    | 
+    /**
+     * Use all supported Phys for scanning.
+     *
+     * @relation PHY_LE_ALL_SUPPORTED = 255
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    PHY_LE_ALL_SUPPORTED
+    PhyLeAllSupported
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case PHY_LE_1M => 1
-            case PHY_LE_ALL_SUPPORTED => 255
+            case PhyLe1M => 1
+            case PhyLeAllSupported => 255
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
 }
 
+/**
+ * Bluetooth Ble CallbackType
+ */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     21,
-    permission: "ohos.permission.ACCESS_BLUETOOTH",
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleCallbackType {
+    /**
+     * Advertising State Change
+     */
     @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ADVERTISING_STATE_CHANGE
-    | @!APILevel[
+    AdvertisingStateChange
+    | 
+    /**
+     * Ble Device Find
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    BLE_DEVICE_FIND
+    BleDeviceFind
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case ADVERTISING_STATE_CHANGE => 0
-            case BLE_DEVICE_FIND => 1
+            case AdvertisingStateChange => 0
+            case BleDeviceFind => 1
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
@@ -1130,4 +1377,69 @@ struct CArrScanResult {
         let head: CPointer<NativeScanResult>,
         let size: Int64
     ) {}
+}
+
+/**
+ * Report mode used during scan.
+ *
+ * @relation enum ScanReportMode
+ */
+@Derive[ToString, Equatable]
+@!APILevel[
+    21,
+    stagemodelonly: true,
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
+public enum ScanReportMode {
+    /**
+     * In normal mode, the advertisement packet is reported immediately after being scanned.
+     *
+     * @relation NORMAL = 1
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    Normal
+    |
+    /**
+     * Enables the batch mode in which advertisement packets are sent after the interval specified by {@link
+     * ScanOptions#interval}.
+     *
+     * @relation BATCH = 2
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    Batch
+    |
+    /**
+     * In low sensitivity fence mode, the advertisement packets are reported only when they are received for
+     * the first time and lost for the last time. The reception sensitivity is low.
+     *
+     * @relation FENCE_SENSITIVITY_LOW = 10
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    FenceSensitivityLow
+    |
+    /**
+     * In high sensitivity fence mode, the advertisement packets are reported only when they are received for
+     * the first time and lost for the last time. The reception sensitivity is high.
+     *
+     * @relation FENCE_SENSITIVITY_HIGH = 11
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    FenceSensitivityHigh
+    | ...
 }

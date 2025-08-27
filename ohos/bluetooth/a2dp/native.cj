@@ -13,13 +13,16 @@
  * limitations under the License.
  */
 
-package kit.ConnectivityKit
+package ohos.bluetooth.a2dp
 
-public import ohos.bluetooth.*
-public import ohos.bluetooth.base_profile.*
-public import ohos.bluetooth.ble.*
-public import ohos.bluetooth.constant.*
-public import ohos.bluetooth.connection.*
-public import ohos.wifi_manager.*
-public import ohos.bluetooth.a2dp.*
-public import ohos.bluetooth.hfp.*
+import ohos.ffi.*
+
+foreign {
+    func FfiBluetoothA2dpGetPlayingState(deviceId: CString, errCode: CPointer<Int32>): Int32
+
+    func FfiBluetoothA2dpGetConnectedDevices(errCode: CPointer<Int32>): CArrString
+
+    func FfiBluetoothA2dpGetConnectionState(deviceId: CString, errCode: CPointer<Int32>): Int32
+
+    func FfiBluetoothA2dpOn(callbackType: Int32, id: Int64, errCode: CPointer<Int32>): Unit
+}

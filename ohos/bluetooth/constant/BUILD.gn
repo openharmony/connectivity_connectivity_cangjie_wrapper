@@ -14,7 +14,7 @@
 import("//build/ohos.gni")
 import("//build/cangjie/cjc.gni")
 
-ohos_cj_library("ohos.bluetooth.constant") {
+ohos_cangjie_shared_library("ohos.bluetooth.constant") {
   sources = [ "constant.cj" ]
 
   cj_external_deps = [
@@ -23,5 +23,4 @@ ohos_cj_library("ohos.bluetooth.constant") {
 
   subsystem_name = "communication"
   part_name = "connectivity_cangjie_wrapper"
-  lib_name = "bluetooth.constant"
 }
