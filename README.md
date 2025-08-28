@@ -12,7 +12,6 @@ The communication_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony b
 
 **Figure 1**
 
-
 ![](figures/connectivity_cangjie_wrapper_architecture_en.png)
 
 ## Directory Structure
@@ -21,33 +20,47 @@ The DSoftBus directory structure is as follows:
 
 ```
 foundation/communication/connectivity_cangjie_wrapper
-├── ohos             # Cangjie DSoftBus code
-├── kit              # Cangjie kit code
-├── figures          # architecture pictures
+├── figures             # architecture pictures
+├── kit                 # Cangjie kit code
+│   └── ConnectivityKit # Cangjie ConnectivityKit code implementation
+└── ohos                # Cangjie DSoftBus code
+    ├── bluetooth       # Cangjie bluetooth code implementation
+    └── wifi_manager    # Cangjie wifi code implementation
 ```
 
 ## Constraints
 
-The devices must be in the same LAN.
+The basic communication Cangjie interface is only available for standard devices.
 
 ## Usage
 
-### DSoftBus
+### bluetooth api
 
--   Networking
+Bluetooth-related api, which currently provide BLE-related capabilities, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
 
-1.  The server starts and obtains the list of online devices.
-2.  Register a listener for device status changes.
-3.  Obtain the device ID, name, and type.
-4.  Obtain detailed information about the device, such as the device type, networking type, and device capability.
-5.  Delete the registered listener when the process exits.
+-   BLE（Bluetooth Low Energy）
 
--   Transmission
+Bluetooth Low Energy (BLE) is a wireless, low-power Bluetooth technology. Compared with Classic Bluetooth, BLE allows for lower power consumption and is applicable to devices with long standby time, such as smart watches, healthcare devices, smart home devices.
 
-1.  Creates a socket instance based on information, such as the socket name and caller bundle name.
-2.  The server starts listening for the socket, and the client binds the socket.
-3.  Send data after the bind is successful.
-4.  Close the socket when it is not used.
+For details, see [ohos.bluetooth.ble API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-ble.md)。
+
+-   A2DP（Advanced Audio Distribution Profile）
+
+Advanced Audio Distribution Profile (A2DP) allows high-quality multimedia audio (such as music and voice) to be streamed between devices over a Bluetooth connection. It supports bidirectional communication and can be used in devices such as headsets, speakers, and car audio devices.
+
+Compared with ArkTs, Bluetooth connection module-related functions are not yet provided.
+
+### Wifi api
+
+WLAN-related api provide users with WLAN basic functions, peer-to-peer (P2P) functions, and corresponding services such as WLAN message notifications, so that applications can be interconnected with other devices through WLAN.
+
+-   P2P mode
+
+The P2P mode is also called Wi-Fi Direct, which allows two devices to establish a direct Wi-Fi connection without an intermediary wireless access point (AP). It can set up a TCP/IP connection between two STAs without an AP. Of the two STAs, one is called the group owner (GO), which serves as a traditional AP; the other is called a group client (GC), which connects to the GO like an AP.
+
+For details, see [ohos.wifi_manager API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
+
+Compared with ArkTs, STA mode and AP mode are not available.
 
 ## Repositories Involved
 
