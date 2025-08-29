@@ -15,8 +15,8 @@
 
 package ohos.wifi_manager
 
-import ohos.base.*
-import ohos.ffi.*
+import ohos.business_exception.{ ERR_NO_PERMISSION, ERR_NOT_SYSTEM_APP, ERR_PARAMETER_ERROR, ERR_NOT_SUPPOERTED }
+
 import std.collection.HashMap
 
 const WIFI_OPT_FAILED = 1i32
