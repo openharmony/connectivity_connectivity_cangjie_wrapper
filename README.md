@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The communication_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony:
+The communication_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony, The basic communication Cangjie interface is only available for standard devices.
 
 - WLAN: basic WLAN functions, peer-to-peer (P2P) connection, and WLAN notification, enabling your application to communicate with other devices through a WLAN.
 
@@ -21,16 +21,12 @@ The DSoftBus directory structure is as follows:
 ```
 foundation/communication/connectivity_cangjie_wrapper
 ├── figures             # architecture pictures
-├── kit                 # Cangjie kit code
+├── kit                 # kit code
 │   └── ConnectivityKit # Cangjie ConnectivityKit code implementation
 └── ohos                # Cangjie DSoftBus code
     ├── bluetooth       # Cangjie bluetooth code implementation
     └── wifi_manager    # Cangjie wifi code implementation
 ```
-
-## Constraints
-
-The basic communication Cangjie interface is only available for standard devices.
 
 ## Usage
 
@@ -50,7 +46,7 @@ Advanced Audio Distribution Profile (A2DP) allows high-quality multimedia audio 
 
 For details, please refer to [ohos.bluetooth.a2dp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
-Compared with ArkTs API, Bluetooth connection module-related functions are not yet provided.
+Compared with ArkTS API, Bluetooth connection module-related functions are not yet provided.
 
 For relevant guidance, please refer to [Overview of Bluetooth Service Development](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/bluetooth/cj-bluetooth-overview.md)
 
@@ -64,7 +60,7 @@ The P2P mode is also called Wi-Fi Direct, which allows two devices to establish 
 
 For details, see [ohos.wifi_manager API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
-Compared with ArkTs, STA mode and AP mode are not available.
+Compared with ArkTS, STA mode and AP mode are not available.
 
 ## Repositories Involved
 
@@ -72,8 +68,12 @@ Compared with ArkTs, STA mode and AP mode are not available.
 
 [communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README.md)
 
-## Code Contribution
+[arkui\_arkui\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/arkui_arkui_cangjie_wrapper)
 
-Participate in the community: [Cangjie Community](https://gitcode.com/Cangjie)
+[arkcompiler\_cangjie\_ark\_interop](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop)
+
+[hiviewdfx\_hiviewdfx\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/hiviewdfx_hiviewdfx_cangjie_wrapper)
+
+## Code Contribution
 
 Developers are welcome to contribute code, documentation, etc. For specific contribution processes and methods, please refer to [Code Contribution](https://gitcode.com/openharmony/docs/blob/master/en/contribute/code-contribution.md).

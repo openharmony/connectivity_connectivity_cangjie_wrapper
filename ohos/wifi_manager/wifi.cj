@@ -254,7 +254,7 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>): Unit {
-    commonSubscribe1Arg(WifiScanStateChange, callback) {i: Int32 => i}
+    commonSubscribe1Arg(eventType, callback) {i: Int32 => i}
 }
 
 /**
@@ -272,7 +272,7 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None): Unit {
-    commonUnSubscribe(WifiScanStateChange, callback: callback)
+    commonUnSubscribe(eventType, callback: callback)
 }
 
 /**

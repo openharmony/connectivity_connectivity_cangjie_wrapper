@@ -2,7 +2,7 @@
 
 ## 简介
 
-基础通信仓颉接口是在OpenHarmony上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力。
+基础通信仓颉接口是在OpenHarmony上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力。当前开放的基础通信仓颉接口仅支持standard设备。
 
 蓝牙服务：为应用提供传统蓝牙以及低功耗蓝牙相关功能和服务。
 
@@ -20,17 +20,13 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 
 ```
 foundation/communication/connectivity_cangjie_wrapper
-├── figures             # 存放README中的架构图
-├── kit                 # 仓颉kit化代码
-│   └── ConnectivityKit # 仓颉ConnectivityKit实现
-└── ohos                # 仓颉基础通信接口实现
-    ├── bluetooth       # 仓颉蓝牙接口实现
-    └── wifi_manager    # 仓颉wifi接口实现
+├── figures             # README中的架构图存放目录
+├── kit                 # kit化接口代码
+│   └── ConnectivityKit # 仓颉ConnectivityKit代码目录
+└── ohos                # 仓颉基础通信接口代码
+    ├── bluetooth       # 仓颉蓝牙接口存放目录
+    └── wifi_manager    # 仓颉wifi接口存放目录
 ```
-
-## 约束
-
-当前开放的基础通信仓颉接口仅支持standard设备。
 
 ## 使用说明
 
@@ -50,7 +46,7 @@ A2DP是Advanced Audio Distribution Profile的缩写，即高级音频分发配�
 
 详情请参见: [ohos.bluetooth.a2dp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
-与ArkTs相比暂未提供蓝牙连接模块相关功能。
+与ArkTS相比暂未提供蓝牙连接模块相关功能。
 
 相关指导请参见: [蓝牙服务开发概述](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_zh_cn/connectivity/bluetooth/cj-bluetooth-overview.md)
 
@@ -62,9 +58,9 @@ WLAN相关接口为用户提供WLAN基础功能、P2P（peer-to-peer）功能和
 
 P2P模式即为Wi-Fi Direct；Wi-Fi Direct 是一种点对点连接技术，它可以在两台 STA 之间直接建立 TCP/IP 链接，并不需要AP的参与；其中一台STA会起到传统意义上的AP的作用，称为Group Owner(GO)，另外一台station则称为Group Client(GC)，像连接AP一样连接到GO。
 
-详情请参见: [ohos.wifi_manager API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
+详情请参见: [ohos.wifi\_manager API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
-与ArkTs相比暂未提供STA模式、AP模式相关功能。
+与ArkTS相比暂未提供STA模式、AP模式相关功能。
 
 ## 相关仓
 
@@ -72,8 +68,12 @@ P2P模式即为Wi-Fi Direct；Wi-Fi Direct 是一种点对点连接技术，它�
 
 [communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README_zh.md)
 
-## 如何参与
+[arkui\_arkui\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/arkui_arkui_cangjie_wrapper)
 
-参与社区：[Cangjie社区](https://gitcode.com/Cangjie)
+[arkcompiler\_cangjie\_ark\_interop](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop)
+
+[hiviewdfx\_hiviewdfx\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/hiviewdfx_hiviewdfx_cangjie_wrapper)
+
+## 参与贡献
 
 欢迎广大开发者贡献代码、文档等，具体的贡献流程和方式请参见[参与贡献](https://gitcode.com/openharmony/docs/blob/master/zh-cn/contribute/%E5%8F%82%E4%B8%8E%E8%B4%A1%E7%8C%AE.md)。
