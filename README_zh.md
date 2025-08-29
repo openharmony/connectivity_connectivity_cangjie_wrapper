@@ -2,7 +2,7 @@
 
 ## 简介
 
-基础通信仓颉接口是在OpenHarmony上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力、软总线等通信能力。
+基础通信仓颉接口是在OpenHarmony上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力。
 
 蓝牙服务：为应用提供传统蓝牙以及低功耗蓝牙相关功能和服务。
 
@@ -26,12 +26,6 @@ foundation/communication/connectivity_cangjie_wrapper
 └── ohos                # 仓颉基础通信接口实现
     ├── bluetooth       # 仓颉蓝牙接口实现
     └── wifi_manager    # 仓颉wifi接口实现
-```
-
-## 编译构建<a name="section171384529151"></a>
-
-```bash
-./build.sh --product-name rk3568 --target-cpu=arm64 --build-target connectivity_cangjie_wrapper
 ```
 
 ## 约束
