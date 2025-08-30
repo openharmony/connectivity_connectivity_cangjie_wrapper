@@ -1,0 +1,5 @@
+Cangjie Compiler: 1.0.0 (cjnative)
+Target: x86_64-w64-mingw32
+[31mInternal Compiler Error: [0mWindows unexpected exception code (11) received.
+Please report this to Cangjie team and include the project. Error Code: 11
+Error: failed to compile package `ohos_app_cangjie_entry`, return code is 139
