@@ -23,10 +23,17 @@ foundation/communication/connectivity_cangjie_wrapper
 ├── figures             # architecture pictures
 ├── kit                 # kit code
 │   └── ConnectivityKit # Cangjie ConnectivityKit code implementation
-└── ohos                # Cangjie DSoftBus code
-    ├── bluetooth       # Cangjie bluetooth code implementation
-    └── wifi_manager    # Cangjie wifi code implementation
+├── ohos                # Cangjie DSoftBus code
+│   ├── bluetooth       # Cangjie bluetooth code implementation
+│   └── wifi_manager    # Cangjie wifi code implementation
+└── test                # Test code
 ```
+
+As shown in the architecture:
+
+- Bluetooth Low Energy: A wireless, low-power Bluetooth technology
+- P2P Connection：A peer-to-peer connection technology that enables the direct establishment of a TCP/IP link between two STAs.
+- Cangjie Connectivity FFI Interface：Define the FFI interface between Cangjie and C, which is responsible for invoking the basic communication service capabilities through interoperation.
 
 ## Usage
 
@@ -56,7 +63,7 @@ WLAN-related api provide users with WLAN basic functions, peer-to-peer (P2P) fun
 
 -   P2P mode
 
-The P2P mode is also called Wi-Fi Direct, which allows two devices to establish a direct Wi-Fi connection without an intermediary wireless access point (AP). It can set up a TCP/IP connection between two STAs without an AP. Of the two STAs, one is called the group owner (GO), which serves as a traditional AP; the other is called a group client (GC), which connects to the GO like an AP.
+The P2P mode is also called Wi-Fi Direct, which allows two devices to establish a direct Wi-Fi connection without an intermediary wireless access point (AP). It can set up a TCP/IP connection between two STAs without an AP. Of the two STAs, one is called the group owner (GO), which serves as a traditional AP. the other is called a group client (GC), which connects to the GO like an AP.
 
 For details, see [ohos.wifi_manager API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
@@ -67,12 +74,6 @@ Compared with ArkTS, STA mode and AP mode are not available.
 [communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README.md)
 
 [communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README.md)
-
-[arkui\_arkui\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/arkui_arkui_cangjie_wrapper)
-
-[arkcompiler\_cangjie\_ark\_interop](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop)
-
-[hiviewdfx\_hiviewdfx\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/hiviewdfx_hiviewdfx_cangjie_wrapper)
 
 ## Code Contribution
 
