@@ -12,7 +12,7 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//build/cangjie/cjc.gni")
+import("//build/templates/cangjie/cjc.gni")
 
 ohos_cangjie_shared_library("ohos.bluetooth.hfp") {
   sources = [ "hands_free_audio_gateway_profile.cj", ]
