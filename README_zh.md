@@ -14,6 +14,12 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 
 ![](figures/connectivity_cangjie_wrapper_architecture.png)
 
+如架构图所示：
+
+- 低功耗蓝牙：一种能够在低功耗情况下进行通信的蓝牙技术。
+- P2P功能：一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。
+- 仓颉基础通信FFI接口：定义仓颉与C互操作接口，负责互操作调用基础通信服务能力。
+
 ## 目录
 
 基础通信仓颉主要代码目录结构如下：
@@ -23,9 +29,10 @@ foundation/communication/connectivity_cangjie_wrapper
 ├── figures             # README中的架构图存放目录
 ├── kit                 # kit化接口代码
 │   └── ConnectivityKit # 仓颉ConnectivityKit代码目录
-└── ohos                # 仓颉基础通信接口代码
-    ├── bluetooth       # 仓颉蓝牙接口存放目录
-    └── wifi_manager    # 仓颉wifi接口存放目录
+├── ohos                # 仓颉基础通信接口代码
+│   ├── bluetooth       # 仓颉蓝牙接口存放目录
+│   └── wifi_manager    # 仓颉wifi接口存放目录
+└── test                # 测试代码
 ```
 
 ## 使用说明
@@ -56,7 +63,7 @@ WLAN相关接口为用户提供WLAN基础功能、P2P（peer-to-peer）功能和
 
 -   P2P模式
 
-P2P模式即为Wi-Fi Direct；Wi-Fi Direct 是一种点对点连接技术，它可以在两台 STA 之间直接建立 TCP/IP 链接，并不需要AP的参与；其中一台STA会起到传统意义上的AP的作用，称为Group Owner(GO)，另外一台station则称为Group Client(GC)，像连接AP一样连接到GO。
+P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它可以在两台 STA 之间直接建立 TCP/IP 链接，并不需要AP的参与。其中一台STA会起到传统意义上的AP的作用，称为Group Owner(GO)，另外一台station则称为Group Client(GC)，像连接AP一样连接到GO。
 
 详情请参见: [ohos.wifi\_manager API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
@@ -67,12 +74,6 @@ P2P模式即为Wi-Fi Direct；Wi-Fi Direct 是一种点对点连接技术，它�
 [communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README_zh.md)
 
 [communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README_zh.md)
-
-[arkui\_arkui\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/arkui_arkui_cangjie_wrapper)
-
-[arkcompiler\_cangjie\_ark\_interop](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop)
-
-[hiviewdfx\_hiviewdfx\_cangjie\_wrapper](https://gitcode.com/openharmony-sig/hiviewdfx_hiviewdfx_cangjie_wrapper)
 
 ## 参与贡献
 
