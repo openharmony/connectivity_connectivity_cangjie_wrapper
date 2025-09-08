@@ -34,12 +34,12 @@ import std.collection.{ArrayList, HashMap}
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattClientDevice <: RemoteDataLite {
-    private let callbackMap = HashMap<BluetoothBleGattClientDeviceCallbackType, ArrayList<CallbackObject>>()
-    private let registerMap = HashMap<BluetoothBleGattClientDeviceCallbackType, Bool>(
+    private let callbackMap = HashMap<String, ArrayList<CallbackObject>>()
+    private let registerMap = HashMap<String, Bool>(
         [
-            (BleCharacteristicChange, false),
-            (BleConnectionStateChange, false),
-            (ClientBleMtuChange, false)
+            ("BleCharacteristicChange", false),
+            ("BleConnectionStateChange", false),
+            ("BleMtuChange", false)
         ]
     )
 
@@ -486,7 +486,6 @@ public class GattClientDevice <: RemoteDataLite {
      *
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @relation on(type: 'BLECharacteristicChange', callback: Callback<BLECharacteristic>): void
      */
     @!APILevel[
@@ -495,21 +494,42 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BLECharacteristic>): Unit {
-        if (eventType != BleCharacteristicChange) {
-            BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is BleCharacteristicChange")
-            throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
-        }
-        commonSubscribe1Arg(eventType, callback) {
+    public func onBLECharacteristicChange(callback: Callback1Argument<BLECharacteristic>): Unit {
+        commonSubscribe1Arg("BleCharacteristicChange", callback) {
             characteristic: NativeBLECharacteristic => characteristic.toObject()
         }
         return
     }
 
     /**
+     * Unsubscribe characteristic value changed event.
+     *
+     * @relation off(type: 'BLECharacteristicChange', callback?: Callback<BLECharacteristic>): void
+     */
+    @!APILevel[
+        21,
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public func offBLECharacteristicChange(callback!: ?Callback1Argument<BLECharacteristic> = None): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe characteristic value changed event.")
+        if (!callbackMap.contains("BLECharacteristicChange")) {
+            return
+        }
+        if (let Some(v) <- callback) {
+            findCallbackObject("BLECharacteristicChange", v, remove: true)
+            return
+        }
+        callbackMap["BLECharacteristicChange"].clear()
+        return
+    }
+
+    /**
      * Subscribe client connection state changed event.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @throws { BusinessException } 201 - Permission denied.
+     * @throws { BusinessException } 801 - Capability not supported.
      * @relation on(type: 'BLEConnectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
@@ -518,23 +538,42 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(
-        eventType: BluetoothBleGattClientDeviceCallbackType,
-        callback: Callback1Argument<BLEConnectionChangeState>
-    ): Unit {
-        if (eventType != BleConnectionStateChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
-        }
-        commonSubscribe1Arg(eventType, callback) {
+    public func onBLEConnectionStateChange(callback: Callback1Argument<BLEConnectionChangeState>): Unit {
+        commonSubscribe1Arg("BleConnectionStateChange", callback) {
             state: NativeBLEConnectionChangeState => state.toObject()
         }
         return
     }
 
     /**
+     * Unsubscribe client connection state changed event.
+     *
+     * @relation off(type: 'BLEConnectionStateChange', callback?: Callback<BLEConnectionChangeState>): void
+     */
+    @!APILevel[
+        21,
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public func offBLEConnectionStateChange(callback!: ?Callback1Argument<BLEConnectionChangeState> = None): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe client connection state changed event.")
+        if (!callbackMap.contains("BLEConnectionStateChange")) {
+            return
+        }
+        if (let Some(v) <- callback) {
+            findCallbackObject("BLEConnectionStateChange", v, remove: true)
+            return
+        }
+        callbackMap["BLEConnectionStateChange"].clear()
+        return
+    }
+
+    /**
      * Subscribe mtu changed event.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @throws { BusinessException } 201 - Permission denied.
+     * @throws { BusinessException } 801 - Capability not supported.
      * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
@@ -543,11 +582,8 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
-        if (eventType != ClientBleMtuChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
-        }
-        commonSubscribe1Arg(eventType, callback) {
+    public func onBLEMtuChange(callback: Callback1Argument<Int32>): Unit {
+        commonSubscribe1Arg("BleMtuChange", callback) {
             i: Int32 => i
         }
         return
@@ -556,8 +592,6 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Unsubscribe mtu changed event.
      *
-     * @relation off(type: 'BLECharacteristicChange', callback?: Callback<BLECharacteristic>): void
-     * @relation off(type: 'BLEConnectionStateChange', callback?: Callback<BLEConnectionChangeState>): void
      * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
@@ -566,20 +600,20 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(eventType: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType}")
-        if (!callbackMap.contains(eventType)) {
+    public func offBLEMtuChange(callback!: ?Callback1Argument<Int32> = None): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe mtu changed event.")
+        if (!callbackMap.contains("BLEMtuChange")) {
             return
         }
         if (let Some(v) <- callback) {
-            findCallbackObject(eventType, v, remove: true)
+            findCallbackObject("BLEMtuChange", v, remove: true)
             return
         }
-        callbackMap[eventType].clear()
+        callbackMap["BLEMtuChange"].clear()
         return
     }
 
-    private func findCallbackObject(callbackType: BluetoothBleGattClientDeviceCallbackType, callback: CallbackObject,
+    private func findCallbackObject(callbackType: String, callback: CallbackObject,
         remove!: Bool = false): Int64 {
         let callbackList = callbackMap.get(callbackType) ?? return -1
         for (idx in 0..callbackList.size) {
@@ -593,7 +627,7 @@ public class GattClientDevice <: RemoteDataLite {
         return -1
     }
 
-    private func argWrapper1<CT, T>(callbackType: BluetoothBleGattClientDeviceCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+    private func argWrapper1<CT, T>(callbackType: String, ctor: (CT) -> T): Int64 where CT <: CType {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
@@ -606,15 +640,21 @@ public class GattClientDevice <: RemoteDataLite {
         registerCall.getID()
     }
 
-    private func register(callbackType: BluetoothBleGattClientDeviceCallbackType, id: Int64) {
+    private func register(callbackType: String, id: Int64) {
         var errorCode: Int32 = 0
+        let eventTypeId: Int32 = match (callbackType) {
+            case "BleCharacteristicChange" => 0
+            case "BleConnectionStateChange" => 1
+            case "ClientBleMtuChange" => 2
+            case _ => throw IllegalArgumentException("The type is not supported.")
+        }
         unsafe {
-            FfiBluetoothBleGattClientDeviceOn(getID(), callbackType.getValue(), id, inout errorCode)
+            FfiBluetoothBleGattClientDeviceOn(getID(), eventTypeId, id, inout errorCode)
         }
         checkRet(errorCode)
     }
 
-    private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleGattClientDeviceCallbackType,
+    private func commonSubscribe1Arg<CT, T>(callbackType: String,
         callback: CallbackObject, ctor: (CT) -> T) where CT <: CType {
         BLUETOOTH_LOG.debug("subscribe ${callbackType}")
         if (!registerMap[callbackType]) {

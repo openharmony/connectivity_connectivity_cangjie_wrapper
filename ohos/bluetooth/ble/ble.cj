@@ -257,11 +257,11 @@ public func stopAdvertising(advertisingId: UInt32): Unit {
     checkRet(errorCode)
 }
 
-private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothBleCallbackType, ArrayList<CallbackObject>>()
-private let GLOBAL_REGISTER_MAP = HashMap<BluetoothBleCallbackType, Bool>(
-    [(AdvertisingStateChange, false), (BleDeviceFind, false)])
+private let GLOBAL_CALLBACK_MAP = HashMap<String, ArrayList<CallbackObject>>()
+private let GLOBAL_REGISTER_MAP = HashMap<String, Bool>(
+    [("AdvertisingStateChange", false), ("BleDeviceFind", false)])
 
-private func findCallbackObject(callbackType: BluetoothBleCallbackType, callback: CallbackObject, remove!: Bool = false): Int64 {
+private func findCallbackObject(callbackType: String, callback: CallbackObject, remove!: Bool = false): Int64 {
     let callbackList = GLOBAL_CALLBACK_MAP.get(callbackType) ?? return -1
     for (idx in 0..callbackList.size) {
         if (refEq(callback, callbackList[idx])) {
@@ -274,15 +274,20 @@ private func findCallbackObject(callbackType: BluetoothBleCallbackType, callback
     return -1
 }
 
-private func register(callbackType: BluetoothBleCallbackType, id: Int64) {
+private func register(callbackType: String, id: Int64) {
     var errorCode: Int32 = 0
+    let eventTypeId: Int32 = match (callbackType) {
+        case "AdvertisingStateChange" => 0
+        case "BleDeviceFind" => 1
+        case _ => throw IllegalArgumentException("The type is not supported.")
+    }
     unsafe {
-        FfiBluetoothBleOn(callbackType.getValue(), id, inout errorCode)
+        FfiBluetoothBleOn(eventTypeId, id, inout errorCode)
     }
     checkRet(errorCode)
 }
 
-private func argWrapper1<CT, T>(callbackType: BluetoothBleCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+private func argWrapper1<CT, T>(callbackType: String, ctor: (CT) -> T): Int64 where CT <: CType {
     let wrapper = {
         ctype: CT =>
         let cjType = ctor(ctype)
@@ -295,7 +300,7 @@ private func argWrapper1<CT, T>(callbackType: BluetoothBleCallbackType, ctor: (C
     registerCall.getID()
 }
 
-private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, callback: CallbackObject,
+private func commonSubscribe1Arg<CT, T>(callbackType: String, callback: CallbackObject,
     ctor: (CT) -> T) where CT <: CType {
     BLUETOOTH_LOG.debug("subscribe ${callbackType}")
     if (!GLOBAL_REGISTER_MAP[callbackType]) {
@@ -314,7 +319,8 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
 /**
  * Subscribing to advertising state change event.
  *
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
  * @relation function on(type: 'advertisingStateChange', callback: Callback<AdvertisingStateChangeInfo>): void
  */
 @!APILevel[
@@ -323,21 +329,42 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<AdvertisingStateChangeInfo>): Unit {
-    if (eventType != AdvertisingStateChange) {
-        throw IllegalArgumentException("Invalid name ${eventType}, valid name is AdvertisingStateChange")
-    }
-
-    commonSubscribe1Arg(eventType, callback) {
+public func onAdvertisingStateChange(callback: Callback1Argument<AdvertisingStateChangeInfo>): Unit {
+    commonSubscribe1Arg("AdvertisingStateChange", callback) {
         info: CAdvertisingStateChangeInfo => info.toObject()
     }
     return
 }
 
 /**
+ * Unsubscribe from callback event.
+ *
+ * @relation function off(type: 'advertisingStateChange', callback?: Callback<AdvertisingStateChangeInfo>): void
+ */
+@!APILevel[
+    21,
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    stagemodelonly: true,
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
+public func offAdvertisingStateChange(callback!: ?Callback1Argument<AdvertisingStateChangeInfo> = None): Unit {
+    BLUETOOTH_LOG.debug("unsubscribe advertising state change callback event.")
+    if (!GLOBAL_CALLBACK_MAP.contains("AdvertisingStateChange")) {
+        return
+    }
+    if (let Some(v) <- callback) {
+        findCallbackObject("AdvertisingStateChange", v, remove: true)
+        return
+    }
+    GLOBAL_CALLBACK_MAP["AdvertisingStateChange"].clear()
+    return
+}
+
+/**
  * Subscribe BLE scan result.
  *
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
  * @relation function on(type: 'BLEDeviceFind', callback: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
@@ -346,13 +373,8 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<Array<ScanResult>>): Unit {
-    if (eventType != BleDeviceFind) {
-        BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is BleDeviceFind")
-        throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
-    }
-
-    commonSubscribe1Arg(eventType, callback) {
+public func onBLEDeviceFind(callback: Callback1Argument<Array<ScanResult>>): Unit {
+    commonSubscribe1Arg("BleDeviceFind", callback) {
         result: CArrScanResult => unsafe {
             cArr2cjArr<NativeScanResult, ScanResult>(result.size, result.head) {
                 r: NativeScanResult => r.toObject()
@@ -365,7 +387,6 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 /**
  * Unsubscribe from callback event.
  *
- * @relation function off(type: 'advertisingStateChange', callback?: Callback<AdvertisingStateChangeInfo>): void
  * @relation function off(type: 'BLEDeviceFind', callback?: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
@@ -374,15 +395,15 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public func off(eventType: BluetoothBleCallbackType, callback!: ?CallbackObject = None): Unit {
-    BLUETOOTH_LOG.debug("unsubscribe stateChange")
-    if (!GLOBAL_CALLBACK_MAP.contains(eventType)) {
+public func offBLEDeviceFind(callback!: ?Callback1Argument<Array<ScanResult>> = None): Unit {
+    BLUETOOTH_LOG.debug("unsubscribe ble device find callback event")
+    if (!GLOBAL_CALLBACK_MAP.contains("BLEDeviceFind")) {
         return
     }
     if (let Some(v) <- callback) {
-        findCallbackObject(eventType, v, remove: true)
+        findCallbackObject("BLEDeviceFind", v, remove: true)
         return
     }
-    GLOBAL_CALLBACK_MAP[eventType].clear()
+    GLOBAL_CALLBACK_MAP["BLEDeviceFind"].clear()
     return
 }

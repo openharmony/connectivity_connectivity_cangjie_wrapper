@@ -1328,49 +1328,6 @@ public enum PhyType {
     }
 }
 
-/**
- * Bluetooth Ble CallbackType
- */
-@Derive[ToString, Hashable, Equatable]
-@!APILevel[
-    21,
-    stagemodelonly: true,
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
-]
-public enum BluetoothBleCallbackType {
-    /**
-     * Advertising State Change
-     */
-    @!APILevel[
-        21,
-        stagemodelonly: true,
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    AdvertisingStateChange
-    | 
-    /**
-     * Ble Device Find
-     */
-    @!APILevel[
-        21,
-        stagemodelonly: true,
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    BleDeviceFind
-    | ...
-
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
-    func getValue(): Int32 {
-        match (this) {
-            case AdvertisingStateChange => 0
-            case BleDeviceFind => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
-        }
-    }
-}
-
 @C
 struct CArrScanResult {
     CArrScanResult(

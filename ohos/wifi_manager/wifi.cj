@@ -171,15 +171,15 @@ public func stopDiscoverDevices(): Unit {
     }
 }
 
-private let CALLBACK_MAP = HashMap<WifiCallbackType, ArrayList<CallbackObject>>()
-private let REGISTER_MAP = HashMap<WifiCallbackType, Bool>(
+private let CALLBACK_MAP = HashMap<String, ArrayList<CallbackObject>>()
+private let REGISTER_MAP = HashMap<String, Bool>(
     [
-        (WifiScanStateChange, false)
+        ("wifiStateChange", false)
     ]
 )
 
 // return index of the object in array
-private func findCallbackObject(callbackType: WifiCallbackType, callback: CallbackObject, remove!: Bool = false): Int64 {
+private func findCallbackObject(callbackType: String, callback: CallbackObject, remove!: Bool = false): Int64 {
     let callbackList = CALLBACK_MAP.get(callbackType) ?? return -1
     for (idx in 0..callbackList.size) {
         if (refEq(callback, callbackList[idx])) {
@@ -192,9 +192,9 @@ private func findCallbackObject(callbackType: WifiCallbackType, callback: Callba
     return -1
 }
 
-private func on(callbackType: WifiCallbackType, id: Int64) {
+private func on(callbackType: String, id: Int64) {
     let code: Int32
-    try (cstr = unsafe { LibC.mallocCString(callbackType.getValue()) }.asResource()) {
+    try (cstr = unsafe { LibC.mallocCString(callbackType) }.asResource()) {
         code = unsafe { FfiWifiWifiOn(cstr.value, id) }
         if (code != SUCCESS_CODE) {
             let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
@@ -203,7 +203,7 @@ private func on(callbackType: WifiCallbackType, id: Int64) {
     }
 }
 
-private func argWrapper1<CT, T>(callbackType: WifiCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+private func argWrapper1<CT, T>(callbackType: String, ctor: (CT) -> T): Int64 where CT <: CType {
     let wrapper = {
         ctype: CT =>
         let cjType = ctor(ctype)
@@ -216,7 +216,7 @@ private func argWrapper1<CT, T>(callbackType: WifiCallbackType, ctor: (CT) -> T)
     registerCall.getID()
 }
 
-private func commonSubscribe1Arg<CT, T>(callbackType: WifiCallbackType, callback: CallbackObject, ctor: (CT) -> T) where CT <: CType {
+private func commonSubscribe1Arg<CT, T>(callbackType: String, callback: CallbackObject, ctor: (CT) -> T) where CT <: CType {
     LOGGER.debug("subscribe ${callbackType}")
     if (!REGISTER_MAP[callbackType]) {
         on(callbackType, argWrapper1<CT, T>(callbackType, ctor))
@@ -232,7 +232,7 @@ private func commonSubscribe1Arg<CT, T>(callbackType: WifiCallbackType, callback
 }
 
 // no need to call FfiWifiWifiOff because there is no unregister api in ndk
-private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T = None): Unit where T <: CallbackObject {
+private func commonUnSubscribe<T>(callbackType: String, callback!: ?T = None): Unit where T <: CallbackObject {
     LOGGER.debug("unsubscribe ${callbackType}")
     match (callback) {
         case Some(v) => findCallbackObject(callbackType, v, remove: true)
@@ -242,6 +242,7 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
 
 /**
  * Subscribe Wi-Fi scan status change events.
+ *
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -253,16 +254,14 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
-public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>): Unit {
-    commonSubscribe1Arg(eventType, callback) {i: Int32 => i}
+public func onWifiScanStateChange(callback: Callback1Argument<Int32>): Unit {
+    commonSubscribe1Arg("wifiStateChange", callback) {i: Int32 => i}
 }
 
 /**
  * Unsubscribe Wi-Fi related events.
+ *
  * All callback functions will be deregistered If there is no specific callback parameter.
- * @throws {BusinessException} 201 - Permission denied.
- * @throws {BusinessException} 801 - Capability not supported.
- * @throws {BusinessException} 2801000 - Operation failed.
  * @relation function off(type: 'wifiScanStateChange', callback?: Callback<number>): void
  */
 @!APILevel[
@@ -271,36 +270,6 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
-public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None): Unit {
-    commonUnSubscribe(eventType, callback: callback)
-}
-
-/**
- * WiFi registration event type.
- */
-@Derive[ToString, Equatable, Hashable]
-@!APILevel[
-    21,
-    stagemodelonly: true,
-    syscap: "SystemCapability.Communication.WiFi.STA"
-]
-public enum WifiCallbackType {
-    /**
-     * Wi-Fi scan status change event type.
-     */
-    @!APILevel[
-        21,
-        stagemodelonly: true,
-        syscap: "SystemCapability.Communication.WiFi.STA"
-    ]
-    WifiScanStateChange
-    |
-    ...
-
-    func getValue(): String {
-        match(this) {
-            case WifiScanStateChange => "wifiStateChange"
-            case _ => throw IllegalArgumentException("types are not supported")
-        }
-    }
+public func offWifiScanStateChange(callback!: ?Callback1Argument<Int32> = None): Unit {
+    commonUnSubscribe("wifiStateChange", callback: callback)
 }
