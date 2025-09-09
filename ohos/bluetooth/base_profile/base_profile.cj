@@ -206,12 +206,6 @@ public interface BaseProfile {
     /**
      * Get connection strategy of this profile.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2900003 - Bluetooth disabled.
-     * @throws { BusinessException } 2900004 - Profile not supported.
-     * @throws { BusinessException } 2900099 - Operation failed.
      * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
@@ -225,13 +219,6 @@ public interface BaseProfile {
     /**
      * Obtains the profile connection state.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2900003 - Bluetooth disabled.
-     * @throws { BusinessException } 2900004 - Profile not supported.
-     * @throws { BusinessException } 2900099 - Operation failed.
      * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
@@ -245,9 +232,6 @@ public interface BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
      * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
@@ -256,14 +240,11 @@ public interface BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit
+    func onConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit
 
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
@@ -272,14 +253,11 @@ public interface BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit
+    func offConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit
 
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
@@ -288,33 +266,5 @@ public interface BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    func off(eventType: ProfileCallbackType): Unit
-}
-
-/**
- * Type of the profile connection state changes event to listen for.
- */
-@Derive[ToString, Hashable, Equatable]
-@!APILevel[
-    21,
-    stagemodelonly: true,
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
-]
-public enum ProfileCallbackType {
-    /**
-     * Connection State Change.
-     */
-    @!APILevel[
-        21,
-        stagemodelonly: true,
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    ConnectionStateChange | ...
-
-    protected func getValue(): Int32 {
-        match (this) {
-            case ConnectionStateChange => 0
-            case _ => throw IllegalArgumentException("The type is not supported.")
-        }
-    }
+    func offConnectionStateChange(): Unit
 }

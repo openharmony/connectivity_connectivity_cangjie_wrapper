@@ -143,7 +143,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * Subscribe the event reported when the profile connection state changes .
      *
      * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      * @param { Callback1Argument<StateChangeParam> } callback - Callback used to listen for event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -156,13 +155,14 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
+    public func onConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
         if (!registerState) {
             var errorCode: Int32 = 0
             let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
+            let eventTypeId: Int32 = 0
             unsafe {
-                FfiBluetoothHfpOn(eventType.getValue(), id, inout errorCode)
+                FfiBluetoothHfpOn(eventTypeId, id, inout errorCode)
             }
             checkRet(errorCode)
             registerState = true
@@ -182,7 +182,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * Unsubscribe the event reported when the profile connection state changes .
      *
      * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      * @param { CallbackObject } callback - Callback used to listen for event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -195,8 +194,8 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
+    public func offConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe connectionStateChange callback event")
         for (idx in 0..callbackList.size) {
             if (refEq(callback, callbackList[idx])) {
                 callbackList.remove(at: idx)
@@ -209,7 +208,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * Unsubscribe the event reported when the profile connection state changes .
      *
      * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
@@ -221,11 +219,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(eventType: ProfileCallbackType): Unit {
-        if (eventType != ConnectionStateChange) {
-            BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is CONNECTIONSTATECHANGE")
-            throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
-        }
+    public func offConnectionStateChange(): Unit {
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
         callbackList.clear()
         return

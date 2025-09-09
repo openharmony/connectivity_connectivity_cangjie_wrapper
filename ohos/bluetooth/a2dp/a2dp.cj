@@ -168,7 +168,6 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
@@ -177,13 +176,14 @@ public class A2dpSourceProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
+    public func onConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
         if (!registerState) {
             var errorCode: Int32 = 0
             let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
+            let eventTypeId: Int32 = 0
             unsafe {
-                FfiBluetoothA2dpOn(eventType.getValue(), id, inout errorCode)
+                FfiBluetoothA2dpOn(eventTypeId, id, inout errorCode)
             }
             if (errorCode != SUCCESS_CODE) {
                 throw BusinessException(errorCode, getErrorMsg(errorCode))
@@ -212,8 +212,8 @@ public class A2dpSourceProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
+    public func offConnectionStateChange(callback: Callback1Argument<StateChangeParam>): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe connectionStateChange callback event")
         for (idx in 0..callbackList.size) {
             if (refEq(callback, callbackList[idx])) {
                 callbackList.remove(at: idx)
@@ -225,7 +225,6 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
@@ -234,11 +233,8 @@ public class A2dpSourceProfile <: BaseProfile {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(eventType: ProfileCallbackType): Unit {
-        if (eventType != ConnectionStateChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is CONNECTIONSTATECHANGE")
-        }
-        BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
+    public func offConnectionStateChange(): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe connectionStateChange callback event")
         callbackList.clear()
         return
     }
