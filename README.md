@@ -1,24 +1,18 @@
-# DSoftBus
+# connectivity_cangjie_wrapper
 
 ## Introduction
 
-The DSoftBus subsystem provides the following communication capabilities for OpenHarmony:
+The communication_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony, The basic communication Cangjie interface is only available for standard devices.
 
 - WLAN: basic WLAN functions, peer-to-peer (P2P) connection, and WLAN notification, enabling your application to communicate with other devices through a WLAN.
 
 - Bluetooth: classic Bluetooth and Bluetooth Low Energy (BLE).
 
-- DSoftBus: distributed communications between near-field devices, and device discovery, connection setup, networking, and data transmission capabilities regardless of communication modes.
+## System Architecture
 
-- Remote procedure call (RPC): communications between processes on a device or across devices.
+**Figure 1**
 
-
-## Architecture
-
-**Figure 1** DSoftBus architecture
-
-
-![](figures/dsoftbus.png)
+![](figures/connectivity_cangjie_wrapper_architecture_en.png)
 
 ## Directory Structure
 
@@ -26,45 +20,61 @@ The DSoftBus directory structure is as follows:
 
 ```
 foundation/communication/connectivity_cangjie_wrapper
-├── ohos             # Cangjie DSoftBus code
-├── kit              # Cangjie kit code
-├── figures          # architecture pictures
+├── figures             # architecture pictures
+├── kit                 # kit code
+│   └── ConnectivityKit # Cangjie ConnectivityKit code implementation
+├── ohos                # Cangjie DSoftBus code
+│   ├── bluetooth       # Cangjie bluetooth code implementation
+│   └── wifi_manager    # Cangjie wifi code implementation
+└── test                # Test code
 ```
 
-## Constraints
+As shown in the architecture:
 
-The devices must be in the same LAN.
+- Bluetooth Low Energy: A wireless, low-power Bluetooth technology
+- P2P Connection：A peer-to-peer connection technology that enables the direct establishment of a TCP/IP link between two STAs.
+- Cangjie Connectivity FFI Interface：Define the FFI interface between Cangjie and C, which is responsible for invoking the basic communication service capabilities through interoperation.
 
 ## Usage
 
-### RPC
+### bluetooth api
 
-In an RPC, the client process obtains the proxy of the process that provides the service (server). Through the proxy, the two processes communicate with each other.
+Bluetooth-related api, which currently provide BLE-related capabilities, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
 
-1.  Implement the server capabilities.
-2.  The client obtains a proxy of the server. This proxy provides the same capabilities as the server. To call a method of the server, the client only needs to call the same method of the proxy.
-3.  The server processes the received request and returns the result to the proxy via the driver.
-4.  The proxy returns the result to the client.
+-   BLE（Bluetooth Low Energy）
 
-### DSoftBus
+Bluetooth Low Energy (BLE) is a wireless, low-power Bluetooth technology. Compared with Classic Bluetooth, BLE allows for lower power consumption and is applicable to devices with long standby time, such as smart watches, healthcare devices, smart home devices.
 
--   Networking
+For details, please refer to [ohos.bluetooth.ble API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-ble.md)。
 
-1.  The server starts and obtains the list of online devices.
-2.  Register a listener for device status changes.
-3.  Obtain the device ID, name, and type.
-4.  Obtain detailed information about the device, such as the device type, networking type, and device capability.
-5.  Delete the registered listener when the process exits.
+-   A2DP（Advanced Audio Distribution Profile）
 
--   Transmission
+Advanced Audio Distribution Profile (A2DP) allows high-quality multimedia audio (such as music and voice) to be streamed between devices over a Bluetooth connection. It supports bidirectional communication and can be used in devices such as headsets, speakers, and car audio devices.
 
-1.  Creates a socket instance based on information, such as the socket name and caller bundle name.
-2.  The server starts listening for the socket, and the client binds the socket.
-3.  Send data after the bind is successful.
-4.  Close the socket when it is not used.
+For details, please refer to [ohos.bluetooth.a2dp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
+
+Compared with ArkTS API, Bluetooth connection module-related functions are not yet provided.
+
+For relevant guidance, please refer to [Overview of Bluetooth Service Development](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/bluetooth/cj-bluetooth-overview.md)
+
+### Wifi api
+
+WLAN-related api provide users with WLAN basic functions, peer-to-peer (P2P) functions, and corresponding services such as WLAN message notifications, so that applications can be interconnected with other devices through WLAN.
+
+-   P2P mode
+
+The P2P mode is also called Wi-Fi Direct, which allows two devices to establish a direct Wi-Fi connection without an intermediary wireless access point (AP). It can set up a TCP/IP connection between two STAs without an AP. Of the two STAs, one is called the group owner (GO), which serves as a traditional AP. the other is called a group client (GC), which connects to the GO like an AP.
+
+For details, see [ohos.wifi_manager API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
+
+Compared with ArkTS, STA mode and AP mode are not available.
 
 ## Repositories Involved
 
-**DSoftBus subsystem**
+[communication\_bluetooth](https://gitee.com/openharmony/communication_bluetooth/blob/master/README.md)
 
-connectivity_cangjie_wrapper
+[communication\_wifi](https://gitee.com/openharmony/communication_wifi/blob/master/README.md)
+
+## Code Contribution
+
+Developers are welcome to contribute code, documentation, etc. For specific contribution processes and methods, please refer to [Code Contribution](https://gitcode.com/openharmony/docs/blob/master/en/contribute/code-contribution.md).

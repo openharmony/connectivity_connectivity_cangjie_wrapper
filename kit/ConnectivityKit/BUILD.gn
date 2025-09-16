@@ -12,17 +12,19 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//build/cangjie/cjc.gni")
+import("//build/templates/cangjie/cjc.gni")
 
-ohos_cj_library("kit.ConnectivityKit") {
+ohos_cangjie_shared_library("kit.ConnectivityKit") {
   sources = [ "index.cj" ]
 
   cj_deps = [
-    "../../ohos/bluetooth/baseProfile:ohos.bluetooth.baseProfile",
+    "../../ohos/bluetooth/base_profile:ohos.bluetooth.base_profile",
     "../../ohos/bluetooth/ble:ohos.bluetooth.ble",
     "../../ohos/bluetooth:ohos.bluetooth",
     "../../ohos/bluetooth/connection:ohos.bluetooth.connection",
     "../../ohos/bluetooth/constant:ohos.bluetooth.constant",
+    "../../ohos/bluetooth/hfp:ohos.bluetooth.hfp",
+    "../../ohos/bluetooth/a2dp:ohos.bluetooth.a2dp",
     "../../ohos/wifi_manager:ohos.wifi_manager",
   ]
 

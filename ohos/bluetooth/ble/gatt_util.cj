@@ -15,12 +15,11 @@
 
 package ohos.bluetooth.ble
 
-import std.deriving.*
-import ohos.bluetooth.constant.*
-import ohos.labels.*
-import ohos.bluetooth.*
-import ohos.base.*
-import ohos.ffi.*
+import ohos.bluetooth.constant.ProfileConnectionState
+import ohos.ffi.{ CArrUI8, cArr2cjArr, cjArr2CArr}
+import ohos.labels.APILevel
+
+import std.deriving.Derive
 
 @C
 struct NativeGattService {
@@ -41,7 +40,7 @@ struct NativeGattService {
                     v: NativeBLECharacteristic => v.toObject()
                 }
             },
-            unsafe {
+            includeServices: unsafe {
                 cArr2cjArr<NativeGattService, GattService>(includeServices.size, includeServices.head) {
                     v: NativeGattService => v.toObject()
                 }
@@ -50,7 +49,7 @@ struct NativeGattService {
     }
 
     unsafe func free(): Unit {
-        serviceUuid.free()
+        LibC.free(serviceUuid)
         characteristics.free()
         includeServices.free()
     }
@@ -95,8 +94,7 @@ struct CArrGattService {
 /**
  * Describes the Gatt service.
  *
- * @typedef GattService
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface GattService
  */
 @!APILevel[
     21,
@@ -104,37 +102,70 @@ struct CArrGattService {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattService {
+    /**
+     * The UUID of a GattService instance.
+     *
+     * @relation serviceUuid: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public GattService(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var isPrimary: Bool,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristics: Array<BLECharacteristic>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var includeServices: Array<GattService>
-    ) {}
+    public var serviceUuid: String
+    /**
+     * Indicates whether the GattService instance is primary or secondary.
+     *
+     * @relation isPrimary: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var isPrimary: Bool
+    /**
+     * The BLECharacteristic list belongs to this GattService instance.
+     *
+     * @relation characteristics: Array<BLECharacteristic>
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristics: Array<BLECharacteristic>
+    /**
+     * The list of GATT services contained in the service.
+     *
+     * @relation includeServices?: Array<GattService>
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var includeServices: Array<GattService>
+
+    /**
+     * GattService constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuid: String,
+        isPrimary: Bool,
+        characteristics: Array<BLECharacteristic>,
+        includeServices!: Array<GattService> = []
+    ) {
+        this.serviceUuid = serviceUuid
+        this.isPrimary = isPrimary
+        this.characteristics = characteristics
+        this.includeServices = includeServices
+    }
 
     unsafe func toNative(): NativeGattService {
         var cServiceUuid: CString = CString(CPointer())
@@ -155,7 +186,7 @@ public class GattService {
                 cIncludeServices
             )
         } catch (e: Exception) {
-            cServiceUuid.free()
+            LibC.free(cServiceUuid)
             cCharacteristics.free()
             cIncludeServices.free()
             throw e
@@ -211,13 +242,13 @@ struct NativeBLECharacteristic {
                     v: NativeBLEDescriptor => v.toObject()
                 }
             },
-            properties.toObject()
+            properties: properties.toObject()
         )
     }
 
     unsafe func free(): Unit {
-        serviceUuid.free()
-        characteristicUuid.free()
+        LibC.free(serviceUuid)
+        LibC.free(characteristicUuid)
         LibC.free<UInt8>(characteristicValue.head)
         descriptors.free()
         // Members of NativeGattProperties do not need to be released.
@@ -245,8 +276,7 @@ struct CArrBLEDescriptor {
 /**
  * Describes the Gatt characteristic.
  *
- * @typedef BLECharacteristic
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface BLECharacteristic
  */
 @!APILevel[
     21,
@@ -254,43 +284,93 @@ struct CArrBLEDescriptor {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class BLECharacteristic {
+    /**
+     * The UUID of the GattService instance to which the characteristic belongs
+     *
+     * @relation serviceUuid: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public BLECharacteristic(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristicValue: Array<Byte>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var descriptors: Array<BLEDescriptor>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var properties: GattProperties
-    ) {}
+    public var serviceUuid: String
+    /**
+     * The UUID of a BLECharacteristic instance
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The value of a BLECharacteristic instance
+     *
+     * @relation characteristicValue: ArrayBuffer
+     */    
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicValue: Array<Byte>
+    /**
+     * The list of BLEDescriptor contained in the characteristic
+     *
+     * @relation descriptors: Array<BLEDescriptor>
+     */    
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var descriptors: Array<BLEDescriptor>
+    /**
+     * The properties of a BLECharacteristic instance
+     *
+     * @relation properties?: GattProperties
+     */    
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var properties: GattProperties
+
+    var permissions: GattPermissions
+    var characteristicValueHandle: UInt32
+
+    /**
+     * BLECharacteristic constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuid: String,
+        characteristicUuid: String,
+        characteristicValue: Array<Byte>,
+        descriptors: Array<BLEDescriptor>,
+        properties!: GattProperties = GattProperties(),
+        permissions!: GattPermissions = GattPermissions(),
+        characteristicValueHandle!: UInt32 = 0
+    ) {
+        this.serviceUuid = serviceUuid
+        this.characteristicUuid = characteristicUuid
+        this.characteristicValue = characteristicValue
+        this.descriptors = descriptors
+        this.properties = properties
+        if (permissions != GattPermissions() || characteristicValueHandle != 0) {
+            throw IllegalArgumentException("the feature is temporarily not supported.")
+        }
+        this.permissions = permissions
+        this.characteristicValueHandle = characteristicValueHandle
+    }
 
     unsafe func toNative(): NativeBLECharacteristic {
         var cServiceUuid: CString = CString(CPointer())
@@ -315,8 +395,8 @@ public class BLECharacteristic {
                 cProperties
             )
         } catch (e: Exception) {
-            cServiceUuid.free()
-            cCharacteristicUuid.free()
+            LibC.free(cServiceUuid)
+            LibC.free(cCharacteristicUuid)
             cCharacteristicValue.free()
             cDescriptors.free()
             throw e
@@ -352,9 +432,9 @@ struct NativeBLEDescriptor {
     }
 
     unsafe func free(): Unit {
-        serviceUuid.free()
-        characteristicUuid.free()
-        descriptorUuid.free()
+        LibC.free(serviceUuid)
+        LibC.free(characteristicUuid)
+        LibC.free(descriptorUuid)
         LibC.free<UInt8>(descriptorValue.head)
     }
 }
@@ -362,8 +442,7 @@ struct NativeBLEDescriptor {
 /**
  * Describes the Gatt descriptor.
  *
- * @typedef BLEDescriptor
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface BLEDescriptor
  */
 @!APILevel[
     21,
@@ -371,37 +450,80 @@ struct NativeBLEDescriptor {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class BLEDescriptor {
+    /**
+     * The UUID of the GattService instance to which the descriptor belongs
+     *
+     * @relation serviceUuid: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public BLEDescriptor(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var descriptorUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var descriptorValue: Array<Byte>
-    ) {}
+    public var serviceUuid: String
+    /**
+     * The UUID of the BLECharacteristic instance to which the descriptor belongs
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The UUID of the BLEDescriptor instance
+     *
+     * @relation descriptorUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var descriptorUuid: String
+    /**
+     * The value of the BLEDescriptor instance
+     *
+     * @relation descriptorValue: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var descriptorValue: Array<Byte>
+
+    var descriptorHandle: UInt32
+    var permissions: GattPermissions
+
+    /**
+     * BLEDescriptor constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuid: String,
+        characteristicUuid: String,
+        descriptorUuid: String,
+        descriptorValue: Array<Byte>,
+        descriptorHandle!: UInt32 = 0,
+        permissions!: GattPermissions = GattPermissions()
+    ) {
+        this.serviceUuid = serviceUuid
+        this.characteristicUuid = characteristicUuid
+        this.descriptorUuid = descriptorUuid
+        this.descriptorValue = descriptorValue
+        if (descriptorHandle!= 0 || permissions != GattPermissions()) {
+            throw IllegalArgumentException("the feature is temporarily not supported.")
+        }
+        this.descriptorHandle = descriptorHandle
+        this.permissions = permissions
+    }
 
     unsafe func toNative(): NativeBLEDescriptor {
         var nativeServiceUuid: CString = CString(CPointer())
@@ -413,8 +535,8 @@ public class BLEDescriptor {
             nativeCharacteristicUuid = LibC.mallocCString(characteristicUuid)
             nativeDescriptorUuid = LibC.mallocCString(descriptorUuid)
         } catch (e: Exception) {
-            nativeServiceUuid.free()
-            nativeCharacteristicUuid.free()
+            LibC.free(nativeServiceUuid)
+            LibC.free(nativeCharacteristicUuid)
             throw e
         }
         NativeBLEDescriptor(
@@ -470,8 +592,7 @@ struct NativeGattProperties {
 /**
  * Describes the properties of a gatt characteristic.
  *
- * @typedef GattProperties
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface GattProperties
  */
 @!APILevel[
     21,
@@ -479,18 +600,96 @@ struct NativeGattProperties {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattProperties {
+    /**
+     * Support write property of the characteristic.
+     *
+     * @relation write?: boolean
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public GattProperties(
-        let write!: Bool = true,
-        let writeNoResponse!: Bool = true,
-        let read!: Bool = true,
-        let notify!: Bool = false,
-        let indicate!: Bool = false
-    ) {}
+    public var write: Bool
+    /**
+     * Support write no response property of the characteristic.
+     *
+     * @relation writeNoResponse?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var writeNoResponse: Bool
+    /**
+     * Support read property of the characteristic.
+     *
+     * @relation read?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var read: Bool
+    /**
+     * Support notify property of the characteristic.
+     *
+     * @relation notify?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var notify: Bool
+    /**
+     * Support indicate property of the characteristic.
+     *
+     * @relation indicate?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var indicate: Bool
+
+    var broadcast: Bool
+    var authenticatedSignedWrite: Bool
+    var extendedProperties: Bool
+
+    /**
+     * GattProperties constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        write!: Bool = true,
+        writeNoResponse!: Bool = true,
+        read!: Bool = true,
+        notify!: Bool = false,
+        indicate!: Bool = false,
+        broadcast!: Bool = false,
+        authenticatedSignedWrite!: Bool = false,
+        extendedProperties!: Bool = false
+    ) {
+        this.write = write
+        this.writeNoResponse = writeNoResponse
+        this.read = read
+        this.notify = notify
+        this.indicate = indicate
+        if (broadcast != false || authenticatedSignedWrite != false || extendedProperties != false) {
+            throw IllegalArgumentException("the feature is temporarily not supported.")
+        }
+        this.broadcast = broadcast
+        this.authenticatedSignedWrite = authenticatedSignedWrite
+        this.extendedProperties = extendedProperties
+    }
 
     unsafe func toNative(): NativeGattProperties {
         NativeGattProperties(
@@ -513,8 +712,8 @@ struct NativeNotifyCharacteristic {
     ) {}
 
     unsafe func free(): Unit {
-        serviceUuid.free()
-        characteristicUuid.free()
+        LibC.free(serviceUuid)
+        LibC.free(characteristicUuid)
         LibC.free<UInt8>(characteristicValue.head)
     }
 }
@@ -522,8 +721,7 @@ struct NativeNotifyCharacteristic {
 /**
  * Describes the value of the indication or notification sent by the Gatt server.
  *
- * @typedef NotifyCharacteristic
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface NotifyCharacteristic
  */
 @!APILevel[
     21,
@@ -531,37 +729,71 @@ struct NativeNotifyCharacteristic {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class NotifyCharacteristic {
+    /**
+     * The UUID of the GattService instance to which the characteristic belongs
+     *
+     * @relation serviceUuid: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public NotifyCharacteristic(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var serviceUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var characteristicValue: Array<Byte>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var confirm: Bool
-    ) {}
+    public var serviceUuid: String
+    /**
+     * The UUID of a NotifyCharacteristic instance
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The value of a NotifyCharacteristic instance
+     *
+     * @relation characteristicValue: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicValue: Array<Byte>
+    /**
+     * Specifies whether to request confirmation from the BLE peripheral device (indication) or
+     * send a notification. Value true indicates the former and false indicates the latter.
+     *
+     * @relation confirm: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var confirm: Bool
+
+    /**
+     * NotifyCharacteristic constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        serviceUuid: String,
+        characteristicUuid: String,
+        characteristicValue: Array<Byte>,
+        confirm: Bool
+    ) {
+        this.serviceUuid = serviceUuid
+        this.characteristicUuid = characteristicUuid
+        this.characteristicValue = characteristicValue
+        this.confirm = confirm
+    }
 
     unsafe func toNative(): NativeNotifyCharacteristic {
         var cServiceUuid: CString = CString(CPointer())
@@ -579,8 +811,8 @@ public class NotifyCharacteristic {
                 confirm
             )
         } catch (e: Exception) {
-            cServiceUuid.free()
-            cCharacteristicUuid.free()
+            LibC.free(cServiceUuid)
+            LibC.free(cCharacteristicUuid)
             cCharacteristicValue.free()
             throw e
         }
@@ -598,7 +830,7 @@ struct NativeServerResponse {
     ) {}
 
     unsafe func free(): Unit {
-        deviceId.free()
+        LibC.free(deviceId)
         LibC.free<UInt8>(value.head)
     }
 }
@@ -606,8 +838,7 @@ struct NativeServerResponse {
 /**
  * Describes the parameters of a response send by the server to a specified read or write request.
  *
- * @typedef ServerResponse
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface ServerResponse
  */
 @!APILevel[
     21,
@@ -615,43 +846,83 @@ struct NativeServerResponse {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ServerResponse {
+    /**
+     * Indicates the address of the client to which to send the response
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public ServerResponse(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let transId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let status: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let offset: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let value: Array<Byte>
-    ) {}
+    public var deviceId: String
+    /**
+     * The Id of the write request
+     *
+     * @relation transId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var transId: Int32
+    /**
+     * Indicates the status of the read or write request, set this parameter to '0' in normal cases
+     *
+     * @relation status: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var status: Int32
+    /**
+     * Indicates the byte offset of the start position for reading or writing operation
+     *
+     * @relation offset: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var offset: Int32
+    /**
+     * Indicates the value to be sent
+     *
+     * @relation value: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var value: Array<Byte>
+
+    /**
+     * ServerResponse constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(
+        deviceId: String,
+        transId: Int32,
+        status: Int32,
+        offset: Int32,
+        value: Array<Byte>
+    ) {
+        this.deviceId = deviceId
+        this.transId = transId
+        this.status = status
+        this.offset = offset
+        this.value = value
+    }
 
     unsafe func toNative(): NativeServerResponse {
         var cDeviceId = CString(CPointer())
@@ -667,7 +938,7 @@ public class ServerResponse {
                 cValue
             )
         } catch (e: Exception) {
-            cDeviceId.free()
+            LibC.free(cDeviceId)
             cValue.free()
             throw e
         }
@@ -677,7 +948,7 @@ public class ServerResponse {
 /**
  * The enum of gatt characteristic write type
  *
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation enum GattWriteType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -686,24 +957,38 @@ public class ServerResponse {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum GattWriteType {
+    /**
+     * Write characteristic with response.
+     *
+     * @relation WRITE = 1
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    WRITE
-    | @!APILevel[
+    Write
+    | 
+    /**
+     * Write characteristic without response.
+     *
+     * @relation WRITE_NO_RESPONSE = 2
+     */
+    @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    WRITE_NO_RESPONSE
+    WriteNoResponse
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case WRITE => 0
-            case WRITE_NO_RESPONSE => 1
+            case Write => 0
+            case WriteNoResponse => 1
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
@@ -735,8 +1020,7 @@ struct NativeCharacteristicReadRequest {
 /**
  * Describes the parameters of the Gatt client's characteristic read request.
  *
- * @typedef CharacteristicReadRequest
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface CharacteristicReadRequest
  */
 @!APILevel[
     21,
@@ -744,43 +1028,75 @@ struct NativeCharacteristicReadRequest {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class CharacteristicReadRequest {
+    /**
+     * Indicates the address of the client that initiates the read request
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public CharacteristicReadRequest(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let transId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let offset: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let serviceUuid: String
-    ) {}
+    public var deviceId: String
+    /**
+     * The Id of the read request
+     *
+     * @relation transId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var transId: Int32
+    /**
+     * Indicates the byte offset of the start position for reading characteristic value
+     *
+     * @relation offset: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var offset: Int32
+    /**
+     * The UUID of a CharacteristicReadRequest instance
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The UUID of the service to which the characteristic belongs
+     *
+     * @relation serviceUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceUuid: String
+
+    init(
+        deviceId: String,
+        transId: Int32,
+        offset: Int32,
+        characteristicUuid: String,
+        serviceUuid: String
+    ) {
+        this.deviceId = deviceId
+        this.transId = transId
+        this.offset = offset
+        this.characteristicUuid = characteristicUuid
+        this.serviceUuid = serviceUuid
+    }
 }
 
 @C
@@ -815,8 +1131,7 @@ struct NativeCharacteristicWriteRequest {
 /**
  * Describes the parameters of the of the Gatt client's characteristic write request.
  *
- * @typedef CharacteristicWriteRequest
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface CharacteristicWriteRequest
  */
 @!APILevel[
     21,
@@ -824,61 +1139,114 @@ struct NativeCharacteristicWriteRequest {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class CharacteristicWriteRequest {
+    /**
+     * Indicates the address of the client that initiates the write request
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public CharacteristicWriteRequest(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let transId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let offset: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let isPrepared: Bool,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let needRsp: Bool,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let value: Array<Byte>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let serviceUuid: String
-    ) {}
+    public var deviceId: String
+    /**
+     * The Id of the write request
+     *
+     * @relation transId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var transId: Int32
+    /**
+     * Indicates the byte offset of the start position for writing characteristic value
+     *
+     * @relation offset: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var offset: Int32
+    /**
+     * Whether this request should be pending for later operation
+     *
+     * @relation isPrepared: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var isPrepared: Bool
+    /**
+     * Whether the remote client need a response
+     *
+     * @relation needRsp: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var needRsp: Bool
+    /**
+     * Indicates the value to be written
+     *
+     * @relation value: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var value: Array<Byte>
+    /**
+     * The UUID of a CharacteristicWriteRequest instance
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The UUID of the service to which the characteristic belongs
+     *
+     * @relation serviceUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceUuid: String
+
+    init(
+        deviceId: String,
+        transId: Int32,
+        offset: Int32,
+        isPrepared: Bool,
+        needRsp: Bool,
+        value: Array<Byte>,
+        characteristicUuid: String,
+        serviceUuid: String
+    ) {
+        this.deviceId = deviceId
+        this.transId = transId
+        this.offset = offset
+        this.isPrepared = isPrepared
+        this.needRsp = needRsp
+        this.value = value
+        this.characteristicUuid = characteristicUuid
+        this.serviceUuid = serviceUuid
+    }
 }
 
 @C
@@ -909,8 +1277,7 @@ struct NativeDescriptorReadRequest {
 /**
  * Describes the parameters of the Gatt client's descriptor read request.
  *
- * @typedef DescriptorReadRequest
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface DescriptorReadRequest
  */
 @!APILevel[
     21,
@@ -918,49 +1285,88 @@ struct NativeDescriptorReadRequest {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class DescriptorReadRequest {
+    /**
+     * Indicates the address of the client that initiates the read request
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public DescriptorReadRequest(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let transId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let offset: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let descriptorUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let serviceUuid: String
-    ) {}
+    public var deviceId: String
+    /**
+     * The Id of the read request
+     *
+     * @relation transId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var transId: Int32
+    /**
+     * Indicates the byte offset of the start position for reading characteristic value
+     *
+     * @relation offset: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var offset: Int32
+    /**
+     * The UUID of a DescriptorReadRequest instance
+     *
+     * @relation descriptorUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var descriptorUuid: String
+    /**
+     * The UUID of the characteristic to which the descriptor belongs
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The UUID of the service to which the descriptor belongs
+     *
+     * @relation serviceUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceUuid: String
+
+    init(
+        deviceId: String,
+        transId: Int32,
+        offset: Int32,
+        descriptorUuid: String,
+        characteristicUuid: String,
+        serviceUuid: String
+    ) {
+        this.deviceId = deviceId
+        this.transId = transId
+        this.offset = offset
+        this.descriptorUuid = descriptorUuid
+        this.characteristicUuid = characteristicUuid
+        this.serviceUuid = serviceUuid
+    }
 }
 
 @C
@@ -997,8 +1403,7 @@ struct NativeDescriptorWriteRequest {
 /**
  * Describes the parameters of the Gatt client's characteristic write request.
  *
- * @typedef DescriptorWriteRequest
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface DescriptorWriteRequest
  */
 @!APILevel[
     21,
@@ -1006,67 +1411,127 @@ struct NativeDescriptorWriteRequest {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class DescriptorWriteRequest {
+    /**
+     * Indicates the address of the client that initiates the write request
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public DescriptorWriteRequest(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let transId: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let offset: Int32,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let isPrepared: Bool,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let needRsp: Bool,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let value: Array<Byte>,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let descriptorUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let characteristicUuid: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let serviceUuid: String
-    ) {}
+    public var deviceId: String
+    /**
+     * The Id of the write request
+     *
+     * @relation transId: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var transId: Int32
+    /**
+     * Indicates the byte offset of the start position for writing characteristic value
+     *
+     * @relation offset: number
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var offset: Int32
+    /**
+     * Whether this request should be pending for later operation
+     *
+     * @relation isPrepared: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var isPrepared: Bool
+    /**
+     * Whether the remote client need a response
+     *
+     * @relation needRsp: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var needRsp: Bool
+    /**
+     * Indicates the value to be written
+     *
+     * @relation value: ArrayBuffer
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var value: Array<Byte>
+    /**
+     * The UUID of a DescriptorWriteRequest instance
+     *
+     * @relation descriptorUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var descriptorUuid: String
+    /**
+     * The UUID of the characteristic to which the descriptor belongs
+     *
+     * @relation characteristicUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var characteristicUuid: String
+    /**
+     * The UUID of the service to which the descriptor belongs
+     *
+     * @relation serviceUuid: string
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var serviceUuid: String
+
+    init(
+        deviceId: String,
+        transId: Int32,
+        offset: Int32,
+        isPrepared: Bool,
+        needRsp: Bool,
+        value: Array<Byte>,
+        descriptorUuid: String,
+        characteristicUuid: String,
+        serviceUuid: String
+    ) {
+        this.deviceId = deviceId
+        this.transId = transId
+        this.offset = offset
+        this.isPrepared = isPrepared
+        this.needRsp = needRsp
+        this.value = value
+        this.descriptorUuid = descriptorUuid
+        this.characteristicUuid = characteristicUuid
+        this.serviceUuid = serviceUuid
+    }
 }
 
 @C
@@ -1088,8 +1553,7 @@ struct NativeBLEConnectionChangeState {
 /**
  * Describes the Gatt profile connection state.
  *
- * @typedef BLEConnectionChangeState
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface BLEConnectionChangeState
  */
 @!APILevel[
     21,
@@ -1097,129 +1561,323 @@ struct NativeBLEConnectionChangeState {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class BLEConnectionChangeState {
+    /**
+     * Indicates the peer device address
+     *
+     * @relation deviceId: string
+     */
     @!APILevel[
         21,
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public BLEConnectionChangeState(
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public let deviceId: String,
-        @!APILevel[
-            21,
-            stagemodelonly: true,
-            syscap: "SystemCapability.Communication.Bluetooth.Core"
-        ]
-        public var state: ProfileConnectionState
-    ) {}
+    public var deviceId: String
+    /**
+     * Connection state of the Gatt profile
+     *
+     * @relation state: ProfileConnectionState
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var state: ProfileConnectionState
+
+    init(
+        deviceId: String,
+        state: ProfileConnectionState
+    ) {
+        this.deviceId = deviceId
+        this.state = state
+    }
 }
 
+/**
+ * Bluetooth Ble GattServer CallbackType.
+ */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     21,
-    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    permission: "ohos.ACCESS_BLUETOOTH",
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattServerCallbackType {
+    /**
+     * Characteristic Read
+     */
     @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    CHARACTERISTIC_READ
-    | @!APILevel[
+    CharacteristicRead
+    | 
+    /**
+     * Characteristic Write
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    CHARACTERISTIC_WRITE
-    | @!APILevel[
+    CharacteristicWrite
+    | 
+    /**
+     * Descriptor Read
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    DESCRIPTOR_READ
-    | @!APILevel[
+    DescriptorRead
+    | 
+    /**
+     * Descriptor Write
+     */    
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    DESCRIPTOR_WRITE
-    | @!APILevel[
+    DescriptorWrite
+    | 
+    /**
+     * Connection State Change
+     */    
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    CONNECTION_STATE_CHANGE
-    | @!APILevel[
+    ConnectionStateChange
+    | 
+    /**
+     * Ble Mtu Change
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    BLE_MTU_CHANGE
+    ServerBleMtuChange
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case CHARACTERISTIC_READ => 0
-            case CHARACTERISTIC_WRITE => 1
-            case DESCRIPTOR_READ => 2
-            case DESCRIPTOR_WRITE => 3
-            case CONNECTION_STATE_CHANGE => 4
-            case BLE_MTU_CHANGE => 5
+            case CharacteristicRead => 0
+            case CharacteristicWrite => 1
+            case DescriptorRead => 2
+            case DescriptorWrite => 3
+            case ConnectionStateChange => 4
+            case ServerBleMtuChange => 5
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
     }
 }
 
+/**
+ * Bluetooth Ble GattClientDevice CallbackType.
+ */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     21,
-    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    permission: "ohos.ACCESS_BLUETOOTH",
     stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattClientDeviceCallbackType {
+    /**
+     * Ble Characteristic Change
+     */
     @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    BLE_CHARACTERISTIC_CHANGE
-    | @!APILevel[
+    BleCharacteristicChange
+    | 
+    /**
+     * BleConnection State Change
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    BLE_CONNECTION_STATE_CHANGE
-    | @!APILevel[
+    BleConnectionStateChange
+    | 
+    /**
+     * Ble Mtu Change
+     */
+    @!APILevel[
         21,
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        permission: "ohos.ACCESS_BLUETOOTH",
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    BLE_MTU_CHANGE
+    ClientBleMtuChange
     | ...
 
+    /**
+     * @throws IllegalArgumentException - Value conversion failed.
+     */
     func getValue(): Int32 {
         match (this) {
-            case BLE_CHARACTERISTIC_CHANGE => 0
-            case BLE_CONNECTION_STATE_CHANGE => 1
-            case BLE_MTU_CHANGE => 2
+            case BleCharacteristicChange => 0
+            case BleConnectionStateChange => 1
+            case ClientBleMtuChange => 2
             case _ => throw IllegalArgumentException("The type is not supported.")
         }
+    }
+}
+
+/**
+ * Describes the permission of a att attribute item.
+ *
+ * @relation interface GattPermissions
+ */
+@Derive[Equatable]
+@!APILevel[
+    21,
+    stagemodelonly: true,
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
+public class GattPermissions {
+    /**
+     * The attribute field has the read permission.
+     *
+     * @relation read?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var read: Bool
+
+    /**
+     * The attribute field has the encrypted read permission.
+     *
+     * @relation readEncrypted?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var readEncrypted: Bool
+
+    /**
+     * The attribute field has the read permission for encryption authentication.
+     *
+     * @relation readEncryptedMitm?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var readEncryptedMitm: Bool
+
+    /**
+     * The attribute field has the write permission.
+     *
+     * @relation write?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var write: Bool
+
+    /**
+     * The attribute field has the encrypted write permission.
+     *
+     * @relation writeEncrypted?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var writeEncrypted: Bool
+
+    /**
+     * The attribute field has the write permission for encryption authentication.
+     *
+     * @relation writeEncryptedMitm?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var writeEncryptedMitm: Bool
+
+    /**
+     * The attribute field has the signed write permission.
+     *
+     * @relation writeSigned?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var writeSigned: Bool
+
+    /**
+     * The attribute field has the write permission for signature authentication.
+     *
+     * @relation writeSignedMitm?: boolean
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public var writeSignedMitm: Bool
+
+    /**
+     * GattPermissions constructor.
+     */
+    @!APILevel[
+        21,
+        stagemodelonly: true,
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init (
+        read!: Bool = true,
+        readEncrypted!: Bool = false,
+        readEncryptedMitm!: Bool = false,
+        write!: Bool = true,
+        writeEncrypted!: Bool = false,
+        writeEncryptedMitm!: Bool = false,
+        writeSigned!: Bool = false,
+        writeSignedMitm!: Bool = false
+    ) {
+        this.read = read
+        this.readEncrypted = readEncrypted
+        this.readEncryptedMitm = readEncryptedMitm
+        this.write = write
+        this.writeEncrypted = writeEncrypted
+        this.writeEncryptedMitm = writeEncryptedMitm
+        this.writeSigned = writeSigned
+        this.writeSignedMitm = writeSignedMitm
     }
 }

@@ -15,18 +15,18 @@
 
 package ohos.bluetooth.ble
 
-import std.sync.AtomicBool
-import ohos.labels.*
-import ohos.base.*
+import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg }
+import ohos.business_exception.{ BusinessException, AsyncCallback, ERR_PARAMETER_ERROR }
+import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
+import ohos.ffi.{ Callback1Param, RemoteDataLite, RetDataI32, SUCCESS_CODE, cArr2cjArr, releaseFFIData }
+import ohos.labels.APILevel
+
 import std.collection.{ArrayList, HashMap}
-import ohos.ffi.*
-import ohos.bluetooth.*
 
 /**
- * Manages GATT client. Before calling an Gatt client method, you must use {@link createGattClientDevice} to create an GattClientDevice instance.
+ * Manages GATT client. Before calling an Gatt client method, you must use createGattClientDevice to create an GattClientDevice instance.
  *
- * @typedef GattClientDevice
- * @syscap SystemCapability.Communication.Bluetooth.Core
+ * @relation interface GattClientDevice
  */
 @!APILevel[
     21,
@@ -37,9 +37,9 @@ public class GattClientDevice <: RemoteDataLite {
     private let callbackMap = HashMap<BluetoothBleGattClientDeviceCallbackType, ArrayList<CallbackObject>>()
     private let registerMap = HashMap<BluetoothBleGattClientDeviceCallbackType, Bool>(
         [
-            (BLE_CHARACTERISTIC_CHANGE, false),
-            (BLE_CONNECTION_STATE_CHANGE, false),
-            (BLE_MTU_CHANGE, false)
+            (BleCharacteristicChange, false),
+            (BleConnectionStateChange, false),
+            (ClientBleMtuChange, false)
         ]
     )
 
@@ -53,15 +53,13 @@ public class GattClientDevice <: RemoteDataLite {
 
     /**
      * Connects to a BLE peripheral device.
-     * <p>The 'BLEConnectionStateChange' event is subscribed to return the connection state.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation connect(): void
      */
     @!APILevel[
         21,
@@ -74,21 +72,18 @@ public class GattClientDevice <: RemoteDataLite {
         unsafe {
             FfiBluetoothBleGattClientDeviceConnect(getID(), inout errorCode)
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Disconnects from or stops an ongoing connection to a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation disconnect(): void
      */
     @!APILevel[
         21,
@@ -101,22 +96,19 @@ public class GattClientDevice <: RemoteDataLite {
         unsafe {
             FfiBluetoothBleGattClientDeviceDisconnect(getID(), inout errorCode)
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Disables a BLE peripheral device.
-     * <p> This method unregisters the device and clears the registered callbacks and handles.
+     * This method unregisters the device and clears the registered callbacks and handles.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation close(): void
      */
     @!APILevel[
         21,
@@ -129,23 +121,18 @@ public class GattClientDevice <: RemoteDataLite {
         unsafe {
             FfiBluetoothBleGattClientDeviceClose(getID(), inout errorCode)
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Obtains the name of BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @returns { String } Returns a string representation of the name if obtained;
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter.Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation getDeviceName(): Promise<string>
      */
     @!APILevel[
         21,
@@ -162,27 +149,22 @@ public class GattClientDevice <: RemoteDataLite {
             try {
                 outName = name.toString()
             } finally {
-                name.free()
+                LibC.free(name)
             }
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
         return outName
     }
 
     /**
      * Starts discovering services.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @returns { Array<GattService> } Returns the list of services {@link GattService} of the BLE peripheral device.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation getServices(): Promise<Array<GattService>>
      */
     @!APILevel[
         21,
@@ -190,36 +172,37 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func getServices(): Array<GattService> {
-        var errorCode: Int32 = 0
-        let outServices: Array<GattService>
-        unsafe {
-            let nativeServices: CArrGattService = FfiBluetoothBleGattClientDeviceGetServices(getID(), inout errorCode)
-            outServices = cArr2cjArr<NativeGattService, GattService>(nativeServices.size, nativeServices.head) {
-                v: NativeGattService => v.toObject()
+    public func getServices(callback: AsyncCallback<Array<GattService>>): Unit {
+        spawn {
+            var errorCode: Int32 = 0
+            let outServices: Array<GattService>
+            unsafe {
+                let nativeServices: CArrGattService = FfiBluetoothBleGattClientDeviceGetServices(getID(), inout errorCode)
+                outServices = cArr2cjArr<NativeGattService, GattService>(nativeServices.size, nativeServices.head) {
+                    v: NativeGattService => v.toObject()
+                }
+                nativeServices.free()
             }
-            nativeServices.free()
+            if (errorCode != SUCCESS_CODE) {
+                let error = BusinessException(errorCode, getErrorMsg(errorCode))
+                callback(error, None)
+            } else {
+                callback(None, outServices)
+            }
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
-        return outServices
+        return
     }
 
     /**
      * Reads the characteristic of a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to read.
-     * @param { (?BusinessException, ?BLECharacteristic) -> Unit } callback - Callback invoked to return the characteristic value read.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2901000 - Read forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation readCharacteristicValue(characteristic: BLECharacteristic): Promise<BLECharacteristic>
      */
     @!APILevel[
         21,
@@ -229,7 +212,7 @@ public class GattClientDevice <: RemoteDataLite {
     ]
     public func readCharacteristicValue(
         characteristic: BLECharacteristic,
-        callback: (?BusinessException, ?BLECharacteristic) -> Unit
+        callback: AsyncCallback<BLECharacteristic>
     ): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
@@ -249,25 +232,25 @@ public class GattClientDevice <: RemoteDataLite {
                 inout errorCode)
             inputCharacteristic.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Reads the descriptor of a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLEDescriptor } descriptor - Indicates the descriptor to read.
-     * @param { (?BusinessException, ?BLEDescriptor) -> Unit } callback - Callback invoked to return the descriptor read.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2901000 - Read forbidden.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not complete.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { BusinessException } 2901000 - Read forbidden.
+     * @throws { BusinessException } 2901003 - The connection is not established.
+     * @throws { BusinessException } 2901004 - The connection is congested.
+     * @throws { BusinessException } 2901005 - The connection is not encrypted.
+     * @throws { BusinessException } 2901006 - The connection is not authenticated.
+     * @throws { BusinessException } 2901007 - The connection is not authorized.
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation readDescriptorValue(descriptor: BLEDescriptor): Promise<BLEDescriptor>
      */
     @!APILevel[
         21,
@@ -275,7 +258,7 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func readDescriptorValue(descriptor: BLEDescriptor, callback: (?BusinessException, ?BLEDescriptor) -> Unit): Unit {
+    public func readDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<BLEDescriptor>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             ret: RetNativeBLEDescriptor =>
@@ -294,26 +277,19 @@ public class GattClientDevice <: RemoteDataLite {
                 inout errorCode)
             inputDescriptor.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Writes the characteristic of a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to write.
-     * @param { GattWriteType } writeType - Write type of the characteristic.
-     * @param { (?BusinessException) -> Unit } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2901001 - Write forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType): Promise<void>
      */
     @!APILevel[
         21,
@@ -322,12 +298,14 @@ public class GattClientDevice <: RemoteDataLite {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType,
-        callback: (?BusinessException) -> Unit): Unit {
+        callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
                 let error = BusinessException(regiestError, getErrorMsg(regiestError))
-                callback(error)
+                callback(error, None)
+            } else {
+                callback(None, ())
             }
         }
         let registerCall = Callback1Param<Int32, Unit>(wrapper)
@@ -337,25 +315,19 @@ public class GattClientDevice <: RemoteDataLite {
                 registerCall.getID(), inout errorCode)
             inputCharacteristic.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Writes the descriptor of a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLEDescriptor } descriptor - Indicates the descriptor to write.
-     * @param { (?BusinessException) -> Unit } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2901001 - Write forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation writeDescriptorValue(descriptor: BLEDescriptor): Promise<void>
      */
     @!APILevel[
         21,
@@ -363,12 +335,14 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func writeDescriptorValue(descriptor: BLEDescriptor, callback: (?BusinessException) -> Unit): Unit {
+    public func writeDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
                 let error = BusinessException(regiestError, getErrorMsg(regiestError))
-                callback(error)
+                callback(error, None)
+            } else {
+                callback(None, ())
             }
         }
         let registerCall = Callback1Param<Int32, Unit>(wrapper)
@@ -378,21 +352,17 @@ public class GattClientDevice <: RemoteDataLite {
                 inout errorCode)
             inputDescriptor.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Get the RSSI value of this BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { (?BusinessException, ?Int32) -> Unit } callback - Callback invoked to return the RSSI, in dBm.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation getRssiValue(): Promise<number>
      */
     @!APILevel[
         21,
@@ -400,7 +370,7 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func getRssiValue(callback: (?BusinessException, ?Int32) -> Unit): Unit {
+    public func getRssiValue(callback: AsyncCallback<Int32>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             retRssi: RetDataI32 => if (retRssi.code != SUCCESS_CODE) {
@@ -412,23 +382,18 @@ public class GattClientDevice <: RemoteDataLite {
         }
         let registerCall = Callback1Param<RetDataI32, Unit>(wrapper)
         unsafe { FfiBluetoothBleGattClientDeviceGetRssiValue(getID(), registerCall.getID(), inout errorCode) }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Set the mtu size of a BLE peripheral device.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { Int32 } mtu - The maximum transmission unit.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation setBLEMtuSize(mtu: number): void
      */
     @!APILevel[
         21,
@@ -441,25 +406,18 @@ public class GattClientDevice <: RemoteDataLite {
         unsafe {
             FfiBluetoothBleGattClientDeviceSetBLEMtuSize(getID(), mtu, inout errorCode)
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Enables or disables indication of a characteristic when value changed.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
-     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
-     * that indication is enabled, and the value {@code false} indicates that indication is disabled.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
         21,
@@ -467,33 +425,35 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: Bool): Unit {
+    public func setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
+        let wrapper = {
+            regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
+                let error = BusinessException(regiestError, getErrorMsg(regiestError))
+                callback(error, None)
+            } else {
+                callback(None, ())
+            }
+        }
+        let registerCall = Callback1Param<Int32, Unit>(wrapper)
         unsafe {
             let inputCharacteristic: NativeBLECharacteristic = characteristic.toNative()
             FfiBluetoothBleGattClientDeviceSetCharacteristicChangeNotification(getID(), inputCharacteristic, enable,
                 inout errorCode)
             inputCharacteristic.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Enables or disables indication of a characteristic when value changed.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
-     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
-     * that indication is enabled, and the value {@code false} indicates that indication is disabled.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
         21,
@@ -501,31 +461,33 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: Bool): Unit {
+    public func setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
+        let wrapper = {
+            regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
+                let error = BusinessException(regiestError, getErrorMsg(regiestError))
+                callback(error, None)
+            } else {
+                callback(None, ())
+            }
+        }
+        let registerCall = Callback1Param<Int32, Unit>(wrapper)
         unsafe {
             let inputCharacteristic: NativeBLECharacteristic = characteristic.toNative()
             FfiBluetoothBleGattClientDeviceSetCharacteristicChangeIndication(getID(), inputCharacteristic, enable,
                 inout errorCode)
             inputCharacteristic.free()
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     /**
      * Subscribe characteristic value changed event.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BluetoothBleGattClientDeviceCallbackType } type - Type of the characteristic value changed event to listen for.
-     * @param { Callback1Argument<BLECharacteristic>} callback - Callback used to listen for the characteristic value changed event.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
-     * @since 12
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation on(type: 'BLECharacteristicChange', callback: Callback<BLECharacteristic>): void
      */
     @!APILevel[
         21,
@@ -533,12 +495,12 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(`type`: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BLECharacteristic>): Unit {
-        if (`type` != BLE_CHARACTERISTIC_CHANGE) {
-            BLUETOOTH_LOG.error("Invalid name ${`type`}, valid name is BLE_CHARACTERISTIC_CHANGE")
+    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BLECharacteristic>): Unit {
+        if (eventType != BleCharacteristicChange) {
+            BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is BleCharacteristicChange")
             throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
         }
-        commonSubscribe1Arg(`type`, callback) {
+        commonSubscribe1Arg(eventType, callback) {
             characteristic: NativeBLECharacteristic => characteristic.toObject()
         }
         return
@@ -547,14 +509,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Subscribe client connection state changed event.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BluetoothBleGattClientDeviceCallbackType } type - Type of the connection state changed event to listen for.
-     * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation on(type: 'BLEConnectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
         21,
@@ -563,14 +519,13 @@ public class GattClientDevice <: RemoteDataLite {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func on(
-        `type`: BluetoothBleGattClientDeviceCallbackType,
+        eventType: BluetoothBleGattClientDeviceCallbackType,
         callback: Callback1Argument<BLEConnectionChangeState>
     ): Unit {
-        if (`type` != BLE_CONNECTION_STATE_CHANGE) {
-            BLUETOOTH_LOG.error("Invalid name ${`type`}, valid name is BLE_CONNECTION_STATE_CHANGE")
-            throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
+        if (eventType != BleConnectionStateChange) {
+            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
         }
-        commonSubscribe1Arg(`type`, callback) {
+        commonSubscribe1Arg(eventType, callback) {
             state: NativeBLEConnectionChangeState => state.toObject()
         }
         return
@@ -579,14 +534,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Subscribe mtu changed event.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BluetoothBleGattClientDeviceCallbackType } type - Type of the mtu changed event to listen for.
-     * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
         21,
@@ -594,12 +543,11 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func on(`type`: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
-        if (`type` != BluetoothBleGattClientDeviceCallbackType.BLE_MTU_CHANGE) {
-            BLUETOOTH_LOG.error("Invalid name ${`type`}, valid name is BLE_MTU_CHANGE")
-            throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
+    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
+        if (eventType != ClientBleMtuChange) {
+            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
         }
-        commonSubscribe1Arg(`type`, callback) {
+        commonSubscribe1Arg(eventType, callback) {
             i: Int32 => i
         }
         return
@@ -608,14 +556,9 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Unsubscribe mtu changed event.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
-     * @param { BluetoothBleGattClientDeviceCallbackType } type - Type of the mtu changed event to listen for.
-     * @param { CallbackObject} callback - Callback event.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 401 - Invalid parameter. Possible causes: 1. Mandatory parameters are left unspecified.
-     * <br>2. Incorrect parameter types. 3. Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @syscap SystemCapability.Communication.Bluetooth.Core
+     * @relation off(type: 'BLECharacteristicChange', callback?: Callback<BLECharacteristic>): void
+     * @relation off(type: 'BLEConnectionStateChange', callback?: Callback<BLEConnectionChangeState>): void
+     * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
         21,
@@ -623,16 +566,16 @@ public class GattClientDevice <: RemoteDataLite {
         stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func off(`type`: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${`type`}")
-        if (!callbackMap.contains(`type`)) {
+    public func off(eventType: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
+        BLUETOOTH_LOG.debug("unsubscribe ${eventType}")
+        if (!callbackMap.contains(eventType)) {
             return
         }
         if (let Some(v) <- callback) {
-            findCallbackObject(`type`, v, remove: true)
+            findCallbackObject(eventType, v, remove: true)
             return
         }
-        callbackMap[`type`].clear()
+        callbackMap[eventType].clear()
         return
     }
 
@@ -656,7 +599,7 @@ public class GattClientDevice <: RemoteDataLite {
             let cjType = ctor(ctype)
             let callbackList = callbackMap.get(callbackType) ?? ArrayList<CallbackObject>()
             for (caller in callbackList) {
-                (caller as Callback1Argument<T>)?.invoke(cjType)
+                (caller as Callback1Argument<T>)?.invoke(None, cjType)
             }
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
@@ -668,9 +611,7 @@ public class GattClientDevice <: RemoteDataLite {
         unsafe {
             FfiBluetoothBleGattClientDeviceOn(getID(), callbackType.getValue(), id, inout errorCode)
         }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
+        checkRet(errorCode)
     }
 
     private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleGattClientDeviceCallbackType,

@@ -12,9 +12,9 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//build/cangjie/cjc.gni")
+import("//build/templates/cangjie/cjc.gni")
 
-ohos_cj_library("ohos.bluetooth.constant") {
+ohos_cangjie_shared_library("ohos.bluetooth.constant") {
   sources = [ "constant.cj" ]
 
   cj_external_deps = [

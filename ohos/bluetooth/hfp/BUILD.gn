@@ -12,20 +12,25 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//build/cangjie/cjc.gni")
+import("//build/templates/cangjie/cjc.gni")
 
-ohos_cj_library("ohos.bluetooth.baseProfile") {
-  sources = [ "base_profile.cj" ]
+ohos_cangjie_shared_library("ohos.bluetooth.hfp") {
+  sources = [ "hands_free_audio_gateway_profile.cj", ]
 
-  external_deps = []
+  external_deps = [ "bluetooth:cj_bluetooth_hfp_ffi" ]
 
   cj_external_deps = [
-    "arkui_cangjie_wrapper:ohos.base",
+    "cangjie_ark_interop:ohos.business_exception",
+    "cangjie_ark_interop:ohos.callback_invoke",
+    "cangjie_ark_interop:ohos.ffi",
     "cangjie_ark_interop:ohos.labels",
+    "hiviewdfx_cangjie_wrapper:ohos.hilog",
   ]
 
   cj_deps = [
+    "../:ohos.bluetooth",
     "../constant:ohos.bluetooth.constant",
+    "../base_profile:ohos.bluetooth.base_profile",
   ]
 
   subsystem_name = "communication"
