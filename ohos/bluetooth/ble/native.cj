@@ -70,6 +70,12 @@ foreign {
     func FfiBluetoothBleGattClientDeviceSetCharacteristicChangeIndication(id: Int64,
         characteristic: NativeBLECharacteristic, enable: Bool, errCode: CPointer<Int32>): Unit
 
+    func FfiBluetoothBleGattClientDeviceSetCharacteristicChangeNotificationV2(id: Int64,
+        characteristic: NativeBLECharacteristic, enable: Bool, callback: Int64, errCode: CPointer<Int32>): Unit
+
+    func FfiBluetoothBleGattClientDeviceSetCharacteristicChangeIndicationV2(id: Int64,
+        characteristic: NativeBLECharacteristic, enable: Bool, callback: Int64, errCode: CPointer<Int32>): Unit
+
     func FfiBluetoothBleGattClientDeviceOn(id: Int64, callbackType: Int32, callbackId: Int64, errCode: CPointer<Int32>): Unit
 
     // GattServer ffi function
