@@ -23,8 +23,7 @@ import ohos.ffi.*
  * @relation interface WifiP2PConfig
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
 public class WifiP2PConfig {
@@ -33,8 +32,7 @@ public class WifiP2PConfig {
      * @relation deviceAddress: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let deviceAddress: String
@@ -45,8 +43,7 @@ public class WifiP2PConfig {
      * @relation netId: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let netId: Int32
@@ -56,8 +53,7 @@ public class WifiP2PConfig {
      * @relation passphrase: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let passphrase: String
@@ -67,8 +63,7 @@ public class WifiP2PConfig {
      * @relation groupName: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let groupName: String
@@ -78,8 +73,7 @@ public class WifiP2PConfig {
      * @relation goBand: GroupOwnerBand
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let goBand: GroupOwnerBand
@@ -89,8 +83,7 @@ public class WifiP2PConfig {
      * @relation deviceAddressType?: DeviceAddressType
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public let deviceAddressType: DeviceAddressType
@@ -99,8 +92,7 @@ public class WifiP2PConfig {
      * WifiP2PConfig constructor
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public init(

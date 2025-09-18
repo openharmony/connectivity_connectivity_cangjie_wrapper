@@ -29,8 +29,7 @@ import std.collection.{ArrayList, HashMap}
  * @relation function createGattServer(): GattServer
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createGattServer(): GattServer {
@@ -49,8 +48,7 @@ public func createGattServer(): GattServer {
  * @relation function createGattClientDevice(deviceId: string): GattClientDevice
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createGattClientDevice(deviceId: String): GattClientDevice {
@@ -79,9 +77,8 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
  * @relation function startBLEScan(filters: Array<ScanFilter>, options?: ScanOptions): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = None): Unit {
@@ -121,9 +118,8 @@ public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = No
  * @relation function stopBLEScan(): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func stopBLEScan(): Unit {
@@ -147,9 +143,8 @@ public func stopBLEScan(): Unit {
  * @relation function startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, advResponse?: AdvertiseData): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, advResponse!: ?AdvertiseData = None): Unit {
@@ -185,9 +180,8 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
  * @relation function stopAdvertising(): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func stopAdvertising(): Unit {
@@ -210,9 +204,8 @@ public func stopAdvertising(): Unit {
  * @relation function startAdvertising(advertisingParams: AdvertisingParams): Promise<number>
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
@@ -244,9 +237,8 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
  * @relation function stopAdvertising(advertisingId: number): Promise<void>
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func stopAdvertising(advertisingId: UInt32): Unit {
@@ -318,9 +310,8 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
  * @relation function on(type: 'advertisingStateChange', callback: Callback<AdvertisingStateChangeInfo>): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<AdvertisingStateChangeInfo>): Unit {
@@ -341,9 +332,8 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * @relation function on(type: 'BLEDeviceFind', callback: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<Array<ScanResult>>): Unit {
@@ -369,9 +359,8 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * @relation function off(type: 'BLEDeviceFind', callback?: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
-    21,
+    22,
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    stagemodelonly: true,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func off(eventType: BluetoothBleCallbackType, callback!: ?CallbackObject = None): Unit {

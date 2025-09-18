@@ -29,8 +29,7 @@ import std.collection.{ArrayList, HashMap}
  * @relation interface GattClientDevice
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattClientDevice <: RemoteDataLite {
@@ -62,9 +61,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation connect(): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func connect(): Unit {
@@ -86,9 +84,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation disconnect(): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func disconnect(): Unit {
@@ -111,9 +108,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation close(): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func close(): Unit {
@@ -135,9 +131,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getDeviceName(): Promise<string>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func getDeviceName(): String {
@@ -167,9 +162,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getServices(): Promise<Array<GattService>>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func getServices(callback: AsyncCallback<Array<GattService>>): Unit {
@@ -205,9 +199,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation readCharacteristicValue(characteristic: BLECharacteristic): Promise<BLECharacteristic>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func readCharacteristicValue(
@@ -253,9 +246,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation readDescriptorValue(descriptor: BLEDescriptor): Promise<BLEDescriptor>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func readDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<BLEDescriptor>): Unit {
@@ -292,9 +284,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType): Promise<void>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType,
@@ -330,9 +321,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation writeDescriptorValue(descriptor: BLEDescriptor): Promise<void>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func writeDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<Unit>): Unit {
@@ -365,9 +355,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getRssiValue(): Promise<number>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func getRssiValue(callback: AsyncCallback<Int32>): Unit {
@@ -396,9 +385,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setBLEMtuSize(mtu: number): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func setBLEMtuSize(mtu: Int32): Unit {
@@ -420,9 +408,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
@@ -456,9 +443,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
@@ -490,9 +476,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLECharacteristicChange', callback: Callback<BLECharacteristic>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BLECharacteristic>): Unit {
@@ -513,9 +498,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLEConnectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func on(
@@ -538,9 +522,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
@@ -561,9 +544,8 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func off(eventType: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
