@@ -23,8 +23,7 @@ import ohos.labels.*
  * @relation interface WifiScanInfo
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public class WifiScanInfo {
@@ -33,8 +32,7 @@ public class WifiScanInfo {
      * @relation ssid: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let ssid: String
@@ -44,8 +42,7 @@ public class WifiScanInfo {
      * @relation bssid: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let bssid: String
@@ -55,8 +52,7 @@ public class WifiScanInfo {
      * @relation bssidType: DeviceAddressType
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let bssidType: DeviceAddressType
@@ -66,8 +62,7 @@ public class WifiScanInfo {
      * @relation capabilities: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let capabilities: String
@@ -77,8 +72,7 @@ public class WifiScanInfo {
      * @relation securityType: WifiSecurityType
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let securityType: WifiSecurityType
@@ -88,8 +82,7 @@ public class WifiScanInfo {
      * @relation rssi: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let rssi: Int32
@@ -99,8 +92,7 @@ public class WifiScanInfo {
      * @relation band: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let band: Int32
@@ -110,8 +102,7 @@ public class WifiScanInfo {
      * @relation frequency: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let frequency: Int32
@@ -121,8 +112,7 @@ public class WifiScanInfo {
      * @relation channelWidth: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let channelWidth: Int32
@@ -132,8 +122,7 @@ public class WifiScanInfo {
      * @relation centerFrequency0: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let centerFrequency0: Int32
@@ -143,8 +132,7 @@ public class WifiScanInfo {
      * @relation centerFrequency1: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let centerFrequency1: Int32
@@ -154,8 +142,7 @@ public class WifiScanInfo {
      * @relation infoElems: Array<WifiInfoElem>
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let infoElems: Array<WifiInfoElem>
@@ -165,8 +152,7 @@ public class WifiScanInfo {
      * @relation timestamp: number
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let timestamp: Int64
@@ -176,8 +162,7 @@ public class WifiScanInfo {
      * @relation supportedWifiCategory: WifiCategory
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let supportedWifiCategory: WifiCategory
@@ -187,8 +172,7 @@ public class WifiScanInfo {
      * @relation isHiLinkNetwork: boolean
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let isHiLinkNetwork: Bool

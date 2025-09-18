@@ -42,8 +42,7 @@ const SYSCAP_WIFI_P2P = 2800000i32
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.Core"
 ]
 public enum DeviceAddressType {
@@ -52,8 +51,7 @@ public enum DeviceAddressType {
      * @relation RANDOM_DEVICE_ADDRESS = 0
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     RandomDeviceAddress
@@ -63,8 +61,7 @@ public enum DeviceAddressType {
      * @relation REAL_DEVICE_ADDRESS = 1
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     RealDeviceAddress
@@ -107,8 +104,7 @@ public enum DeviceAddressType {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.Core"
 ]
 public enum WifiSecurityType {
@@ -117,8 +113,7 @@ public enum WifiSecurityType {
      * @relation WIFI_SEC_TYPE_INVALID = 0
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeInvalid
@@ -128,8 +123,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_OPEN = 1
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeOpen
@@ -139,8 +133,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_WEP = 2
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeWep
@@ -150,8 +143,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_PSK = 3
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypePsk
@@ -161,8 +153,7 @@ public enum WifiSecurityType {
         * @relation WIFI_SEC_TYPE_SAE = 4
         */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeSae
@@ -172,8 +163,7 @@ public enum WifiSecurityType {
         * @relation WIFI_SEC_TYPE_EAP = 5
         */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeEap
@@ -183,8 +173,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_EAP_SUITE_B = 6
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeEapSuiteB
@@ -194,8 +183,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_OWE = 7
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeOwe
@@ -205,8 +193,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_WAPI_CERT = 8
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeWapiCert
@@ -216,8 +203,7 @@ public enum WifiSecurityType {
          * @relation WIFI_SEC_TYPE_WAPI_PSK = 9
          */
         @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeWapiPsk
@@ -268,8 +254,7 @@ public enum WifiSecurityType {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public enum WifiCategory {
@@ -278,8 +263,7 @@ public enum WifiCategory {
      * @relation DEFAULT = 1
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     Default
@@ -289,8 +273,7 @@ public enum WifiCategory {
      * @relation WIFI6 = 2
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     Wifi6
@@ -300,8 +283,7 @@ public enum WifiCategory {
      * @relation WIFI6_PLUS = 3
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     Wifi6Plus
@@ -338,8 +320,7 @@ public enum WifiCategory {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
 public enum GroupOwnerBand {
@@ -348,8 +329,7 @@ public enum GroupOwnerBand {
      * @relation GO_BAND_AUTO  = 0
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     GoBandAuto
@@ -359,8 +339,7 @@ public enum GroupOwnerBand {
      * @relation GO_BAND_2GHZ  = 1
      */
      @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     GoBand2GHz
@@ -370,8 +349,7 @@ public enum GroupOwnerBand {
      * @relation GO_BAND_5GHZ  = 2
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     GoBand5GHz

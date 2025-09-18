@@ -28,8 +28,7 @@ import std.deriving.Derive
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum DisconnectCause {
@@ -39,8 +38,7 @@ public enum DisconnectCause {
      * @relation USER_DISCONNECT = 0
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     UserDisconnect
@@ -51,8 +49,7 @@ public enum DisconnectCause {
      * @relation CONNECT_FROM_KEYBOARD = 1
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromKeyboard
@@ -63,8 +60,7 @@ public enum DisconnectCause {
      * @relation CONNECT_FROM_MOUSE = 2
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromMouse
@@ -75,8 +71,7 @@ public enum DisconnectCause {
      * @relation CONNECT_FROM_CAR = 3
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromCar
@@ -87,8 +82,7 @@ public enum DisconnectCause {
      * @relation TOO_MANY_CONNECTED_DEVICES = 4
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     TooManyConnectedDevices
@@ -99,8 +93,7 @@ public enum DisconnectCause {
      * @relation CONNECT_FAIL_INTERNAL = 5
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFailInternal
@@ -142,8 +135,7 @@ protected struct NativeStateChangeParam {
  * @relation export interface StateChangeParam
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class StateChangeParam {
@@ -153,8 +145,7 @@ public class StateChangeParam {
      * @relation deviceId: string
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var deviceId: String
@@ -164,8 +155,7 @@ public class StateChangeParam {
      * @relation state: ProfileConnectionState
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var state: ProfileConnectionState
@@ -175,8 +165,7 @@ public class StateChangeParam {
      * @relation cause: DisconnectCause
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var cause: DisconnectCause
@@ -198,8 +187,7 @@ public class StateChangeParam {
  * @relation interface BaseProfile
  */
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public interface BaseProfile {
@@ -215,9 +203,8 @@ public interface BaseProfile {
      * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     func getConnectedDevices(): Array<String>
@@ -235,9 +222,8 @@ public interface BaseProfile {
      * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     func getConnectionState(deviceId: String): ProfileConnectionState
@@ -251,9 +237,8 @@ public interface BaseProfile {
      * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit
@@ -267,9 +252,8 @@ public interface BaseProfile {
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit
@@ -283,9 +267,8 @@ public interface BaseProfile {
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        21,
+        22,
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        stagemodelonly: true,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     func off(eventType: ProfileCallbackType): Unit
@@ -296,8 +279,7 @@ public interface BaseProfile {
  */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
-    21,
-    stagemodelonly: true,
+    22,
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ProfileCallbackType {
@@ -305,8 +287,7 @@ public enum ProfileCallbackType {
      * Connection State Change.
      */
     @!APILevel[
-        21,
-        stagemodelonly: true,
+        22,
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectionStateChange | ...
