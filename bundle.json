@@ -26,7 +26,6 @@
         "ram": "1176KB",
         "deps": {
             "components": [
-                "arkui_cangjie_wrapper",
                 "cangjie_ark_interop",
                 "hiviewdfx_cangjie_wrapper",
                 "bluetooth",
@@ -45,10 +44,8 @@
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/wifi_manager:ohos.wifi_manager",
                 "//foundation/communication/connectivity_cangjie_wrapper/kit/ConnectivityKit:kit.ConnectivityKit"
             ],
-            "inner_kits": [
-            ],
-            "test": [
-            ]
+            "inner_kits": [],
+            "test": []
         }
     }
 }
