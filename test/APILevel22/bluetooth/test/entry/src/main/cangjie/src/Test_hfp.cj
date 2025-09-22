@@ -41,7 +41,7 @@ class Test_hfp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_hfp_getConnectedDevices() {
         try {
             let hdfProfile = createHfpAgProfile()
@@ -53,7 +53,7 @@ class Test_hfp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_hfp_getConnectionState_param_invalid() {
         try {
             let hdfProfile = createHfpAgProfile()
@@ -66,7 +66,7 @@ class Test_hfp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_hfp_getConnectionState_param_format_invalid() {
         try {
             let hdfProfile = createHfpAgProfile()
@@ -80,7 +80,7 @@ class Test_hfp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_hfp_on_off() {
         let changeCallBack = StateChangeCallbackHfp()
         let hdfProfile = createHfpAgProfile()
@@ -94,7 +94,7 @@ class Test_hfp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_hfp_on_off_with_callback() {
         let changeCallBack = StateChangeCallbackHfp()
         let hdfProfile = createHfpAgProfile()

@@ -41,7 +41,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_DisconnectCause() {
         let arr1: Array<DisconnectCause> = [
             UserDisconnect,
@@ -67,7 +67,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_getConnectedDevices() {
         try {
             let a2dpSrc = createA2dpSrcProfile()
@@ -80,7 +80,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_getConnectionState() {
         try {
             let a2dpSrc = createA2dpSrcProfile()
@@ -93,7 +93,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_getConnectionState_error_param() {
         try {
             let a2dpSrc = createA2dpSrcProfile()
@@ -106,7 +106,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_on_CONNECTION_STATE_CHANGE() {
         try {
             let a2dpSrc = createA2dpSrcProfile()
@@ -120,7 +120,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_off() {
         try {
             let a2dpSrc = createA2dpSrcProfile()
@@ -134,7 +134,7 @@ class Test_baseProfile {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BaseProfile_getPlayingState_param_error() {
         try {
             let a2dpSrc = createA2dpSrcProfile()

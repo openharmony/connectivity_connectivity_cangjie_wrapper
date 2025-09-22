@@ -43,7 +43,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_GattWriteType() {
         let arr1: Array<GattWriteType> = [
             Write,
@@ -61,7 +61,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_BluetoothBleGattServerCallbackType() {
         let arr1: Array<BluetoothBleGattServerCallbackType> = [
             CharacteristicRead,
@@ -88,7 +88,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_BluetoothBleGattClientDeviceCallbackType() {
         let arr1: Array<BluetoothBleGattClientDeviceCallbackType> = [
             BleCharacteristicChange,
@@ -109,7 +109,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_ScanDuty() {
         let arr1: Array<ScanDuty> = [
             ScanModeLowPower,
@@ -129,7 +129,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_MatchMode() {
         let arr1: Array<MatchMode> = [
             MatchModeAggressive,
@@ -147,7 +147,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_AdvertisingState() {
         let arr1: Array<AdvertisingState> = [
             Started,
@@ -169,7 +169,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_PhyType() {
         let arr1: Array<PhyType> = [
             PhyLe1M,
@@ -187,7 +187,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_BluetoothBleCallbackType() {
         let arr1: Array<BluetoothBleCallbackType> = [
             BluetoothBleCallbackType.AdvertisingStateChange,
@@ -206,7 +206,7 @@ class Test_ble {
     }
 
         @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_GattService() {
         let serviceUuid = "114514"
         let isPrimary = true
@@ -220,7 +220,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BLECharacteristic() {
         let serviceUuid: String = "11"
         let characteristicUuid: String = "11"
@@ -236,7 +236,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BLEDescriptor() {
         let serviceUuid = "11"
         let characteristicUuid = "11"
@@ -250,7 +250,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_NotifyCharacteristic() {
         let serviceUuid = "11"
         let characteristicUuid = "11"
@@ -264,7 +264,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ScanFilter() {
         let deviceId = "11"
         let name = "test"
@@ -294,7 +294,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ScanOptions() {
         let interval = 0i32
         let dutyMode = ScanModeLowPower
@@ -308,7 +308,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_AdvertiseSetting() {
         let interval = 1600u16
         let txPower = -7i8
@@ -320,7 +320,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_AdvertiseData() {
         let serviceUuids: Array<String> = []
         let manufactureData: Array<ManufactureData> = []
@@ -335,7 +335,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ManufactureData() {
         let manufactureId: UInt16 = 1u16
         let manufactureValue: Array<Byte> = []
@@ -345,7 +345,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ServiceData() {
         let serviceUuid: String = "11"
         let serviceValue: Array<Byte> = []
@@ -355,7 +355,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_AdvertisingParams() {
         let interval = 1600u16
         let txPower = -7i8
@@ -373,13 +373,13 @@ class Test_ble {
     // AdvertisingStateChangeInfo
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_GattProperties() {
         let gattProperties: GattProperties = GattProperties()
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ServerResponse() {
         let deviceId = "0A:1B:2C:3D:4D:5F"
         let transId = 1i32
@@ -395,7 +395,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_GattServer_On_BLE_MTU_CHANGE() {
         let gattServer: GattServer = createGattServer()
         let callBackType: BluetoothBleGattServerCallbackType = BluetoothBleGattServerCallbackType.ServerBleMtuChange
@@ -411,7 +411,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_createGattServer() {
         try {
             let gattServer: GattServer = createGattServer()
@@ -421,7 +421,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_createGattClientDevice() {
         try {
             // 参数是对端设备地址，地址无效，报错 401
@@ -433,7 +433,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_createGattClientDevice_param_format_error() {
         try {
             // 参数是对端设备地址，地址格式校验失败，报错401，有效的格式应为0-9，A-F，a-f
@@ -444,7 +444,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_startBLEScan() {
         try {
             var scanFilter = ScanFilter()
@@ -456,7 +456,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_stopBLEScan() {
         try {
             stopBLEScan()
@@ -466,7 +466,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_startAdvertising() {
         try {
             let advertisingSettings = AdvertiseSetting(interval: 32, txPower: 0, connectable: true)
@@ -497,7 +497,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_stopAdvertising() {
         try {
             let advertisingSettings = AdvertiseSetting(interval: 32, txPower: 0, connectable: true)
@@ -528,7 +528,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_startAdvertising_AdvertisingParams() {
         try {
             let advertisingSettings = AdvertiseSetting(interval: 32, txPower: 0, connectable: true)
@@ -566,7 +566,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_stopAdvertising_UInt32() {
         try {
             let advertisingSettings = AdvertiseSetting(interval: 32, txPower: 0, connectable: true)
@@ -607,7 +607,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_stopAdvertising() {
         try {
             // Invalid id
@@ -618,7 +618,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleCallbackType_Callback1Argument_AdvertisingStateChangeInfo() {
         try {
             let advertisingStateChange = AdvertisingStateChange()
@@ -629,7 +629,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleCallbackType_Callback1Argument_Array_ScanResult() {
         try {
             let bleDeviceFindCallback = BLEDeviceFindCallback()
@@ -640,7 +640,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_off_BluetoothBleCallbackType_CallbackObject() {
         try {
             let bleDeviceFindCallback = BLEDeviceFindCallback()
@@ -652,7 +652,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_connect() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -663,7 +663,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_disconnect() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -676,7 +676,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_getDeviceName() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -689,7 +689,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_getServices() {
         try {
             var resCallback:  AsyncCallback<Array<GattService>> = {
@@ -713,7 +713,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_readCharacteristicValue() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -759,7 +759,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_readDescriptorValue() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -794,7 +794,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_writeCharacteristicValue() {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
@@ -832,7 +832,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleGattServerCallbackType_Callback1Argument_CharacteristicReadRequest() {
         try {
             let characteristicReadCallback = CharacteristicReadCallback()
@@ -843,7 +843,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleGattServerCallbackType_Callback1Argument_CharacteristicWriteRequest() {
         try {
             let characteristicWriteCallback = CharacteristicWriteCallback()
@@ -854,7 +854,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleGattServerCallbackType_Callback1Argument_DescriptorReadRequest() {
         try {
             let descriptorReadCallback = DescriptorReadCallback()
@@ -865,7 +865,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleGattServerCallbackType_Callback1Argument_DescriptorWriteRequest() {
         try {
             let descriptorWriteCallback = DescriptorWriteCallback()
@@ -876,7 +876,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_BluetoothBleGattServerCallbackType_Callback1Argument_BLEConnectionChangeState() {
         try {
             let stateChangeCallback = StateChangeCallback()
@@ -888,7 +888,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_writeDescriptorValue() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let descBuffer: Array<Byte> = [31, 32]
@@ -914,7 +914,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_getRssiValue() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         try {
@@ -931,7 +931,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_setBLEMtuSize() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         try {
@@ -942,7 +942,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_setCharacteristicChangeNotification() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
 
@@ -981,7 +981,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_setCharacteristicChangeIndication() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
 
@@ -1020,7 +1020,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BluetoothBleGattClientBLECharacteristic_on() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let bleCharacteristicChangeCallback = BLECharacteristicChangeCallback()
@@ -1032,7 +1032,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BluetoothBleGattClientBLEConnectionChangeState_on() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let device = "0A:1B:2C:3D:4D:5F"
@@ -1046,7 +1046,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BluetoothBleGattClientInt32_on() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let bleMtuChangeCallback = BLEMtuChangeCallback()
@@ -1058,7 +1058,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_BluetoothBleGattClient_off() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let device = "0A:1B:2C:3D:4D:5F"
@@ -1073,7 +1073,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_addService() {
         let descBuffer: Array<Byte> = [31, 32]
         let descriptors0 = BLEDescriptor(
@@ -1120,7 +1120,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_removeService() {
         let gattServer = createGattServer()
         try {
@@ -1131,7 +1131,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_notifyCharacteristicChanged() {
         let gattServer = createGattServer()
         try {
@@ -1147,7 +1147,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_sendResponse() {
         let gattServer = createGattServer()
         try {
@@ -1163,7 +1163,7 @@ class Test_ble {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_ScanReportMode() {
         let enumArray: Array<ScanReportMode> = [
             ScanReportMode.Normal,

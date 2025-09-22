@@ -27,7 +27,7 @@ import ohos.base.*
 @Test
 class Test_a2dp {
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_PlayingState() {
         let arr1: Array<PlayingState> = [
             StateNotPlaying,
@@ -45,7 +45,7 @@ class Test_a2dp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_CodecType() {
         let arr1: Array<CodecType> = [
             CodecTypeInvalid,
@@ -67,7 +67,7 @@ class Test_a2dp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_CodecChannelMode() {
         let arr1: Array<CodecChannelMode> = [
             CodecChannelModeNone,
@@ -87,7 +87,7 @@ class Test_a2dp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_CodecBitsPerSample() {
         let arr1: Array<CodecBitsPerSample> = [
             CodecBitsPerSampleNone,
@@ -109,7 +109,7 @@ class Test_a2dp {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_CodecSampleRate() {
         let arr1: Array<CodecSampleRate> = [
             CodecSampleRateNone,

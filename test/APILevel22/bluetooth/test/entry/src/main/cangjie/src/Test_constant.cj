@@ -28,7 +28,7 @@ import ohos.base.*
 @Test
 class Test_constant {
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_auto_enum_ProfileConnectionState() {
         let arr1: Array<ProfileConnectionState> = [
             StateDisconnected,
