@@ -29,7 +29,7 @@ import std.collection.{ArrayList, HashMap}
  * @relation interface GattServer
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattServer <: RemoteDataLite {
@@ -66,7 +66,7 @@ public class GattServer <: RemoteDataLite {
      * @relation addService(service: GattService): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -93,7 +93,7 @@ public class GattServer <: RemoteDataLite {
      * @relation removeService(serviceUuid: string): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -118,7 +118,7 @@ public class GattServer <: RemoteDataLite {
      * @relation close(): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -144,7 +144,7 @@ public class GattServer <: RemoteDataLite {
      * @relation notifyCharacteristicChanged(deviceId: string, notifyCharacteristic: NotifyCharacteristic): Promise<void>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -173,7 +173,7 @@ public class GattServer <: RemoteDataLite {
      * @relation sendResponse(serverResponse: ServerResponse): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -196,7 +196,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'characteristicRead', callback: Callback<CharacteristicReadRequest>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -221,7 +221,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'characteristicWrite', callback: Callback<CharacteristicWriteRequest>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -245,7 +245,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'descriptorRead', callback: Callback<DescriptorReadRequest>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -269,7 +269,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'descriptorWrite', callback: Callback<DescriptorWriteRequest>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -293,7 +293,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'connectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -315,7 +315,7 @@ public class GattServer <: RemoteDataLite {
      * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -341,7 +341,7 @@ public class GattServer <: RemoteDataLite {
      * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

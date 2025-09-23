@@ -30,7 +30,7 @@ const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
  * @relation interface ScanFilter
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ScanFilter {
@@ -40,7 +40,7 @@ public class ScanFilter {
      * @relation deviceId?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var deviceId: String
@@ -51,7 +51,7 @@ public class ScanFilter {
      * @relation name?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var name: String
@@ -62,7 +62,7 @@ public class ScanFilter {
      * @relation serviceUuid?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceUuid: String
@@ -73,7 +73,7 @@ public class ScanFilter {
      * @relation serviceUuidMask?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceUuidMask: String
@@ -84,7 +84,7 @@ public class ScanFilter {
      * @relation serviceSolicitationUuid?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceSolicitationUuid: String
@@ -95,7 +95,7 @@ public class ScanFilter {
      * @relation serviceSolicitationUuidMask?: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceSolicitationUuidMask: String
@@ -106,7 +106,7 @@ public class ScanFilter {
      * @relation serviceData?: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceData: Array<Byte>
@@ -117,7 +117,7 @@ public class ScanFilter {
      * @relation serviceDataMask?: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceDataMask: Array<Byte>
@@ -128,7 +128,7 @@ public class ScanFilter {
      * @relation manufactureId?: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureId: UInt16
@@ -139,7 +139,7 @@ public class ScanFilter {
      * @relation manufactureData?: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureData: Array<Byte>
@@ -150,7 +150,7 @@ public class ScanFilter {
      * @relation manufactureDataMask?: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureDataMask: Array<Byte>
@@ -159,7 +159,7 @@ public class ScanFilter {
      * ScanFilter constructor.
      */    
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -305,7 +305,7 @@ struct NativeScanOptions {
  * @relation interface ScanOptions
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ScanOptions {
@@ -315,7 +315,7 @@ public class ScanOptions {
      * @relation interval?: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var interval: Int32
@@ -326,7 +326,7 @@ public class ScanOptions {
      * @relation dutyMode?: ScanDuty
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var dutyMode: ScanDuty
@@ -337,7 +337,7 @@ public class ScanOptions {
      * @relation matchMode?: MatchMode
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var matchMode: MatchMode
@@ -348,7 +348,7 @@ public class ScanOptions {
      * @relation phyType?: PhyType
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var phyType: PhyType
@@ -359,7 +359,7 @@ public class ScanOptions {
      * ScanOptions constructor.
      */    
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -404,7 +404,7 @@ struct NativeAdvertiseSetting {
  * @relation interface AdvertiseSetting
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertiseSetting {
@@ -416,7 +416,7 @@ public class AdvertiseSetting {
      * @relation interval?: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var interval: UInt16
@@ -429,7 +429,7 @@ public class AdvertiseSetting {
      * @relation txPower?: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var txPower: Int8
@@ -440,7 +440,7 @@ public class AdvertiseSetting {
      * @relation connectable?: boolean
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var connectable: Bool
@@ -449,7 +449,7 @@ public class AdvertiseSetting {
      * AdvertiseSetting constructor.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(interval!: UInt16 = BLE_ADV_DEFAULT_INTERVAL, txPower!: Int8 = BLE_ADV_TX_POWER_MEDIUM_VALUE, connectable!: Bool = true) {
@@ -535,7 +535,7 @@ struct NativeAdvertiseData {
  * @relation interface AdvertiseData
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertiseData {
@@ -545,7 +545,7 @@ public class AdvertiseData {
      * @relation serviceUuids: Array<string>
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceUuids: Array<String>
@@ -555,7 +555,7 @@ public class AdvertiseData {
      * @relation manufactureData: Array<ManufactureData>
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureData: Array<ManufactureData>
@@ -565,7 +565,7 @@ public class AdvertiseData {
      * @relation serviceData: Array<ServiceData>
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceData: Array<ServiceData>
@@ -575,7 +575,7 @@ public class AdvertiseData {
      * @relation includeDeviceName?: boolean
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var includeDeviceName: Bool
@@ -586,7 +586,7 @@ public class AdvertiseData {
      * AdvertiseData constructor.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -653,7 +653,7 @@ struct NativeManufactureData {
  * @relation interface ManufactureData
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ManufactureData {
@@ -663,7 +663,7 @@ public class ManufactureData {
      * @relation manufactureId: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureId: UInt16
@@ -673,7 +673,7 @@ public class ManufactureData {
      * @relation manufactureValue: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var manufactureValue: Array<Byte>
@@ -682,7 +682,7 @@ public class ManufactureData {
      * ManufactureData constructor.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -722,7 +722,7 @@ struct NativeServiceData {
  * @relation interface ServiceData
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ServiceData {
@@ -732,7 +732,7 @@ public class ServiceData {
      * @relation serviceUuid: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceUuid: String
@@ -742,7 +742,7 @@ public class ServiceData {
      * @relation serviceValue: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var serviceValue: Array<Byte>
@@ -751,7 +751,7 @@ public class ServiceData {
      * ServiceData constructor
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -800,7 +800,7 @@ struct NativeAdvertisingParams {
  * @relation interface AdvertisingParams
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertisingParams {
@@ -810,7 +810,7 @@ public class AdvertisingParams {
      * @relation advertisingSettings: AdvertiseSetting
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var advertisingSettings: AdvertiseSetting
@@ -820,7 +820,7 @@ public class AdvertisingParams {
      * @relation advertisingData: AdvertiseData
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var advertisingData: AdvertiseData
@@ -830,7 +830,7 @@ public class AdvertisingParams {
      * @relation advertisingResponse?: AdvertiseData
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var advertisingResponse: AdvertiseData
@@ -842,7 +842,7 @@ public class AdvertisingParams {
      * @relation duration?: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var duration: UInt16
@@ -851,7 +851,7 @@ public class AdvertisingParams {
      * AdvertisingParams constructor.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
@@ -906,7 +906,7 @@ struct CAdvertisingStateChangeInfo {
  * @relation interface AdvertisingStateChangeInfo
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class AdvertisingStateChangeInfo {
@@ -916,7 +916,7 @@ public class AdvertisingStateChangeInfo {
      * @relation advertisingId: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var advertisingId: Int32
@@ -926,7 +926,7 @@ public class AdvertisingStateChangeInfo {
      * @relation state: AdvertisingState
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var state: AdvertisingState
@@ -966,7 +966,7 @@ struct NativeScanResult {
  * @relation interface ScanResult
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class ScanResult {
@@ -976,7 +976,7 @@ public class ScanResult {
      * @relation deviceId: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var deviceId: String
@@ -986,7 +986,7 @@ public class ScanResult {
      * @relation rssi: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var rssi: Int32
@@ -996,7 +996,7 @@ public class ScanResult {
      * @relation data: ArrayBuffer
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var data: Array<Byte>
@@ -1006,7 +1006,7 @@ public class ScanResult {
      * @relation deviceName: string
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var deviceName: String
@@ -1016,7 +1016,7 @@ public class ScanResult {
      * @relation connectable: boolean
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var connectable: Bool
@@ -1043,7 +1043,7 @@ public class ScanResult {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ScanDuty {
@@ -1053,7 +1053,7 @@ public enum ScanDuty {
      * @relation SCAN_MODE_LOW_POWER = 0
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ScanModeLowPower
@@ -1064,7 +1064,7 @@ public enum ScanDuty {
      * @relation SCAN_MODE_BALANCED = 1
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ScanModeBalanced
@@ -1075,7 +1075,7 @@ public enum ScanDuty {
      * @relation SCAN_MODE_LOW_LATENCY = 2
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ScanModeLowLatency
@@ -1101,7 +1101,7 @@ public enum ScanDuty {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum MatchMode {
@@ -1111,7 +1111,7 @@ public enum MatchMode {
      * @relation MATCH_MODE_AGGRESSIVE = 1
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     MatchModeAggressive
@@ -1122,7 +1122,7 @@ public enum MatchMode {
      * @relation MATCH_MODE_STICKY = 2
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     MatchModeSticky
@@ -1156,7 +1156,7 @@ let ADVERTISING_STATE_MAP = HashMap<Int32, AdvertisingState>(
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum AdvertisingState {
@@ -1166,7 +1166,7 @@ public enum AdvertisingState {
      * @relation STARTED = 1
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Started
@@ -1177,7 +1177,7 @@ public enum AdvertisingState {
      * @relation ENABLED = 2
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Enabled
@@ -1188,7 +1188,7 @@ public enum AdvertisingState {
      * @relation DISABLED = 3
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Disabled
@@ -1199,7 +1199,7 @@ public enum AdvertisingState {
      * @relation STOPPED = 4
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Stopped
@@ -1221,7 +1221,7 @@ public enum AdvertisingState {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum PhyType {
@@ -1231,7 +1231,7 @@ public enum PhyType {
      * @relation PHY_LE_1M = 1
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     PhyLe1M
@@ -1242,7 +1242,7 @@ public enum PhyType {
      * @relation PHY_LE_ALL_SUPPORTED = 255
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     PhyLeAllSupported
@@ -1265,7 +1265,7 @@ public enum PhyType {
  */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleCallbackType {
@@ -1273,7 +1273,7 @@ public enum BluetoothBleCallbackType {
      * Advertising State Change
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     AdvertisingStateChange
@@ -1282,7 +1282,7 @@ public enum BluetoothBleCallbackType {
      * Ble Device Find
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     BleDeviceFind
@@ -1315,7 +1315,7 @@ struct CArrScanResult {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ScanReportMode {
@@ -1325,7 +1325,7 @@ public enum ScanReportMode {
      * @relation NORMAL = 1
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Normal
@@ -1337,7 +1337,7 @@ public enum ScanReportMode {
      * @relation BATCH = 2
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     Batch
@@ -1349,7 +1349,7 @@ public enum ScanReportMode {
      * @relation FENCE_SENSITIVITY_LOW = 10
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     FenceSensitivityLow
@@ -1361,7 +1361,7 @@ public enum ScanReportMode {
      * @relation FENCE_SENSITIVITY_HIGH = 11
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     FenceSensitivityHigh

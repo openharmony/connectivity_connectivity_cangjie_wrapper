@@ -23,7 +23,7 @@ import ohos.ffi.*
  * @relation interface WifiInfoElem
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public class WifiInfoElem {
@@ -32,7 +32,7 @@ public class WifiInfoElem {
      * @relation eid: number
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let eid: UInt32
@@ -42,7 +42,7 @@ public class WifiInfoElem {
      * @relation content: Uint8Array
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public let content: Array<UInt8>

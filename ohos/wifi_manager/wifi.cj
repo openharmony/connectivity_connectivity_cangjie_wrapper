@@ -33,7 +33,7 @@ let LOGGER = HilogChannel(0, 0xD001560, "CJ-wifi")
  * @relation function isWifiActive(): boolean
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func isWifiActive(): Bool {
@@ -54,7 +54,7 @@ public func isWifiActive(): Bool {
  * @relation function getScanInfoList(): Array<WifiScanInfo>
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -88,7 +88,7 @@ public func getScanInfoList(): Array<WifiScanInfo> {
  * @relation function p2pConnect(config: WifiP2PConfig): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -111,7 +111,7 @@ public func p2pConnect(config: WifiP2PConfig): Unit {
  * @relation function p2pCancelConnect(): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -132,7 +132,7 @@ public func p2pCancelConnect(): Unit {
  * @relation function startDiscoverDevices(): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -153,7 +153,7 @@ public func startDiscoverDevices(): Unit {
  * @relation function stopDiscoverDevices(): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -242,7 +242,7 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
  * @relation function on(type: 'wifiScanStateChange', callback: Callback<number>): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -259,7 +259,7 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
  * @relation function off(type: 'wifiScanStateChange', callback?: Callback<number>): void
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -272,7 +272,7 @@ public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None):
  */
 @Derive[ToString, Equatable, Hashable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public enum WifiCallbackType {
@@ -280,7 +280,7 @@ public enum WifiCallbackType {
      * Wi-Fi scan status change event type.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     WifiScanStateChange

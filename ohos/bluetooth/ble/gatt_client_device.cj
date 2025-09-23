@@ -29,7 +29,7 @@ import std.collection.{ArrayList, HashMap}
  * @relation interface GattClientDevice
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattClientDevice <: RemoteDataLite {
@@ -61,7 +61,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation connect(): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -84,7 +84,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation disconnect(): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -108,7 +108,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation close(): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -131,7 +131,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getDeviceName(): Promise<string>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -162,7 +162,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getServices(): Promise<Array<GattService>>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -199,7 +199,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation readCharacteristicValue(characteristic: BLECharacteristic): Promise<BLECharacteristic>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -246,7 +246,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation readDescriptorValue(descriptor: BLEDescriptor): Promise<BLEDescriptor>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -284,7 +284,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType): Promise<void>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -321,7 +321,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation writeDescriptorValue(descriptor: BLEDescriptor): Promise<void>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -355,7 +355,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation getRssiValue(): Promise<number>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -385,7 +385,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setBLEMtuSize(mtu: number): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -408,7 +408,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -443,7 +443,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -476,7 +476,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLECharacteristicChange', callback: Callback<BLECharacteristic>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -498,7 +498,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLEConnectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -522,7 +522,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -544,7 +544,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

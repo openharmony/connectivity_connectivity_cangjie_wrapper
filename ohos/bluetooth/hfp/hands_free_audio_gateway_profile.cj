@@ -39,7 +39,7 @@ foreign {
  * @relation createHfpAgProfile(): HandsFreeAudioGatewayProfile
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
@@ -52,7 +52,7 @@ public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
  * @relation interface HandsFreeAudioGatewayProfile extends BaseProfile
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class HandsFreeAudioGatewayProfile <: BaseProfile {
@@ -87,7 +87,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -119,7 +119,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -147,7 +147,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -185,7 +185,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      *  @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -210,7 +210,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
