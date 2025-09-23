@@ -51,7 +51,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func testWifiConnectivity() {
         if (isWifiActive()) {
             let wifis = getScanInfoList()
@@ -61,7 +61,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func testp2p() {
         loggerInfo("start discover devices")
         spawn {
@@ -72,7 +72,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_toString(): Unit {
         @Expect(WifiSecurityType.WifiSecTypeInvalid.toString(), "WifiSecurityType.WifiSecTypeInvalid")
         @Expect(WifiSecurityType.WifiSecTypeOpen.toString(), "WifiSecurityType.WifiSecTypeOpen")
@@ -88,14 +88,14 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_wifi(): Unit {
         let scanInfo = getScanInfoList()
         p2pCancelConnect()
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_p2pconnect(): Unit {
         try {
             let config = WifiP2PConfig("00:11:22:33:44:55", 2, "", "", GroupOwnerBand.GoBandAuto)
@@ -107,7 +107,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func test_on_off() {
         try {
             on(WifiCallbackType.WifiScanStateChange, WifiStateChangeCallback())
@@ -119,7 +119,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func Test_WifiSecurityType() {
         let wifiSecurityTypeArr: Array<WifiSecurityType> = [WifiSecurityType.WifiSecTypeInvalid, WifiSecurityType.WifiSecTypeOpen, WifiSecurityType.WifiSecTypeWep, WifiSecurityType.WifiSecTypePsk, WifiSecurityType.WifiSecTypeSae, WifiSecurityType.WifiSecTypeEap, WifiSecurityType.WifiSecTypeEapSuiteB, WifiSecurityType.WifiSecTypeOwe, WifiSecurityType.WifiSecTypeWapiCert, WifiSecurityType.WifiSecTypeWapiPsk]
         let wifiSecurityTypeArr2: Array<WifiSecurityType> = [WifiSecurityType.WifiSecTypeInvalid, WifiSecurityType.WifiSecTypeOpen, WifiSecurityType.WifiSecTypeWep, WifiSecurityType.WifiSecTypePsk, WifiSecurityType.WifiSecTypeSae, WifiSecurityType.WifiSecTypeEap, WifiSecurityType.WifiSecTypeEapSuiteB, WifiSecurityType.WifiSecTypeOwe, WifiSecurityType.WifiSecTypeWapiCert, WifiSecurityType.WifiSecTypeWapiPsk]
@@ -147,7 +147,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func Test_GroupOwnerBand() {
         let groupOwnerBandArr: Array<GroupOwnerBand> = [GoBandAuto, GoBand2GHz, GoBand5GHz]
         let groupOwnerBandArr2: Array<GroupOwnerBand> = [GoBandAuto, GoBand2GHz, GoBand5GHz]
@@ -160,7 +160,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func Test_WifiCategory() {
         let arr1: Array<WifiCategory> = [Default, Wifi6, Wifi6Plus]
         let arr2: Array<WifiCategory> = [Default, Wifi6, Wifi6Plus]
@@ -173,7 +173,7 @@ public class Test_WifiManager {
     }
 
     @TestCase
-    @Tag[APILevel21, TestLevel0]
+    @Tag[APILevel22, TestLevel0]
     func Test_DeviceAddressType() {
         let arr1: Array<DeviceAddressType> = [RandomDeviceAddress, RealDeviceAddress]
         let arr2: Array<DeviceAddressType> = [RandomDeviceAddress, RealDeviceAddress]
