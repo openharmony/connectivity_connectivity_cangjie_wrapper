@@ -4,9 +4,9 @@
 
 The connectivity_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony, The basic communication Cangjie interface is only available for standard devices.
 
-- WLAN: basic WLAN functions, peer-to-peer (P2P) connection, and WLAN notification, enabling your application to communicate with other devices through a WLAN.
+Bluetooth services: Provide traditional Bluetooth and low-energy Bluetooth related functions and services for applications.
 
-- Bluetooth: classic Bluetooth and Bluetooth Low Energy (BLE).
+WLAN services: Wireless Local Area Network (Wireless Local Area Networks, WLAN) is a local area network that sends and receives data through radio, infrared light signals or other technologies. Users can realize network communication between nodes without physical connection through WLAN. Commonly used in office and public environments where users carry mobile terminals.
 
 ## System Architecture
 
@@ -16,10 +16,15 @@ The connectivity_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony ba
 
 As shown in the architecture diagram:
 
-- Low-Energy Bluetooth (BLE) Wrapper: A type of Bluetooth technology that enables communication under low power consumption.
-- Bluetooth Profile Wrapper: A Bluetooth-based universal file transfer protocol that enables file transfer between devices, such as A2DP, HFP, etc.
-- Basic WLAN Functionality Wrapper: Provides P2P (Peer-to-Peer) functionality, a point-to-point connection technology that allows direct establishment of a TCP/IP link between two STAs (Station, a device that connects to a wireless network).
-- Cangjie Basic Communication FFI Interface: Defines the interoperation interface between Cangjie and the C language, and is responsible for invoking the basic communication service capabilities through interoperation.
+- Low-Power Bluetooth Wrapper: A Bluetooth technology that can communicate in low power consumption situations.
+- Bluetooth Profile Wrapper: A universal file transfer protocol based on Bluetooth that allows file transfer between devices, such as a2dp, hfp, etc.
+- Bluetooth Constants: Public constant definitions related to Bluetooth.
+- Basic WLAN Functionality Wrapper: Provides P2P functionality, a point-to-point connection technology that can directly establish a TCP/IP link between two STAs.
+- Cangjie Basic Communication FFI Interface: Responsible for defining the C language interoperation interface called by the Cangjie language to call basic communication service capabilities.
+- Cangjie ark interop: Encapsulates public interfaces for C language interoperation, and provides Cangjie tag class implementation for annotating Cangjie APIs, as well as providing BusinessException exception class definitions thrown to users.
+- Bluetooth Communication Services: Calls the underlying Bluetooth driver to provide relevant C language interfaces for accessing and using Bluetooth, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
+- WLAN Services: Calls the underlying Wi-Fi driver to provide WLAN-related functional C language interfaces, including WLAN basic functions, WLAN message notifications, WLAN P2P mode and other functions.
+- Cangjie DFX: Responsible for providing log interfaces for printing logs at critical paths.
 
 ## Directory Structure
 
@@ -34,31 +39,24 @@ foundation/communication/connectivity_cangjie_wrapper
 │   ├── bluetooth                    # Cangjie bluetooth code implementation
 │   │   ├── a2dp                     # a2dp Profile interfaces
 │   │   ├── base_profile             # Bluetooth base profile interfaces
-│   │   ├── ble                      # Bluetooth Low-Energy interfaces
+│   │   ├── ble                      # Bluetooth Low Energy interfaces
 │   │   ├── connection               # Bluetooth connection interfaces
 │   │   ├── constant                 # Bluetooth constant definitions
 │   │   ├── error_message.cj         # Bluetooth error message definitions
 │   │   └── hfp                      # hfp Profile interfaces
 │   └── wifi_manager                 # Cangjie wifi code implementation
 └── test                             # Test code
-    └── APILevel22                   # API Level 22 test code
-        ├── bluetooth                # Bluetooth tests
-        │   └── test                 # Bluetooth test project
-        └── wifi_manager             # WiFi tests
-            └── test                 # WiFi test project
+    ├── bluetooth                    # Bluetooth UT tests
+    │   └── test                     # Bluetooth test project
+    └── wifi_manager                 # WiFi UT tests
+        └── test                     # WiFi test project
 ```
-
-As shown in the architecture:
-
-- Bluetooth Low Energy: A wireless, low-power Bluetooth technology
-- P2P Connection：A peer-to-peer connection technology that enables the direct establishment of a TCP/IP link between two STAs.
-- Cangjie Connectivity FFI Interface：Define the FFI interface between Cangjie and C language, which is responsible for invoking the basic communication service capabilities through interoperation.
 
 ## Usage
 
 ### bluetooth api
 
-Bluetooth-related api, which currently provide BLE-related capabilities, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
+Bluetooth-related interfaces currently provide BLE-related capabilities, as well as various device Profile-related capabilities.
 
 -   BLE（Bluetooth Low Energy）
 
@@ -73,6 +71,10 @@ Advanced Audio Distribution Profile (A2DP) allows high-quality multimedia audio 
 For details, please refer to [a2dp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
 Compared with the API capabilities provided by ArkTS, Bluetooth socket module-related functions are not yet provided.
+
+-   HFP (Hands-Free Profile) is a Bluetooth hands-free protocol that allows Bluetooth devices to control the calls of the peer Bluetooth device, such as Bluetooth headsets controlling the answering, hanging up, rejecting, and voice dialing of mobile phone calls.
+
+For details, please refer to [hfp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
 
 For relevant guidance, please refer to [Overview of Bluetooth Service Development](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/bluetooth/cj-bluetooth-overview.md)
 

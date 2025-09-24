@@ -18,8 +18,13 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 
 - 低功耗蓝牙封装：一种能够在低功耗情况下进行通信的蓝牙技术。
 - 蓝牙Profile封装：一种基于蓝牙的通用文件传输协议，允许设备之间进行文件传输，如a2dp，hfp等。
+- 蓝牙常量：蓝牙相关的公共常量定义。
 - WLAN基础功能封装：提供P2P功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。
 - 仓颉基础通信FFI接口：负责定义被Cangjie语言调用的C语言互操作接口，调用基础通信服务能力。
+- 仓颉互操作：封装C语言互操作公共接口，并提供仓颉标签类实现用于对仓颉API进行标注，以及提供抛向用户的BusinessException异常类定义。
+- 蓝牙通信服务：调用底层蓝牙驱动，提供接入与使用蓝牙的相关C语言接口，包括BLE设备gatt相关的操作，以及BLE广播、扫描等功能。
+- WLAN服务：调用底层Wi-Fi驱动，提供WLAN的相关功能C语言接口，包括WLAN基础功能，WLAN消息通知，WLAN P2P模式等功能。
+- 仓颉DFX：负责提供日志接口，用于在关键路径处打印日志。
 
 ## 目录
 
@@ -40,19 +45,18 @@ foundation/communication/connectivity_cangjie_wrapper
 │   │   ├── error_message.cj         # 蓝牙错误信息定义
 │   │   └── hfp                      # hfp Profile相关接口
 │   └── wifi_manager                 # 仓颉wifi接口存放目录
-└── test                             # 测试代码
-    └── APILevel22                   # API Level 22测试代码
-        ├── bluetooth                # 蓝牙测试
-        │   └── test                 # 蓝牙测试工程
-        └── wifi_manager             # WiFi测试
-            └── test                 # WiFi测试工程
+└── test                             # 测试代码  
+    ├── bluetooth                    # 蓝牙UT测试
+    │   └── test                     # 蓝牙测试工程
+    └── wifi_manager                 # WiFiUT测试
+        └── test                     # WiFi测试工程
 ```
 
 ## 使用说明
 
 ### 蓝牙接口
 
-蓝牙相关接口，目前提供BLE相关的能力，包括BLE设备gatt相关的操作，以及BLE广播、扫描等功能。
+蓝牙相关接口，目前提供BLE相关的能力，以及各类设备Profile相关的能力。
 
 -   BLE（低功耗蓝牙）
 
@@ -67,6 +71,11 @@ A2DP是Advanced Audio Distribution Profile的缩写，即高级音频分发配�
 详情请参见: [a2dp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
 与ArkTS提供的API能力相比暂未提供蓝牙socket模块相关功能。
+
+-   HFP（Hands-Free Profile）是蓝牙免提协议，允许蓝牙设备控制对端蓝牙设备的通话，例如蓝牙耳机控制手机通话的接听、挂断、拒接、语音拨号等。
+
+详情请参见: [hfp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
+
 
 相关指导请参见: [蓝牙服务开发概述](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_zh_cn/connectivity/bluetooth/cj-bluetooth-overview.md)
 
