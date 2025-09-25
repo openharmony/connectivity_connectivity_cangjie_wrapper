@@ -2,7 +2,7 @@
 
 ## 简介
 
-基础通信仓颉接口是在OpenHarmony上面向开发者进行应用开发使用蓝牙、WLAN能力之上封装的仓颉API实现。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力的仓颉接口封装实现。当前开放的基础通信仓颉接口仅支持standard设备。
+基础通信仓颉封装为OpenHarmony应用开发者提供使用蓝牙服务、WLAN服务能力的仓颉API实现。当前开放的基础通信仓颉接口仅支持standard设备。
 
 蓝牙服务：为应用提供传统蓝牙以及低功耗蓝牙相关功能和服务。
 
@@ -28,15 +28,14 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 - 低功耗蓝牙封装：低功耗蓝牙是一种能够在低功耗情况下进行通信的蓝牙技术。该封装层是基于蓝牙组件对低功耗蓝牙功能进行仓颉封装实现。
 - 蓝牙Profile封装：蓝牙Profile一种基于蓝牙的通用文件传输协议，允许设备之间进行文件传输，如a2dp，hfp等。该封装层是基于蓝牙组件对蓝牙Profile功能进行仓颉封装实现。
 - 蓝牙常量：定义了蓝牙相关的公共常量。
-- WLAN基础功能封装：提供P2P功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
-- 仓颉基础通信FFI接口：负责定义被Cangjie语言调用的C语言互操作接口，调用基础通信服务能力。
+- WLAN基础功能封装：提供P2P（peer-to-peer）功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
 
 仓颉基础通信服务依赖部件引入说明：
 
-- 仓颉互操作：封装C语言互操作公共接口，并提供仓颉标签类实现用于对仓颉API进行标注，以及提供抛向用户的BusinessException异常类定义。
-- 蓝牙组件：调用底层蓝牙驱动，提供可被基础通信仓颉接口调用的接入与使用蓝牙的相关C语言接口，包括BLE设备gatt相关的操作，以及BLE广播、扫描等功能。
-- WLAN组件：调用底层Wi-Fi驱动，提供可被基础通信仓颉接口调用的WLAN相关功能C语言接口，包括WLAN基础功能，WLAN消息通知，WLAN P2P模式等功能。
-- 仓颉DFX：负责提供日志接口，提供可被基础通信仓颉接口调用在关键路径处打印日志能力的仓颉接口。
+- 蓝牙组件：调用底层蓝牙驱动，提供包括BLE设备gatt相关的操作，以及BLE广播、扫描等蓝牙相关native功能实现。
+- WLAN组件：调用底层Wi-Fi驱动，提供包括WLAN基础功能，WLAN消息通知，WLAN P2P模式等native功能实现。
+- cangjie_ark_interop：封装C语言互操作公共接口，并提供仓颉标签类实现用于对仓颉API进行标注，以及提供抛向用户的BusinessException异常类定义。
+- hiviewdfx_cangjie_wrapper：提供可被基础通信仓颉接口调用在关键路径处打印日志能力的仓颉接口。
 
 ## 目录
 
@@ -59,9 +58,7 @@ foundation/communication/connectivity_cangjie_wrapper
 │   └── wifi_manager                 # 仓颉wifi接口存放目录
 └── test                             # 测试代码  
     ├── bluetooth                    # 蓝牙UT测试
-    │   └── test                     # 蓝牙测试工程
     └── wifi_manager                 # WiFiUT测试
-        └── test                     # WiFi测试工程
 ```
 
 ## 使用说明
@@ -91,9 +88,7 @@ A2DP是Advanced Audio Distribution Profile的缩写，即高级音频分发配�
 
 ### Wifi接口
 
-WLAN相关接口为用户提供WLAN基础功能、P2P（peer-to-peer）功能和WLAN消息通知的相应服务，让应用可以通过WLAN和其他设备互联互通。
-
-#### P2P模式
+WLAN相关接口为用户提供P2P功能
 
 P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它可以在两台 STA 之间直接建立 TCP/IP 链接，并不需要AP的参与。其中一台STA会起到传统意义上的AP的作用，称为Group Owner(GO)，另外一台station则称为Group Client(GC)，像连接AP一样连接到GO。
 
@@ -103,8 +98,10 @@ P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它�
 
 ## 约束
 
-蓝牙接口与ArkTS提供的API能力相比暂未提供蓝牙socket，hid、pan、pbap、map Profile相关功能。
-Wifi接口与ArkTS提供的API能力相比暂未提供STA模式、AP模式相关功能。
+与ArkTS提供的API能力相比，暂不支持以下功能：
+
+- 蓝牙服务暂未提供蓝牙socket，hid、pan、pbap、map Profile相关功能。
+- Wifi服务暂未提供STA模式、AP模式相关功能。
 
 ## 参与贡献
 
