@@ -1,8 +1,8 @@
-# 基础通信仓颉接口
+# 基础通信仓颉封装
 
 ## 简介
 
-基础通信仓颉接口是在OpenHarmony上基于基础通信子系统能力之上封装的仓颉API。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力。当前开放的基础通信仓颉接口仅支持standard设备。
+基础通信仓颉接口是在OpenHarmony上面向开发者进行应用开发使用蓝牙、WLAN能力之上封装的仓颉API实现。基础通信子系统旨在为OpenHarmony系统提供的通信相关的能力，包括：WLAN服务能力、蓝牙服务能力等通信能力的仓颉接口封装实现。当前开放的基础通信仓颉接口仅支持standard设备。
 
 蓝牙服务：为应用提供传统蓝牙以及低功耗蓝牙相关功能和服务。
 
@@ -16,15 +16,27 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 
 如架构图所示：
 
-- 低功耗蓝牙封装：一种能够在低功耗情况下进行通信的蓝牙技术。
-- 蓝牙Profile封装：一种基于蓝牙的通用文件传输协议，允许设备之间进行文件传输，如a2dp，hfp等。
-- 蓝牙常量：蓝牙相关的公共常量定义。
-- WLAN基础功能封装：提供P2P功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。
+接口层说明：
+
+- 低功耗蓝牙接口：基于低功耗蓝牙封装面向开发者开放的仓颉公开接口声明。
+- 蓝牙Profile接口：基于蓝牙Profile封装面向开发者开放的仓颉公开接口声明。
+- 蓝牙常量接口：基于蓝牙常量面向开发者开放的仓颉公开接口声明。
+- WLAN基础功能接口：基于WLAN基础功能封装面向开发者开放的仓颉公开接口声明。
+
+框架层说明：
+
+- 低功耗蓝牙封装：低功耗蓝牙是一种能够在低功耗情况下进行通信的蓝牙技术。该封装层是基于蓝牙组件对低功耗蓝牙功能进行仓颉封装实现。
+- 蓝牙Profile封装：蓝牙Profile一种基于蓝牙的通用文件传输协议，允许设备之间进行文件传输，如a2dp，hfp等。该封装层是基于蓝牙组件对蓝牙Profile功能进行仓颉封装实现。
+- 蓝牙常量：定义了蓝牙相关的公共常量。
+- WLAN基础功能封装：提供P2P功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
 - 仓颉基础通信FFI接口：负责定义被Cangjie语言调用的C语言互操作接口，调用基础通信服务能力。
+
+仓颉基础通信服务依赖部件引入说明：
+
 - 仓颉互操作：封装C语言互操作公共接口，并提供仓颉标签类实现用于对仓颉API进行标注，以及提供抛向用户的BusinessException异常类定义。
-- 蓝牙通信服务：调用底层蓝牙驱动，提供接入与使用蓝牙的相关C语言接口，包括BLE设备gatt相关的操作，以及BLE广播、扫描等功能。
-- WLAN服务：调用底层Wi-Fi驱动，提供WLAN的相关功能C语言接口，包括WLAN基础功能，WLAN消息通知，WLAN P2P模式等功能。
-- 仓颉DFX：负责提供日志接口，用于在关键路径处打印日志。
+- 蓝牙组件：调用底层蓝牙驱动，提供可被基础通信仓颉接口调用的接入与使用蓝牙的相关C语言接口，包括BLE设备gatt相关的操作，以及BLE广播、扫描等功能。
+- WLAN组件：调用底层Wi-Fi驱动，提供可被基础通信仓颉接口调用的WLAN相关功能C语言接口，包括WLAN基础功能，WLAN消息通知，WLAN P2P模式等功能。
+- 仓颉DFX：负责提供日志接口，提供可被基础通信仓颉接口调用在关键路径处打印日志能力的仓颉接口。
 
 ## 目录
 
@@ -70,8 +82,6 @@ A2DP是Advanced Audio Distribution Profile的缩写，即高级音频分发配�
 
 详情请参见: [a2dp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
-与ArkTS提供的API能力相比暂未提供蓝牙socket模块相关功能。
-
 -   HFP（Hands-Free Profile）是蓝牙免提协议，允许蓝牙设备控制对端蓝牙设备的通话，例如蓝牙耳机控制手机通话的接听、挂断、拒接、语音拨号等。
 
 详情请参见: [hfp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
@@ -89,7 +99,12 @@ P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它�
 
 详情请参见: [wifi API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
-与ArkTS提供的API能力相比暂未提供STA模式、AP模式相关功能。
+相关指导请参见: [WLAN开发指南](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_zh_cn/connectivity/wifi/cj-wifi-development-guide.md)
+
+## 约束
+
+蓝牙接口与ArkTS提供的API能力相比暂未提供蓝牙socket，hid、pan、pbap、map Profile相关功能。
+Wifi接口与ArkTS提供的API能力相比暂未提供STA模式、AP模式相关功能。
 
 ## 参与贡献
 
