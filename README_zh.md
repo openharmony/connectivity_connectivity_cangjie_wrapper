@@ -18,17 +18,21 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 
 接口层说明：
 
-- 低功耗蓝牙接口：基于低功耗蓝牙封装面向开发者开放的仓颉公开接口声明。
-- 蓝牙Profile接口：基于蓝牙Profile封装面向开发者开放的仓颉公开接口声明。
-- 蓝牙常量接口：基于蓝牙常量面向开发者开放的仓颉公开接口声明。
-- WLAN基础功能接口：基于WLAN基础功能封装面向开发者开放的仓颉公开接口声明。
+- 低功耗蓝牙接口：提供了基于低功耗蓝牙（Bluetooth Low Energy，BLE）技术的蓝牙能力，支持发起BLE扫描、发送BLE广播报文、以及基于通用属性协议（Generic Attribute Profile，GATT）的连接和传输数据的仓颉公开接口声明。
+- 蓝牙baseProfile接口：蓝牙Profile一种基于蓝牙的通用文件传输协议，提供了不同的蓝牙技术协议的基础公共方法的仓颉公开接口声明。
+- 蓝牙a2dp接口：提供基于增强音频分发协议（Advanced Audio Distribution Profile，A2DP）的蓝牙媒体音频能力，支持获取媒体播放状态和连接状态的仓颉公开接口声明。
+- 蓝牙hfp接口：提供基于免提协议（Hands-Free Profile， HFP）的蓝牙通话音频能力的仓颉公开接口声明。
+- 蓝牙常量接口：提供了蓝牙各Profile、设备类型相关的常量定义的仓颉公开接口声明。
+- WLAN基础功能接口：提供了P2P（peer-to-peer，可以在两台 STA 之间直接建立 TCP/IP 链接）功能的仓颉公开接口声明。
 
 框架层说明：
 
 - 低功耗蓝牙封装：低功耗蓝牙是一种能够在低功耗情况下进行通信的蓝牙技术。该封装层是基于蓝牙组件对低功耗蓝牙功能进行仓颉封装实现。
-- 蓝牙Profile封装：蓝牙Profile一种基于蓝牙的通用文件传输协议，允许设备之间进行文件传输，如a2dp，hfp等。该封装层是基于蓝牙组件对蓝牙Profile功能进行仓颉封装实现。
+- 蓝牙baseProfile封装：提供了不同的蓝牙技术协议的抽象封装。
+- 蓝牙a2dp封装：实现了基于a2dp协议的播放状态和连接状态查询。
+- 蓝牙hfp封装：实现了基于hfp协议的蓝牙通话音频能力。
 - 蓝牙常量：定义了蓝牙相关的公共常量。
-- WLAN基础功能封装：提供P2P（peer-to-peer）功能，一种点对点连接技术，可以在两台 STA 之间直接建立 TCP/IP 链接。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
+- WLAN基础功能封装：提供P2P功能，一种点对点连接技术。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
 
 仓颉基础通信服务依赖部件引入说明：
 
@@ -51,7 +55,6 @@ foundation/communication/connectivity_cangjie_wrapper
 │   │   ├── a2dp                     # a2dp Profile相关接口
 │   │   ├── base_profile             # 蓝牙基础Profile接口
 │   │   ├── ble                      # 低功耗蓝牙相关接口
-│   │   ├── connection               # 蓝牙连接相关接口
 │   │   ├── constant                 # 蓝牙常量定义
 │   │   ├── error_message.cj         # 蓝牙错误信息定义
 │   │   └── hfp                      # hfp Profile相关接口
@@ -75,11 +78,11 @@ BLE是Bluetooth Low Energy的缩写，意为"低功耗蓝牙"。它是一种能�
 
 -   A2DP（高级音频分发配置文件）
 
-A2DP是Advanced Audio Distribution Profile的缩写，即高级音频分发配置文件。它是一种蓝牙协议，允许无线传输高品质音频流，例如音乐或语音通话，同时支持双向通信，因此可以用于耳机、扬声器、汽车音响等设备。
+A2DP即为高级音频分发配置文件。它是一种蓝牙协议，允许无线传输高品质音频流，例如音乐或语音通话，同时支持双向通信，因此可以用于耳机、扬声器、汽车音响等设备。
 
 详情请参见: [a2dp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
--   HFP（Hands-Free Profile）是蓝牙免提协议，允许蓝牙设备控制对端蓝牙设备的通话，例如蓝牙耳机控制手机通话的接听、挂断、拒接、语音拨号等。
+-   HFP即为蓝牙免提协议，允许蓝牙设备控制对端蓝牙设备的通话，例如蓝牙耳机控制手机通话的接听、挂断、拒接、语音拨号等。
 
 详情请参见: [hfp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
 
@@ -100,8 +103,18 @@ P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它�
 
 与ArkTS提供的API能力相比，暂不支持以下功能：
 
-- 蓝牙服务暂未提供蓝牙socket，hid、pan、pbap、map Profile相关功能。
-- Wifi服务暂未提供STA模式、AP模式相关功能。
+- [NFC(Near Field Communication)](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/connectivity/nfc/nfc-hce-guide.md)。
+- [管理安全单元（SecureElement，简称SE）](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/connectivity/nfc/nfc-se-access-guide.md)
+
+蓝牙服务中暂不支持
+- [蓝牙socket](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-socket.md)：一种蓝牙套接字功能，可实现设备间连接和数据传输。
+- [蓝牙hid](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-hid.md)：基于人机接口协议（Human Interface Device Profile，HID）技术的蓝牙人机交互能力，支持获取连接状态。
+- [蓝牙pan](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-pan.md)：基于蓝牙个人局域网协议（Personal Area Networking，PAN）的蓝牙共享网络能力。
+- [蓝牙pbap](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-pbap.md)：基于电话簿访问协议（Phone Book Access Profile，PBAP）的蓝牙电话簿访问能力。
+- [蓝牙map](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-map.md)：基于消息访问协议（Message Access Profile，MAP）的蓝牙消息访问能力。
+
+Wifi服务中暂不支持
+- [STA模式、AP模式](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/connectivity/wlan/sta-development-guide.md)相关功能：Wi-Fi STA模式（Station Mode，站点模式）是无线设备作为客户端接入无线局域网（WLAN）的工作模式。在该模式下，设备（如手机、电脑、平板等）通过连接到接入点（AP，Access Point）或无线路由器，实现对网络的访问。
 
 ## 参与贡献
 
