@@ -2,11 +2,11 @@
 
 ## Introduction
 
-The connectivity_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony based on the capabilities of the Distributed Connectivity Subsystem. The Connectivity subsystem provides the following communication capabilities for OpenHarmony, The basic communication Cangjie interface is only available for standard devices.
+The connectivity_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony for application developers to use Bluetooth services and WLAN service capabilities. The currently open basic communication Cangjie interface only supports standard devices.
 
-- WLAN: basic WLAN functions, peer-to-peer (P2P) connection, and WLAN notification, enabling your application to communicate with other devices through a WLAN.
+Bluetooth services: Provide traditional Bluetooth and low-energy Bluetooth related functions and services for applications.
 
-- Bluetooth: classic Bluetooth and Bluetooth Low Energy (BLE).
+WLAN services: Wireless Local Area Network (Wireless Local Area Networks, WLAN) is a local area network that sends and receives data through radio, infrared light signals or other technologies. Users can realize network communication between nodes without physical connection through WLAN. Commonly used in office and public environments where users carry mobile terminals.
 
 ## System Architecture
 
@@ -16,10 +16,26 @@ The connectivity_cangjie_wrapper is a Cangjie API encapsulated on OpenHarmony ba
 
 As shown in the architecture diagram:
 
-- Low-Energy Bluetooth (BLE) Wrapper: A type of Bluetooth technology that enables communication under low power consumption.
-- Bluetooth Profile Wrapper: A Bluetooth-based universal file transfer protocol that enables file transfer between devices, such as A2DP, HFP, etc.
-- Basic WLAN Functionality Wrapper: Provides P2P (Peer-to-Peer) functionality, a point-to-point connection technology that allows direct establishment of a TCP/IP link between two STAs (Station, a device that connects to a wireless network).
-- Cangjie Basic Communication FFI Interface: Defines the interoperation interface between Cangjie and the C language, and is responsible for invoking the basic communication service capabilities through interoperation.
+Interface layer description:
+
+- Low-Power Bluetooth Interface: Cangjie public interfaces based on low-power Bluetooth encapsulation exposed to developers.
+- Bluetooth Profile Interface: Cangjie public interfaces based on Bluetooth Profile encapsulation exposed to developers.
+- Bluetooth Constant Interface: Cangjie public interfaces based on Bluetooth constants exposed to developers.
+- Basic WLAN Functionality Interface: Cangjie public interfaces based on WLAN basic functionality encapsulation exposed to developers.
+
+Framework layer description:
+
+- Low-Power Bluetooth Wrapper: Bluetooth Low Energy is a Bluetooth technology that can communicate in low power consumption situations. This encapsulation layer is a Cangjie encapsulation implementation of low-power Bluetooth functionality based on the Bluetooth component.
+- Bluetooth Profile Wrapper: Bluetooth Profile is a universal file transfer protocol based on Bluetooth that allows file transfer between devices, such as a2dp, hfp, etc. This encapsulation layer is a Cangjie encapsulation implementation of Bluetooth Profile functionality based on the Bluetooth component.
+- Bluetooth Constants: Defines public constants related to Bluetooth.
+- Basic WLAN Functionality Wrapper: Provides P2P (peer-to-peer) functionality, a point-to-point connection technology that can directly establish a TCP/IP link between two STAs. This encapsulation layer is a Cangjie encapsulation implementation of WLAN basic functionality based on the WLAN component.
+
+Cangjie Basic Communication Service Dependencies:
+
+- Bluetooth Component: Calls the underlying Bluetooth driver to provide relevant functions for accessing and using Bluetooth that can be called by the basic communication Cangjie interface, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
+- WLAN Component: Calls the underlying Wi-Fi driver to provide WLAN-related functional C language interfaces that can be called by the basic communication Cangjie interface, including WLAN basic functions, WLAN message notifications, WLAN P2P mode and other functions.
+- cangjie_ark_interop: Encapsulates public interfaces for C language interoperation, and provides Cangjie tag class implementation for annotating Cangjie APIs, as well as providing BusinessException exception class definitions thrown to users.
+- hiviewdfx_cangjie_wrapper: Responsible for providing log interfaces, providing Cangjie interfaces that can be called by the basic communication Cangjie interface to print logs at critical paths.
 
 ## Directory Structure
 
@@ -34,31 +50,24 @@ foundation/communication/connectivity_cangjie_wrapper
 │   ├── bluetooth                    # Cangjie bluetooth code implementation
 │   │   ├── a2dp                     # a2dp Profile interfaces
 │   │   ├── base_profile             # Bluetooth base profile interfaces
-│   │   ├── ble                      # Bluetooth Low-Energy interfaces
+│   │   ├── ble                      # Bluetooth Low Energy interfaces
 │   │   ├── connection               # Bluetooth connection interfaces
 │   │   ├── constant                 # Bluetooth constant definitions
 │   │   ├── error_message.cj         # Bluetooth error message definitions
 │   │   └── hfp                      # hfp Profile interfaces
 │   └── wifi_manager                 # Cangjie wifi code implementation
 └── test                             # Test code
-    └── APILevel22                   # API Level 22 test code
-        ├── bluetooth                # Bluetooth tests
-        │   └── test                 # Bluetooth test project
-        └── wifi_manager             # WiFi tests
-            └── test                 # WiFi test project
+    ├── bluetooth                    # Bluetooth UT tests
+    │   └── test                     # Bluetooth test project
+    └── wifi_manager                 # WiFi UT tests
+        └── test                     # WiFi test project
 ```
-
-As shown in the architecture:
-
-- Bluetooth Low Energy: A wireless, low-power Bluetooth technology
-- P2P Connection：A peer-to-peer connection technology that enables the direct establishment of a TCP/IP link between two STAs.
-- Cangjie Connectivity FFI Interface：Define the FFI interface between Cangjie and C language, which is responsible for invoking the basic communication service capabilities through interoperation.
 
 ## Usage
 
 ### bluetooth api
 
-Bluetooth-related api, which currently provide BLE-related capabilities, including BLE device gatt-related operations, as well as BLE broadcasting, scanning and other functions.
+Bluetooth-related interfaces currently provide BLE-related capabilities, as well as various device Profile-related capabilities.
 
 -   BLE（Bluetooth Low Energy）
 
@@ -72,21 +81,28 @@ Advanced Audio Distribution Profile (A2DP) allows high-quality multimedia audio 
 
 For details, please refer to [a2dp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-a2dp.md)。
 
-Compared with the API capabilities provided by ArkTS, Bluetooth socket module-related functions are not yet provided.
+-   HFP (Hands-Free Profile) is a Bluetooth hands-free protocol that allows Bluetooth devices to control the calls of the peer Bluetooth device, such as Bluetooth headsets controlling the answering, hanging up, rejecting, and voice dialing of mobile phone calls.
+
+For details, please refer to [hfp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
 
 For relevant guidance, please refer to [Overview of Bluetooth Service Development](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/bluetooth/cj-bluetooth-overview.md)
 
 ### Wifi api
 
-WLAN-related api provide users with WLAN basic functions, peer-to-peer (P2P) functions, and corresponding services such as WLAN message notifications, so that applications can be interconnected with other devices through WLAN.
-
-#### P2P mode
+WLAN-related api provide users with P2P functions
 
 The P2P mode is also called Wi-Fi Direct, which allows two devices to establish a direct Wi-Fi connection without an intermediary wireless access point (AP). It can set up a TCP/IP connection between two STAs without an AP. Of the two STAs, one is called the group owner (GO), which serves as a traditional AP. the other is called a group client (GC), which connects to the GO like an AP.
 
 For details, see [wifi API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-wifi_manager.md)。
 
-Compared with the API capabilities provided by ArkTS, STA mode and AP mode are not available.
+For relevant guidance, please refer to [WLAN Development Guide](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/wifi/cj-wifi-development-guide.md)
+
+## Constraints
+
+Compared with the API capabilities provided by ArkTS, the following functions are not supported:
+
+- Bluetooth services do not yet provide Bluetooth socket, hid, pan, pbap, map Profile related functions.
+- Wifi services do not yet provide STA mode and AP mode related functions.
 
 ## Code Contribution
 
