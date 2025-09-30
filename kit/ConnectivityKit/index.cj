@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package ConnectivityKit
+package kit.ConnectivityKit
 
 public import ohos.bluetooth.*
 public import ohos.bluetooth.base_profile.*
