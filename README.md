@@ -1,4 +1,4 @@
-# connectivity_cangjie_wrapper
+# connectivity_cangjie_wrapper(beta feature)
 
 ## Introduction
 
