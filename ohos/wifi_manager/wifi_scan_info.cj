@@ -22,7 +22,6 @@ import ohos.labels.*
 
 /**
  * Describes the scanned Wi-Fi information.
- * @relation interface WifiScanInfo
  */
 @!APILevel[
     22,
@@ -31,7 +30,6 @@ import ohos.labels.*
 public class WifiScanInfo {
     /**
      * Wi-Fi SSID: the maximum length is 32 
-     * @relation ssid: string
      */
     @!APILevel[
         22,
@@ -41,7 +39,6 @@ public class WifiScanInfo {
 
     /**
      * Wi-Fi bssid(MAC): the length is 6
-     * @relation bssid: string
      */
     @!APILevel[
         22,
@@ -51,7 +48,6 @@ public class WifiScanInfo {
 
     /**
      * Wi-Fi bssid type
-     * @relation bssidType: DeviceAddressType
      */
     @!APILevel[
         22,
@@ -61,7 +57,6 @@ public class WifiScanInfo {
 
     /**
      * Hotspot capability
-     * @relation capabilities: string
      */
     @!APILevel[
         22,
@@ -71,7 +66,6 @@ public class WifiScanInfo {
 
     /**
      * Security type: reference definition of WifiSecurityType
-     * @relation securityType: WifiSecurityType
      */
     @!APILevel[
         22,
@@ -81,7 +75,6 @@ public class WifiScanInfo {
 
     /**
      * Received signal strength indicator (RSSI)
-     * @relation rssi: number
      */
     @!APILevel[
         22,
@@ -91,7 +84,6 @@ public class WifiScanInfo {
 
     /**
      * Frequency band, 1: 2.4G, 2: 5G
-     * @relation band: number
      */
     @!APILevel[
         22,
@@ -101,7 +93,6 @@ public class WifiScanInfo {
 
     /**
      * Frequency
-     * @relation frequency: number
      */
     @!APILevel[
         22,
@@ -111,7 +102,6 @@ public class WifiScanInfo {
 
     /**
      * Channel width
-     * @relation channelWidth: number
      */
     @!APILevel[
         22,
@@ -121,7 +111,6 @@ public class WifiScanInfo {
 
     /**
      * Center frequency 0.
-     * @relation centerFrequency0: number
      */
     @!APILevel[
         22,
@@ -131,7 +120,6 @@ public class WifiScanInfo {
 
     /**
      * Center frequency 1.
-     * @relation centerFrequency1: number
      */
     @!APILevel[
         22,
@@ -141,7 +129,6 @@ public class WifiScanInfo {
 
     /**
      * Information elements.
-     * @relation infoElems: Array<WifiInfoElem>
      */
     @!APILevel[
         22,
@@ -151,7 +138,6 @@ public class WifiScanInfo {
 
     /**
      * Time stamp
-     * @relation timestamp: number
      */
     @!APILevel[
         22,
@@ -161,7 +147,6 @@ public class WifiScanInfo {
 
     /**
      * Supported wifi category
-     * @relation supportedWifiCategory: WifiCategory
      */
     @!APILevel[
         22,
@@ -171,7 +156,6 @@ public class WifiScanInfo {
 
     /**
      * Whether the Wi-Fi hotspot is HiLink network.
-     * @relation isHiLinkNetwork: boolean
      */
     @!APILevel[
         22,

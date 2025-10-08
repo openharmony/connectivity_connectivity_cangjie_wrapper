@@ -22,7 +22,6 @@ import ohos.ffi.*
 
 /**
  * Wi-Fi information elements.
- * @relation interface WifiInfoElem
  */
 @!APILevel[
     22,
@@ -31,7 +30,6 @@ import ohos.ffi.*
 public class WifiInfoElem {
     /**
      * Element id
-     * @relation eid: number
      */
     @!APILevel[
         22,
@@ -41,7 +39,6 @@ public class WifiInfoElem {
 
     /**
      * Element content
-     * @relation content: Uint8Array
      */
     @!APILevel[
         22,
