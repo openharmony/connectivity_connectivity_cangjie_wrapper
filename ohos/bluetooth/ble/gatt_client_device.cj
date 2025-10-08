@@ -27,8 +27,6 @@ import std.collection.{ArrayList, HashMap}
 
 /**
  * Manages GATT client. Before calling an Gatt client method, you must use createGattClientDevice to create an GattClientDevice instance.
- *
- * @relation interface GattClientDevice
  */
 @!APILevel[
     22,
@@ -60,7 +58,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation connect(): void
      */
     @!APILevel[
         22,
@@ -83,7 +80,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation disconnect(): void
      */
     @!APILevel[
         22,
@@ -107,7 +103,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation close(): void
      */
     @!APILevel[
         22,
@@ -130,7 +125,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getDeviceName(): Promise<string>
      */
     @!APILevel[
         22,
@@ -161,7 +155,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getServices(): Promise<Array<GattService>>
      */
     @!APILevel[
         22,
@@ -198,7 +191,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901000 - Read forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation readCharacteristicValue(characteristic: BLECharacteristic): Promise<BLECharacteristic>
      */
     @!APILevel[
         22,
@@ -245,7 +237,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901006 - The connection is not authenticated.
      * @throws { BusinessException } 2901007 - The connection is not authorized.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation readDescriptorValue(descriptor: BLEDescriptor): Promise<BLEDescriptor>
      */
     @!APILevel[
         22,
@@ -283,7 +274,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901001 - Write forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType): Promise<void>
      */
     @!APILevel[
         22,
@@ -320,7 +310,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901001 - Write forbidden.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation writeDescriptorValue(descriptor: BLEDescriptor): Promise<void>
      */
     @!APILevel[
         22,
@@ -354,7 +343,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getRssiValue(): Promise<number>
      */
     @!APILevel[
         22,
@@ -384,7 +372,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation setBLEMtuSize(mtu: number): void
      */
     @!APILevel[
         22,
@@ -407,7 +394,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
         22,
@@ -442,7 +428,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: boolean): Promise<void>
      */
     @!APILevel[
         22,
@@ -475,7 +460,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'BLECharacteristicChange', callback: Callback<BLECharacteristic>): void
      */
     @!APILevel[
         22,
@@ -497,7 +481,6 @@ public class GattClientDevice <: RemoteDataLite {
      * Subscribe client connection state changed event.
      *
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'BLEConnectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
         22,
@@ -521,7 +504,6 @@ public class GattClientDevice <: RemoteDataLite {
      * Subscribe mtu changed event.
      *
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
         22,
@@ -540,10 +522,6 @@ public class GattClientDevice <: RemoteDataLite {
 
     /**
      * Unsubscribe mtu changed event.
-     *
-     * @relation off(type: 'BLECharacteristicChange', callback?: Callback<BLECharacteristic>): void
-     * @relation off(type: 'BLEConnectionStateChange', callback?: Callback<BLEConnectionChangeState>): void
-     * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
         22,

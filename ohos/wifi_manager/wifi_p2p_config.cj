@@ -22,7 +22,6 @@ import ohos.ffi.*
 
 /**
  * P2P config.
- * @relation interface WifiP2PConfig
  */
 @!APILevel[
     22,
@@ -31,7 +30,6 @@ import ohos.ffi.*
 public class WifiP2PConfig {
     /**
      * Device mac address
-     * @relation deviceAddress: string
      */
     @!APILevel[
         22,
@@ -42,7 +40,6 @@ public class WifiP2PConfig {
     /**
      * Group network ID. When creating a group, -1 indicates creates a temporary group,
      * -2: indicates creates a persistent group
-     * @relation netId: number
      */
     @!APILevel[
         22,
@@ -52,7 +49,6 @@ public class WifiP2PConfig {
 
     /**
      * The passphrase of this {@code WifiP2pConfig} instance 
-     * @relation passphrase: string
      */
     @!APILevel[
         22,
@@ -62,7 +58,6 @@ public class WifiP2PConfig {
 
     /**
      * Group name 
-     * @relation groupName: string
      */
     @!APILevel[
         22,
@@ -72,7 +67,6 @@ public class WifiP2PConfig {
 
     /**
      * Group owner band
-     * @relation goBand: GroupOwnerBand
      */
     @!APILevel[
         22,
@@ -82,7 +76,6 @@ public class WifiP2PConfig {
 
     /**
      * Device mac address type
-     * @relation deviceAddressType?: DeviceAddressType
      */
     @!APILevel[
         22,

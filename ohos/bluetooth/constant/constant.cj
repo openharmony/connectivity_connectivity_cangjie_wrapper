@@ -22,7 +22,6 @@ import ohos.labels.APILevel
 
 /**
  * The enum of profile connection state.
- * @relation export enum ProfileConnectionState
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -32,7 +31,6 @@ import ohos.labels.APILevel
 public enum ProfileConnectionState {
     /**
      * the current profile is disconnected
-     * @relation STATE_DISCONNECTED = 0
      */
     @!APILevel[
         22,
@@ -41,7 +39,6 @@ public enum ProfileConnectionState {
     StateDisconnected
     /**
      * the current profile is being connected
-     * @relation STATE_CONNECTING = 1
      */
     | @!APILevel[
         22,
@@ -50,7 +47,6 @@ public enum ProfileConnectionState {
     StateConnecting
     /**
      * the current profile is connected
-     * @relation STATE_CONNECTED = 2
      */
     | @!APILevel[
         22,
@@ -59,7 +55,6 @@ public enum ProfileConnectionState {
     StateConnected
     /**
      * the current profile is being disconnected
-     * @relation STATE_DISCONNECTING = 3
      */
     | @!APILevel[
         22,

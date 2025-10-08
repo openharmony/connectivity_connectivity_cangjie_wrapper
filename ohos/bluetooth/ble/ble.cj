@@ -27,8 +27,6 @@ import std.collection.{ArrayList, HashMap}
 
 /**
  * create a Gatt server instance.
- *
- * @relation function createGattServer(): GattServer
  */
 @!APILevel[
     22,
@@ -47,7 +45,6 @@ public func createGattServer(): GattServer {
  * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function createGattClientDevice(deviceId: string): GattClientDevice
  */
 @!APILevel[
     22,
@@ -76,7 +73,6 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function startBLEScan(filters: Array<ScanFilter>, options?: ScanOptions): void
  */
 @!APILevel[
     22,
@@ -117,7 +113,6 @@ public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = No
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @relation function stopBLEScan(): void
  */
 @!APILevel[
     22,
@@ -142,7 +137,6 @@ public func stopBLEScan(): Unit {
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, advResponse?: AdvertiseData): void
  */
 @!APILevel[
     22,
@@ -179,7 +173,6 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @relation function stopAdvertising(): void
  */
 @!APILevel[
     22,
@@ -203,7 +196,6 @@ public func stopAdvertising(): Unit {
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function startAdvertising(advertisingParams: AdvertisingParams): Promise<number>
  */
 @!APILevel[
     22,
@@ -236,7 +228,6 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function stopAdvertising(advertisingId: number): Promise<void>
  */
 @!APILevel[
     22,
@@ -309,7 +300,6 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
  * Subscribing to advertising state change event.
  *
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function on(type: 'advertisingStateChange', callback: Callback<AdvertisingStateChangeInfo>): void
  */
 @!APILevel[
     22,
@@ -331,7 +321,6 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * Subscribe BLE scan result.
  *
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
- * @relation function on(type: 'BLEDeviceFind', callback: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
     22,
@@ -356,9 +345,6 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 
 /**
  * Unsubscribe from callback event.
- *
- * @relation function off(type: 'advertisingStateChange', callback?: Callback<AdvertisingStateChangeInfo>): void
- * @relation function off(type: 'BLEDeviceFind', callback?: Callback<Array<ScanResult>>): void
  */
 @!APILevel[
     22,
