@@ -1,7 +1,7 @@
 {
     "name": "@ohos/connectivity_cangjie_wrapper",
     "description": "Provides basic Bluetooth, BLE, WIFI Cangjie API for applications",
-    "version": "6.0",
+    "version": "6.1",
     "license": "Apache License 2.0",
     "publishAs": "code-segment",
     "segment": {
