@@ -65,7 +65,8 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
 /**
  * Starts scanning for specified BLE devices with filters.
  *
- * @param { ?ScanOptions } options - Indicates the parameters for scanning and if the user does not assign a value, the default value will be used.
+ * @param { ?ScanOptions } options - Indicates the parameters for scanning and if the user does not assign a value,
+ * the default value will be used.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
