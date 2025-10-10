@@ -26,7 +26,8 @@ import ohos.labels.APILevel
 import std.collection.{ArrayList, HashMap}
 
 /**
- * Manages GATT client. Before calling an Gatt client method, you must use createGattClientDevice to create an GattClientDevice instance.
+ * Manages GATT client. Before calling an Gatt client method, you must use createGattClientDevice to create an
+ * GattClientDevice instance.
  */
 @!APILevel[
     22,

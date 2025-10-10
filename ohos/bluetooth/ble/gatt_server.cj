@@ -26,7 +26,8 @@ import ohos.labels.APILevel
 import std.collection.{ArrayList, HashMap}
 
 /**
- * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer instance.
+ * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer
+ * instance.
  */
 @!APILevel[
     22,
