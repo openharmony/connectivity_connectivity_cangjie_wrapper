@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.ble
 
 import ohos.bluetooth.constant.ProfileConnectionState
@@ -93,8 +95,6 @@ struct CArrGattService {
 
 /**
  * Describes the Gatt service.
- *
- * @relation interface GattService
  */
 @!APILevel[
     since: "22",
@@ -103,8 +103,6 @@ struct CArrGattService {
 public class GattService {
     /**
      * The UUID of a GattService instance.
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -113,8 +111,6 @@ public class GattService {
     public var serviceUuid: String
     /**
      * Indicates whether the GattService instance is primary or secondary.
-     *
-     * @relation isPrimary: boolean
      */
     @!APILevel[
         since: "22",
@@ -123,8 +119,6 @@ public class GattService {
     public var isPrimary: Bool
     /**
      * The BLECharacteristic list belongs to this GattService instance.
-     *
-     * @relation characteristics: Array<BLECharacteristic>
      */
     @!APILevel[
         since: "22",
@@ -133,8 +127,6 @@ public class GattService {
     public var characteristics: Array<BLECharacteristic>
     /**
      * The list of GATT services contained in the service.
-     *
-     * @relation includeServices?: Array<GattService>
      */
     @!APILevel[
         since: "22",
@@ -269,8 +261,6 @@ struct CArrBLEDescriptor {
 
 /**
  * Describes the Gatt characteristic.
- *
- * @relation interface BLECharacteristic
  */
 @!APILevel[
     since: "22",
@@ -279,8 +269,6 @@ struct CArrBLEDescriptor {
 public class BLECharacteristic {
     /**
      * The UUID of the GattService instance to which the characteristic belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -289,8 +277,6 @@ public class BLECharacteristic {
     public var serviceUuid: String
     /**
      * The UUID of a BLECharacteristic instance
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -299,8 +285,6 @@ public class BLECharacteristic {
     public var characteristicUuid: String
     /**
      * The value of a BLECharacteristic instance
-     *
-     * @relation characteristicValue: ArrayBuffer
      */    
     @!APILevel[
         since: "22",
@@ -309,8 +293,6 @@ public class BLECharacteristic {
     public var characteristicValue: Array<Byte>
     /**
      * The list of BLEDescriptor contained in the characteristic
-     *
-     * @relation descriptors: Array<BLEDescriptor>
      */    
     @!APILevel[
         since: "22",
@@ -319,8 +301,6 @@ public class BLECharacteristic {
     public var descriptors: Array<BLEDescriptor>
     /**
      * The properties of a BLECharacteristic instance
-     *
-     * @relation properties?: GattProperties
      */    
     @!APILevel[
         since: "22",
@@ -428,8 +408,6 @@ struct NativeBLEDescriptor {
 
 /**
  * Describes the Gatt descriptor.
- *
- * @relation interface BLEDescriptor
  */
 @!APILevel[
     since: "22",
@@ -438,8 +416,6 @@ struct NativeBLEDescriptor {
 public class BLEDescriptor {
     /**
      * The UUID of the GattService instance to which the descriptor belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -448,8 +424,6 @@ public class BLEDescriptor {
     public var serviceUuid: String
     /**
      * The UUID of the BLECharacteristic instance to which the descriptor belongs
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -458,8 +432,6 @@ public class BLEDescriptor {
     public var characteristicUuid: String
     /**
      * The UUID of the BLEDescriptor instance
-     *
-     * @relation descriptorUuid: string
      */
     @!APILevel[
         since: "22",
@@ -468,8 +440,6 @@ public class BLEDescriptor {
     public var descriptorUuid: String
     /**
      * The value of the BLEDescriptor instance
-     *
-     * @relation descriptorValue: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -572,8 +542,6 @@ struct NativeGattProperties {
 
 /**
  * Describes the properties of a gatt characteristic.
- *
- * @relation interface GattProperties
  */
 @!APILevel[
     since: "22",
@@ -582,8 +550,6 @@ struct NativeGattProperties {
 public class GattProperties {
     /**
      * Support write property of the characteristic.
-     *
-     * @relation write?: boolean
      */
     @!APILevel[
         since: "22",
@@ -592,8 +558,6 @@ public class GattProperties {
     public var write: Bool
     /**
      * Support write no response property of the characteristic.
-     *
-     * @relation writeNoResponse?: boolean
      */
     @!APILevel[
         since: "22",
@@ -602,8 +566,6 @@ public class GattProperties {
     public var writeNoResponse: Bool
     /**
      * Support read property of the characteristic.
-     *
-     * @relation read?: boolean
      */
     @!APILevel[
         since: "22",
@@ -612,8 +574,6 @@ public class GattProperties {
     public var read: Bool
     /**
      * Support notify property of the characteristic.
-     *
-     * @relation notify?: boolean
      */
     @!APILevel[
         since: "22",
@@ -622,8 +582,6 @@ public class GattProperties {
     public var notify: Bool
     /**
      * Support indicate property of the characteristic.
-     *
-     * @relation indicate?: boolean
      */
     @!APILevel[
         since: "22",
@@ -694,8 +652,6 @@ struct NativeNotifyCharacteristic {
 
 /**
  * Describes the value of the indication or notification sent by the Gatt server.
- *
- * @relation interface NotifyCharacteristic
  */
 @!APILevel[
     since: "22",
@@ -704,8 +660,6 @@ struct NativeNotifyCharacteristic {
 public class NotifyCharacteristic {
     /**
      * The UUID of the GattService instance to which the characteristic belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -714,8 +668,6 @@ public class NotifyCharacteristic {
     public var serviceUuid: String
     /**
      * The UUID of a NotifyCharacteristic instance
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -724,8 +676,6 @@ public class NotifyCharacteristic {
     public var characteristicUuid: String
     /**
      * The value of a NotifyCharacteristic instance
-     *
-     * @relation characteristicValue: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -735,8 +685,6 @@ public class NotifyCharacteristic {
     /**
      * Specifies whether to request confirmation from the BLE peripheral device (indication) or
      * send a notification. Value true indicates the former and false indicates the latter.
-     *
-     * @relation confirm: boolean
      */
     @!APILevel[
         since: "22",
@@ -805,8 +753,6 @@ struct NativeServerResponse {
 
 /**
  * Describes the parameters of a response send by the server to a specified read or write request.
- *
- * @relation interface ServerResponse
  */
 @!APILevel[
     since: "22",
@@ -815,8 +761,6 @@ struct NativeServerResponse {
 public class ServerResponse {
     /**
      * Indicates the address of the client to which to send the response
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -825,8 +769,6 @@ public class ServerResponse {
     public var deviceId: String
     /**
      * The Id of the write request
-     *
-     * @relation transId: number
      */
     @!APILevel[
         since: "22",
@@ -835,8 +777,6 @@ public class ServerResponse {
     public var transId: Int32
     /**
      * Indicates the status of the read or write request, set this parameter to '0' in normal cases
-     *
-     * @relation status: number
      */
     @!APILevel[
         since: "22",
@@ -845,8 +785,6 @@ public class ServerResponse {
     public var status: Int32
     /**
      * Indicates the byte offset of the start position for reading or writing operation
-     *
-     * @relation offset: number
      */
     @!APILevel[
         since: "22",
@@ -855,8 +793,6 @@ public class ServerResponse {
     public var offset: Int32
     /**
      * Indicates the value to be sent
-     *
-     * @relation value: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -908,8 +844,6 @@ public class ServerResponse {
 
 /**
  * The enum of gatt characteristic write type
- *
- * @relation enum GattWriteType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -919,8 +853,6 @@ public class ServerResponse {
 public enum GattWriteType {
     /**
      * Write characteristic with response.
-     *
-     * @relation WRITE = 1
      */
     @!APILevel[
         since: "22",
@@ -930,8 +862,6 @@ public enum GattWriteType {
     | 
     /**
      * Write characteristic without response.
-     *
-     * @relation WRITE_NO_RESPONSE = 2
      */
     @!APILevel[
         since: "22",
@@ -977,8 +907,6 @@ struct NativeCharacteristicReadRequest {
 
 /**
  * Describes the parameters of the Gatt client's characteristic read request.
- *
- * @relation interface CharacteristicReadRequest
  */
 @!APILevel[
     since: "22",
@@ -987,8 +915,6 @@ struct NativeCharacteristicReadRequest {
 public class CharacteristicReadRequest {
     /**
      * Indicates the address of the client that initiates the read request
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -997,8 +923,6 @@ public class CharacteristicReadRequest {
     public var deviceId: String
     /**
      * The Id of the read request
-     *
-     * @relation transId: number
      */
     @!APILevel[
         since: "22",
@@ -1007,8 +931,6 @@ public class CharacteristicReadRequest {
     public var transId: Int32
     /**
      * Indicates the byte offset of the start position for reading characteristic value
-     *
-     * @relation offset: number
      */
     @!APILevel[
         since: "22",
@@ -1017,8 +939,6 @@ public class CharacteristicReadRequest {
     public var offset: Int32
     /**
      * The UUID of a CharacteristicReadRequest instance
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1027,8 +947,6 @@ public class CharacteristicReadRequest {
     public var characteristicUuid: String
     /**
      * The UUID of the service to which the characteristic belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1082,8 +1000,6 @@ struct NativeCharacteristicWriteRequest {
 
 /**
  * Describes the parameters of the of the Gatt client's characteristic write request.
- *
- * @relation interface CharacteristicWriteRequest
  */
 @!APILevel[
     since: "22",
@@ -1092,8 +1008,6 @@ struct NativeCharacteristicWriteRequest {
 public class CharacteristicWriteRequest {
     /**
      * Indicates the address of the client that initiates the write request
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -1102,8 +1016,6 @@ public class CharacteristicWriteRequest {
     public var deviceId: String
     /**
      * The Id of the write request
-     *
-     * @relation transId: number
      */
     @!APILevel[
         since: "22",
@@ -1112,8 +1024,6 @@ public class CharacteristicWriteRequest {
     public var transId: Int32
     /**
      * Indicates the byte offset of the start position for writing characteristic value
-     *
-     * @relation offset: number
      */
     @!APILevel[
         since: "22",
@@ -1122,8 +1032,6 @@ public class CharacteristicWriteRequest {
     public var offset: Int32
     /**
      * Whether this request should be pending for later operation
-     *
-     * @relation isPrepared: boolean
      */
     @!APILevel[
         since: "22",
@@ -1132,8 +1040,6 @@ public class CharacteristicWriteRequest {
     public var isPrepared: Bool
     /**
      * Whether the remote client need a response
-     *
-     * @relation needRsp: boolean
      */
     @!APILevel[
         since: "22",
@@ -1142,8 +1048,6 @@ public class CharacteristicWriteRequest {
     public var needRsp: Bool
     /**
      * Indicates the value to be written
-     *
-     * @relation value: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -1152,8 +1056,6 @@ public class CharacteristicWriteRequest {
     public var value: Array<Byte>
     /**
      * The UUID of a CharacteristicWriteRequest instance
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1162,8 +1064,6 @@ public class CharacteristicWriteRequest {
     public var characteristicUuid: String
     /**
      * The UUID of the service to which the characteristic belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1219,8 +1119,6 @@ struct NativeDescriptorReadRequest {
 
 /**
  * Describes the parameters of the Gatt client's descriptor read request.
- *
- * @relation interface DescriptorReadRequest
  */
 @!APILevel[
     since: "22",
@@ -1229,8 +1127,6 @@ struct NativeDescriptorReadRequest {
 public class DescriptorReadRequest {
     /**
      * Indicates the address of the client that initiates the read request
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -1239,8 +1135,6 @@ public class DescriptorReadRequest {
     public var deviceId: String
     /**
      * The Id of the read request
-     *
-     * @relation transId: number
      */
     @!APILevel[
         since: "22",
@@ -1249,8 +1143,6 @@ public class DescriptorReadRequest {
     public var transId: Int32
     /**
      * Indicates the byte offset of the start position for reading characteristic value
-     *
-     * @relation offset: number
      */
     @!APILevel[
         since: "22",
@@ -1259,8 +1151,6 @@ public class DescriptorReadRequest {
     public var offset: Int32
     /**
      * The UUID of a DescriptorReadRequest instance
-     *
-     * @relation descriptorUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1269,8 +1159,6 @@ public class DescriptorReadRequest {
     public var descriptorUuid: String
     /**
      * The UUID of the characteristic to which the descriptor belongs
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1279,8 +1167,6 @@ public class DescriptorReadRequest {
     public var characteristicUuid: String
     /**
      * The UUID of the service to which the descriptor belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1338,8 +1224,6 @@ struct NativeDescriptorWriteRequest {
 
 /**
  * Describes the parameters of the Gatt client's characteristic write request.
- *
- * @relation interface DescriptorWriteRequest
  */
 @!APILevel[
     since: "22",
@@ -1348,8 +1232,6 @@ struct NativeDescriptorWriteRequest {
 public class DescriptorWriteRequest {
     /**
      * Indicates the address of the client that initiates the write request
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -1358,8 +1240,6 @@ public class DescriptorWriteRequest {
     public var deviceId: String
     /**
      * The Id of the write request
-     *
-     * @relation transId: number
      */
     @!APILevel[
         since: "22",
@@ -1368,8 +1248,6 @@ public class DescriptorWriteRequest {
     public var transId: Int32
     /**
      * Indicates the byte offset of the start position for writing characteristic value
-     *
-     * @relation offset: number
      */
     @!APILevel[
         since: "22",
@@ -1378,8 +1256,6 @@ public class DescriptorWriteRequest {
     public var offset: Int32
     /**
      * Whether this request should be pending for later operation
-     *
-     * @relation isPrepared: boolean
      */
     @!APILevel[
         since: "22",
@@ -1388,8 +1264,6 @@ public class DescriptorWriteRequest {
     public var isPrepared: Bool
     /**
      * Whether the remote client need a response
-     *
-     * @relation needRsp: boolean
      */
     @!APILevel[
         since: "22",
@@ -1398,8 +1272,6 @@ public class DescriptorWriteRequest {
     public var needRsp: Bool
     /**
      * Indicates the value to be written
-     *
-     * @relation value: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -1408,8 +1280,6 @@ public class DescriptorWriteRequest {
     public var value: Array<Byte>
     /**
      * The UUID of a DescriptorWriteRequest instance
-     *
-     * @relation descriptorUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1418,8 +1288,6 @@ public class DescriptorWriteRequest {
     public var descriptorUuid: String
     /**
      * The UUID of the characteristic to which the descriptor belongs
-     *
-     * @relation characteristicUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1428,8 +1296,6 @@ public class DescriptorWriteRequest {
     public var characteristicUuid: String
     /**
      * The UUID of the service to which the descriptor belongs
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -1478,8 +1344,6 @@ struct NativeBLEConnectionChangeState {
 
 /**
  * Describes the Gatt profile connection state.
- *
- * @relation interface BLEConnectionChangeState
  */
 @!APILevel[
     since: "22",
@@ -1488,8 +1352,6 @@ struct NativeBLEConnectionChangeState {
 public class BLEConnectionChangeState {
     /**
      * Indicates the peer device address
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -1498,8 +1360,6 @@ public class BLEConnectionChangeState {
     public var deviceId: String
     /**
      * Connection state of the Gatt profile
-     *
-     * @relation state: ProfileConnectionState
      */
     @!APILevel[
         since: "22",
@@ -1659,8 +1519,6 @@ public enum BluetoothBleGattClientDeviceCallbackType {
 
 /**
  * Describes the permission of a att attribute item.
- *
- * @relation interface GattPermissions
  */
 @Derive[Equatable]
 @!APILevel[
@@ -1670,8 +1528,6 @@ public enum BluetoothBleGattClientDeviceCallbackType {
 public class GattPermissions {
     /**
      * The attribute field has the read permission.
-     *
-     * @relation read?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1681,8 +1537,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the encrypted read permission.
-     *
-     * @relation readEncrypted?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1692,8 +1546,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the read permission for encryption authentication.
-     *
-     * @relation readEncryptedMitm?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1703,8 +1555,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the write permission.
-     *
-     * @relation write?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1714,8 +1564,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the encrypted write permission.
-     *
-     * @relation writeEncrypted?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1725,8 +1573,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the write permission for encryption authentication.
-     *
-     * @relation writeEncryptedMitm?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1736,8 +1582,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the signed write permission.
-     *
-     * @relation writeSigned?: boolean
      */
     @!APILevel[
         since: "22",
@@ -1747,8 +1591,6 @@ public class GattPermissions {
 
     /**
      * The attribute field has the write permission for signature authentication.
-     *
-     * @relation writeSignedMitm?: boolean
      */
     @!APILevel[
         since: "22",

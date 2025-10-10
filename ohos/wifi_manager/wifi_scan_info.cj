@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.ffi.*
@@ -20,7 +22,6 @@ import ohos.labels.*
 
 /**
  * Describes the scanned Wi-Fi information.
- * @relation interface WifiScanInfo
  */
 @!APILevel[
     since: "22",
@@ -29,7 +30,6 @@ import ohos.labels.*
 public class WifiScanInfo {
     /**
      * Wi-Fi SSID: the maximum length is 32 
-     * @relation ssid: string
      */
     @!APILevel[
         since: "22",
@@ -39,7 +39,6 @@ public class WifiScanInfo {
 
     /**
      * Wi-Fi bssid(MAC): the length is 6
-     * @relation bssid: string
      */
     @!APILevel[
         since: "22",
@@ -49,7 +48,6 @@ public class WifiScanInfo {
 
     /**
      * Wi-Fi bssid type
-     * @relation bssidType: DeviceAddressType
      */
     @!APILevel[
         since: "22",
@@ -59,7 +57,6 @@ public class WifiScanInfo {
 
     /**
      * Hotspot capability
-     * @relation capabilities: string
      */
     @!APILevel[
         since: "22",
@@ -69,7 +66,6 @@ public class WifiScanInfo {
 
     /**
      * Security type: reference definition of WifiSecurityType
-     * @relation securityType: WifiSecurityType
      */
     @!APILevel[
         since: "22",
@@ -79,7 +75,6 @@ public class WifiScanInfo {
 
     /**
      * Received signal strength indicator (RSSI)
-     * @relation rssi: number
      */
     @!APILevel[
         since: "22",
@@ -89,7 +84,6 @@ public class WifiScanInfo {
 
     /**
      * Frequency band, 1: 2.4G, 2: 5G
-     * @relation band: number
      */
     @!APILevel[
         since: "22",
@@ -99,7 +93,6 @@ public class WifiScanInfo {
 
     /**
      * Frequency
-     * @relation frequency: number
      */
     @!APILevel[
         since: "22",
@@ -109,7 +102,6 @@ public class WifiScanInfo {
 
     /**
      * Channel width
-     * @relation channelWidth: number
      */
     @!APILevel[
         since: "22",
@@ -119,7 +111,6 @@ public class WifiScanInfo {
 
     /**
      * Center frequency 0.
-     * @relation centerFrequency0: number
      */
     @!APILevel[
         since: "22",
@@ -129,7 +120,6 @@ public class WifiScanInfo {
 
     /**
      * Center frequency 1.
-     * @relation centerFrequency1: number
      */
     @!APILevel[
         since: "22",
@@ -139,7 +129,6 @@ public class WifiScanInfo {
 
     /**
      * Information elements.
-     * @relation infoElems: Array<WifiInfoElem>
      */
     @!APILevel[
         since: "22",
@@ -149,7 +138,6 @@ public class WifiScanInfo {
 
     /**
      * Time stamp
-     * @relation timestamp: number
      */
     @!APILevel[
         since: "22",
@@ -159,7 +147,6 @@ public class WifiScanInfo {
 
     /**
      * Supported wifi category
-     * @relation supportedWifiCategory: WifiCategory
      */
     @!APILevel[
         since: "22",
@@ -169,7 +156,6 @@ public class WifiScanInfo {
 
     /**
      * Whether the Wi-Fi hotspot is HiLink network.
-     * @relation isHiLinkNetwork: boolean
      */
     @!APILevel[
         since: "22",

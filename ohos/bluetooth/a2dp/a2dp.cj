@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.a2dp
 
 import ohos.bluetooth.*
@@ -28,8 +30,6 @@ import std.deriving.*
 
 /**
  * create the instance of a2dp profile.
- *
- * @relation function createA2dpSrcProfile(): A2dpSourceProfile
  */
 @!APILevel[
     since: "22",
@@ -41,8 +41,6 @@ public func createA2dpSrcProfile(): A2dpSourceProfile {
 
 /**
  * Manager a2dp source profile.
- *
- * @relation interface A2dpSourceProfile extends BaseProfile
  */
 @!APILevel[
     since: "22",
@@ -76,7 +74,6 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getPlayingState(deviceId: string): PlayingState
      */
     @!APILevel[
         since: "22",
@@ -106,7 +103,6 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
         since: "22",
@@ -138,7 +134,6 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
         since: "22",
@@ -164,7 +159,6 @@ public class A2dpSourceProfile <: BaseProfile {
      * Subscribe the event reported when the profile connection state changes.
      *
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -197,8 +191,6 @@ public class A2dpSourceProfile <: BaseProfile {
 
     /**
      * Unsubscribe the event reported when the profile connection state changes.
-     *
-     * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -219,7 +211,6 @@ public class A2dpSourceProfile <: BaseProfile {
      * Unsubscribe the event reported when the profile connection state changes.
      *
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -238,8 +229,6 @@ public class A2dpSourceProfile <: BaseProfile {
 
 /**
  * The enum of a2dp playing state.
- *
- * @relation enum PlayingState
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -249,8 +238,6 @@ public class A2dpSourceProfile <: BaseProfile {
 public enum PlayingState {
     /**
      * Not playing.
-     *
-     * @relation STATE_NOT_PLAYING
      */
     @!APILevel[
         since: "22",
@@ -260,8 +247,6 @@ public enum PlayingState {
     |
     /**
      * Playing.
-     *
-     * @relation STATE_PLAYING
      */
     @!APILevel[
         since: "22",
@@ -281,8 +266,6 @@ public enum PlayingState {
 
 /**
  * Describes the codec information.
- *
- * @relation interface CodecInfo
  */
 @!APILevel[
     since: "22",
@@ -291,8 +274,6 @@ public enum PlayingState {
 public class CodecInfo {
     /**
      * codec type
-     *
-     * @relation codecType: CodecType
      */
     @!APILevel[
         since: "22",
@@ -302,8 +283,6 @@ public class CodecInfo {
 
     /**
      * codec bits per sample.
-     *
-     * @relation codecBitsPerSample: CodecBitsPerSample
      */
     @!APILevel[
         since: "22",
@@ -313,8 +292,6 @@ public class CodecInfo {
 
     /**
      * codec channel mode.
-     *
-     * @relation codecChannelMode: CodecChannelMode
      */
     @!APILevel[
         since: "22",
@@ -324,8 +301,6 @@ public class CodecInfo {
 
     /**
      * codec sample rate.
-     *
-     * @relation codecSampleRate: CodecSampleRate
      */
     @!APILevel[
         since: "22",
@@ -348,8 +323,6 @@ public class CodecInfo {
 
 /**
  * Describes the codec type.
- *
- * @relation enum CodecType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -359,8 +332,6 @@ public class CodecInfo {
 public enum CodecType {
     /**
      * invalid codec type.
-     *
-     * @relation CODEC_TYPE_INVALID = -1
      */
     @!APILevel[
         since: "22",
@@ -370,8 +341,6 @@ public enum CodecType {
     |
     /**
      * SBC - Sub-band coding.
-     *
-     * @relation CODEC_TYPE_SBC = 0
      */
     @!APILevel[
         since: "22",
@@ -381,8 +350,6 @@ public enum CodecType {
     |
     /**
      * AAC -Advanced Audio Coding.
-     *
-     * @relation CODEC_TYPE_AAC = 1
      */
     @!APILevel[
         since: "22",
@@ -392,8 +359,6 @@ public enum CodecType {
     |
     /**
      * L2HC.
-     *
-     * @relation CODEC_TYPE_L2HC = 2
      */
     @!APILevel[
         since: "22",
@@ -405,8 +370,6 @@ public enum CodecType {
 
 /**
  * Describes the codec channel mode.
- *
- * @relation enum CodecChannelMode
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -416,8 +379,6 @@ public enum CodecType {
 public enum CodecChannelMode {
     /**
      * Codec channel mode none.
-     *
-     * @relation CODEC_CHANNEL_MODE_NONE = 0
      */
     @!APILevel[
         since: "22",
@@ -427,8 +388,6 @@ public enum CodecChannelMode {
     |
     /**
      * Codec channel mode MONO.
-     *
-     * @relation CODEC_CHANNEL_MODE_MONO = 1
      */
     @!APILevel[
         since: "22",
@@ -438,8 +397,6 @@ public enum CodecChannelMode {
     |
     /**
      * Codec channel mode STEREO.
-     *
-     * @relation CODEC_CHANNEL_MODE_STEREO = 2
      */
     @!APILevel[
         since: "22",
@@ -451,8 +408,6 @@ public enum CodecChannelMode {
 
 /**
  * Describes the codec bits per sample.
- *
- * @relation enum CodecBitsPerSample
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -462,8 +417,6 @@ public enum CodecChannelMode {
 public enum CodecBitsPerSample {
     /**
      * Codec bits per sample none.
-     *
-     * @relation CODEC_BITS_PER_SAMPLE_NONE = 0
      */
     @!APILevel[
         since: "22",
@@ -473,8 +426,6 @@ public enum CodecBitsPerSample {
     |
     /**
      * Codec 16 bits per sample.
-     *
-     * @relation CODEC_BITS_PER_SAMPLE_16 = 1
      */
     @!APILevel[
         since: "22",
@@ -484,8 +435,6 @@ public enum CodecBitsPerSample {
     |
     /**
      * Codec 24 bits per sample.
-     *
-     * @relation CODEC_BITS_PER_SAMPLE_24 = 2
      */
     @!APILevel[
         since: "22",
@@ -495,8 +444,6 @@ public enum CodecBitsPerSample {
     |
     /**
      * Codec 32 bits per sample.
-     *
-     * @relation CODEC_BITS_PER_SAMPLE_32 = 3
      */
     @!APILevel[
         since: "22",
@@ -508,8 +455,6 @@ public enum CodecBitsPerSample {
 
 /**
  * Describes the codec sample rate.
- *
- * @relation enum CodecSampleRate
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -519,8 +464,6 @@ public enum CodecBitsPerSample {
 public enum CodecSampleRate {
     /**
      * Codec sample rate none.
-     *
-     * @relation CODEC_SAMPLE_RATE_NONE = 0
      */
     @!APILevel[
         since: "22",
@@ -530,8 +473,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 44.1k.
-     *
-     * @relation CODEC_SAMPLE_RATE_44100 = 1
      */
     @!APILevel[
         since: "22",
@@ -541,8 +482,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 48k.
-     *
-     * @relation CODEC_SAMPLE_RATE_48000 = 2
      */
     @!APILevel[
         since: "22",
@@ -552,8 +491,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 88.2k.
-     *
-     * @relation CODEC_SAMPLE_RATE_88200 = 3
      */
     @!APILevel[
         since: "22",
@@ -563,8 +500,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 96k.
-     *
-     * @relation CODEC_SAMPLE_RATE_96000 = 4
      */
     @!APILevel[
         since: "22",
@@ -574,8 +509,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 176.4k.
-     *
-     * @relation CODEC_SAMPLE_RATE_176400 = 5
      */
     @!APILevel[
         since: "22",
@@ -585,8 +518,6 @@ public enum CodecSampleRate {
     |
     /**
      * Codec sample rate 192k.
-     *
-     * @relation CODEC_SAMPLE_RATE_192000 = 6
      */
     @!APILevel[
         since: "22",

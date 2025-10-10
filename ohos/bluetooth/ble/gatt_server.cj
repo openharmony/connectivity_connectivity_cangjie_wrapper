@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.ble
 
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
@@ -25,8 +27,6 @@ import std.collection.{ArrayList, HashMap}
 
 /**
  * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer instance.
- *
- * @relation interface GattServer
  */
 @!APILevel[
     since: "22",
@@ -63,7 +63,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation addService(service: GattService): void
      */
     @!APILevel[
         since: "22",
@@ -90,7 +89,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException} 2900004 - Profile not supported.
      * @throws { BusinessException} 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation removeService(serviceUuid: string): void
      */
     @!APILevel[
         since: "22",
@@ -115,7 +113,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation close(): void
      */
     @!APILevel[
         since: "22",
@@ -141,7 +138,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation notifyCharacteristicChanged(deviceId: string, notifyCharacteristic: NotifyCharacteristic): Promise<void>
      */
     @!APILevel[
         since: "22",
@@ -170,7 +166,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation sendResponse(serverResponse: ServerResponse): void
      */
     @!APILevel[
         since: "22",
@@ -193,7 +188,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'characteristicRead', callback: Callback<CharacteristicReadRequest>): void
      */
     @!APILevel[
         since: "22",
@@ -218,7 +212,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'characteristicWrite', callback: Callback<CharacteristicWriteRequest>): void
      */
     @!APILevel[
         since: "22",
@@ -242,7 +235,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'descriptorRead', callback: Callback<DescriptorReadRequest>): void
      */
     @!APILevel[
         since: "22",
@@ -266,7 +258,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'descriptorWrite', callback: Callback<DescriptorWriteRequest>): void
      */
     @!APILevel[
         since: "22",
@@ -290,7 +281,6 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'connectionStateChange', callback: Callback<BLEConnectionChangeState>): void
      */
     @!APILevel[
         since: "22",
@@ -312,7 +302,6 @@ public class GattServer <: RemoteDataLite {
      * Subscribe mtu changed event.
      *
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'BLEMtuChange', callback: Callback<number>): void
      */
     @!APILevel[
         since: "22",
@@ -332,13 +321,6 @@ public class GattServer <: RemoteDataLite {
 
     /**
      * Unsubscribe mtu changed event.
-     *
-     * @relation off(type: 'characteristicRead', callback?: Callback<CharacteristicReadRequest>): void
-     * @relation off(type: 'characteristicWrite', callback?: Callback<CharacteristicWriteRequest>): void
-     * @relation off(type: 'descriptorRead', callback?: Callback<DescriptorReadRequest>): void
-     * @relation off(type: 'descriptorWrite', callback?: Callback<DescriptorWriteRequest>): void
-     * @relation off(type: 'connectionStateChange', callback?: Callback<BLEConnectionChangeState>): void
-     * @relation off(type: 'BLEMtuChange', callback?: Callback<number>): void
      */
     @!APILevel[
         since: "22",

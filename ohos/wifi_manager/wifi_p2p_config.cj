@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.labels.*
@@ -20,7 +22,6 @@ import ohos.ffi.*
 
 /**
  * P2P config.
- * @relation interface WifiP2PConfig
  */
 @!APILevel[
     since: "22",
@@ -29,7 +30,6 @@ import ohos.ffi.*
 public class WifiP2PConfig {
     /**
      * Device mac address
-     * @relation deviceAddress: string
      */
     @!APILevel[
         since: "22",
@@ -40,7 +40,6 @@ public class WifiP2PConfig {
     /**
      * Group network ID. When creating a group, -1 indicates creates a temporary group,
      * -2: indicates creates a persistent group
-     * @relation netId: number
      */
     @!APILevel[
         since: "22",
@@ -50,7 +49,6 @@ public class WifiP2PConfig {
 
     /**
      * The passphrase of this {@code WifiP2pConfig} instance 
-     * @relation passphrase: string
      */
     @!APILevel[
         since: "22",
@@ -60,7 +58,6 @@ public class WifiP2PConfig {
 
     /**
      * Group name 
-     * @relation groupName: string
      */
     @!APILevel[
         since: "22",
@@ -70,7 +67,6 @@ public class WifiP2PConfig {
 
     /**
      * Group owner band
-     * @relation goBand: GroupOwnerBand
      */
     @!APILevel[
         since: "22",
@@ -80,7 +76,6 @@ public class WifiP2PConfig {
 
     /**
      * Device mac address type
-     * @relation deviceAddressType?: DeviceAddressType
      */
     @!APILevel[
         since: "22",

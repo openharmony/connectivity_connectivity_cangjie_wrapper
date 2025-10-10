@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.business_exception.BusinessException
@@ -30,7 +32,6 @@ let LOGGER = HilogChannel(0, 0xD001560, "CJ-wifi")
  * Query the Wi-Fi status
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2501000 - Operation failed.
- * @relation function isWifiActive(): boolean
  */
 @!APILevel[
     since: "22",
@@ -51,7 +52,6 @@ public func isWifiActive(): Bool {
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2501000 - Operation failed.
- * @relation function getScanInfoList(): Array<WifiScanInfo>
  */
 @!APILevel[
     since: "22",
@@ -85,7 +85,6 @@ public func getScanInfoList(): Array<WifiScanInfo> {
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
- * @relation function p2pConnect(config: WifiP2PConfig): void
  */
 @!APILevel[
     since: "22",
@@ -108,7 +107,6 @@ public func p2pConnect(config: WifiP2PConfig): Unit {
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
- * @relation function p2pCancelConnect(): void
  */
 @!APILevel[
     since: "22",
@@ -129,7 +127,6 @@ public func p2pCancelConnect(): Unit {
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
- * @relation function startDiscoverDevices(): void
  */
 @!APILevel[
     since: "22",
@@ -150,7 +147,6 @@ public func startDiscoverDevices(): Unit {
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
- * @relation function stopDiscoverDevices(): void
  */
 @!APILevel[
     since: "22",
@@ -239,7 +235,6 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
- * @relation function on(type: 'wifiScanStateChange', callback: Callback<number>): void
  */
 @!APILevel[
     since: "22",
@@ -256,7 +251,6 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
- * @relation function off(type: 'wifiScanStateChange', callback?: Callback<number>): void
  */
 @!APILevel[
     since: "22",

@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.labels.*
@@ -20,7 +22,6 @@ import ohos.ffi.*
 
 /**
  * Wi-Fi information elements.
- * @relation interface WifiInfoElem
  */
 @!APILevel[
     since: "22",
@@ -29,7 +30,6 @@ import ohos.ffi.*
 public class WifiInfoElem {
     /**
      * Element id
-     * @relation eid: number
      */
     @!APILevel[
         since: "22",
@@ -39,7 +39,6 @@ public class WifiInfoElem {
 
     /**
      * Element content
-     * @relation content: Uint8Array
      */
     @!APILevel[
         since: "22",

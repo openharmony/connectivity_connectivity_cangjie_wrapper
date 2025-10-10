@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.labels.APILevel
@@ -38,7 +40,6 @@ const SYSCAP_WIFI_P2P = 2800000i32
 
 /**
  * Wi-Fi device address( mac / bssid ) type.
- * @relation enum DeviceAddressType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -48,7 +49,6 @@ const SYSCAP_WIFI_P2P = 2800000i32
 public enum DeviceAddressType {
     /**
      * random device address
-     * @relation RANDOM_DEVICE_ADDRESS = 0
      */
     @!APILevel[
         since: "22",
@@ -58,7 +58,6 @@ public enum DeviceAddressType {
     |
     /**
      * real device address
-     * @relation REAL_DEVICE_ADDRESS = 1
      */
     @!APILevel[
         since: "22",
@@ -100,7 +99,6 @@ public enum DeviceAddressType {
 
 /**
  * Describes the wifi security type.
- * @relation enum WifiSecurityType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -110,7 +108,6 @@ public enum DeviceAddressType {
 public enum WifiSecurityType {
     /**
      * Invalid security type
-     * @relation WIFI_SEC_TYPE_INVALID = 0
      */
     @!APILevel[
         since: "22",
@@ -120,7 +117,6 @@ public enum WifiSecurityType {
     |
         /**
          * Open
-         * @relation WIFI_SEC_TYPE_OPEN = 1
          */
         @!APILevel[
         since: "22",
@@ -130,7 +126,6 @@ public enum WifiSecurityType {
     |
         /**
          * Wired Equivalent Privacy (WEP)
-         * @relation WIFI_SEC_TYPE_WEP = 2
          */
         @!APILevel[
         since: "22",
@@ -140,7 +135,6 @@ public enum WifiSecurityType {
     |
         /**
          * Pre-shared key (PSK)
-         * @relation WIFI_SEC_TYPE_PSK = 3
          */
         @!APILevel[
         since: "22",
@@ -150,7 +144,6 @@ public enum WifiSecurityType {
     |
         /**
         * Simultaneous Authentication of Equals (SAE)
-        * @relation WIFI_SEC_TYPE_SAE = 4
         */
         @!APILevel[
         since: "22",
@@ -160,7 +153,6 @@ public enum WifiSecurityType {
     |
         /**
         * EAP authentication.
-        * @relation WIFI_SEC_TYPE_EAP = 5
         */
         @!APILevel[
         since: "22",
@@ -170,7 +162,6 @@ public enum WifiSecurityType {
     |
         /**
          * SUITE_B_192 192 bit level.
-         * @relation WIFI_SEC_TYPE_EAP_SUITE_B = 6
          */
         @!APILevel[
         since: "22",
@@ -180,7 +171,6 @@ public enum WifiSecurityType {
     |
         /**
          * Opportunistic Wireless Encryption.
-         * @relation WIFI_SEC_TYPE_OWE = 7
          */
         @!APILevel[
         since: "22",
@@ -190,7 +180,6 @@ public enum WifiSecurityType {
     |
         /**
          * WAPI certificate to be specified.
-         * @relation WIFI_SEC_TYPE_WAPI_CERT = 8
          */
         @!APILevel[
         since: "22",
@@ -200,7 +189,6 @@ public enum WifiSecurityType {
     |
         /**
          * WAPI pre-shared key to be specified.
-         * @relation WIFI_SEC_TYPE_WAPI_PSK = 9
          */
         @!APILevel[
         since: "22",
@@ -250,7 +238,6 @@ public enum WifiSecurityType {
 
 /**
  * Wi-Fi Category.
- * @relation enum WifiCategory
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -260,7 +247,6 @@ public enum WifiSecurityType {
 public enum WifiCategory {
     /**
      * Default.
-     * @relation DEFAULT = 1
      */
     @!APILevel[
         since: "22",
@@ -270,7 +256,6 @@ public enum WifiCategory {
     |
     /**
      * Wifi6.
-     * @relation WIFI6 = 2
      */
     @!APILevel[
         since: "22",
@@ -280,7 +265,6 @@ public enum WifiCategory {
     |
     /**
      * Wifi6+.
-     * @relation WIFI6_PLUS = 3
      */
     @!APILevel[
         since: "22",
@@ -316,7 +300,6 @@ public enum WifiCategory {
 
 /**
  * P2P group owner band.
- * @relation enum GroupOwnerBand
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -326,7 +309,6 @@ public enum WifiCategory {
 public enum GroupOwnerBand {
     /**
      * default band.
-     * @relation GO_BAND_AUTO  = 0
      */
     @!APILevel[
         since: "22",
@@ -336,7 +318,6 @@ public enum GroupOwnerBand {
     |
     /**
      * 2.4G band.
-     * @relation GO_BAND_2GHZ  = 1
      */
      @!APILevel[
         since: "22",
@@ -346,7 +327,6 @@ public enum GroupOwnerBand {
     |
     /**
      * 5G band.
-     * @relation GO_BAND_5GHZ  = 2
      */
     @!APILevel[
         since: "22",

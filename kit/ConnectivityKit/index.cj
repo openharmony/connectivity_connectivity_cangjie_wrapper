@@ -13,7 +13,9 @@
  * limitations under the License.
  */
 
-package ConnectivityKit
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
+package kit.ConnectivityKit
 
 public import ohos.bluetooth.*
 public import ohos.bluetooth.base_profile.*

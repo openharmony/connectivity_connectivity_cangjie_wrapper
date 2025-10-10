@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.base_profile
 
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
@@ -23,8 +25,6 @@ import std.deriving.Derive
 
 /**
  * Enum for cause of disconnect.
- *
- * @relation enum DisconnectCause
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -34,8 +34,6 @@ import std.deriving.Derive
 public enum DisconnectCause {
     /**
      * User disconnect device.
-     *
-     * @relation USER_DISCONNECT = 0
      */
     @!APILevel[
         since: "22",
@@ -45,8 +43,6 @@ public enum DisconnectCause {
     | 
     /**
      * The connection needs to be initiated from the keyboard side.
-     *
-     * @relation CONNECT_FROM_KEYBOARD = 1
      */
     @!APILevel[
         since: "22",
@@ -56,8 +52,6 @@ public enum DisconnectCause {
     | 
     /**
      * The connection needs to be initiated from the mouse side.
-     *
-     * @relation CONNECT_FROM_MOUSE = 2
      */
     @!APILevel[
         since: "22",
@@ -67,8 +61,6 @@ public enum DisconnectCause {
     | 
     /**
      * The connection needs to be initiated from the car side.
-     *
-     * @relation CONNECT_FROM_CAR = 3
      */
     @!APILevel[
         since: "22",
@@ -78,8 +70,6 @@ public enum DisconnectCause {
     | 
     /**
      * Too many devices are currently connected.
-     *
-     * @relation TOO_MANY_CONNECTED_DEVICES = 4
      */
     @!APILevel[
         since: "22",
@@ -89,8 +79,6 @@ public enum DisconnectCause {
     | 
     /**
      * Connection failed due to an internal error.
-     *
-     * @relation CONNECT_FAIL_INTERNAL = 5
      */
     @!APILevel[
         since: "22",
@@ -131,8 +119,6 @@ protected struct NativeStateChangeParam {
 
 /**
  * Profile state change parameters.
- *
- * @relation export interface StateChangeParam
  */
 @!APILevel[
     since: "22",
@@ -141,8 +127,6 @@ protected struct NativeStateChangeParam {
 public class StateChangeParam {
     /**
      * The address of device.
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -151,8 +135,6 @@ public class StateChangeParam {
     public var deviceId: String
     /**
      * Profile state value.
-     *
-     * @relation state: ProfileConnectionState
      */
     @!APILevel[
         since: "22",
@@ -161,8 +143,6 @@ public class StateChangeParam {
     public var state: ProfileConnectionState
     /**
      * Cause of disconnect.
-     *
-     * @relation cause: DisconnectCause
      */
     @!APILevel[
         since: "22",
@@ -183,8 +163,6 @@ public class StateChangeParam {
 
 /**
  * Base interface of profile.
- *
- * @relation interface BaseProfile
  */
 @!APILevel[
     since: "22",
@@ -200,7 +178,6 @@ public interface BaseProfile {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
         since: "22",
@@ -219,7 +196,6 @@ public interface BaseProfile {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
         since: "22",
@@ -234,7 +210,6 @@ public interface BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -249,7 +224,6 @@ public interface BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -264,7 +238,6 @@ public interface BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",

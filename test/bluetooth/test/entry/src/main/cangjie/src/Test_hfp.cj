@@ -14,11 +14,11 @@
  */
 package ohos_app_cangjie_entry
 
-internal import BasicServicesKit.*
+internal import kit.BasicServicesKit.*
 internal import ohos.base.*
 internal import std.collection.*
-import ConnectivityKit.*
-import AbilityKit.*
+import kit.ConnectivityKit.*
+import kit.AbilityKit.*
 import std.unittest.testmacro.*
 import std.unittest.*
 import std.unittest.common.*

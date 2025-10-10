@@ -17,13 +17,13 @@ package ohos_app_cangjie_entry
 
 internal import std.sync.*
 import std.unittest.testmacro.*
-import ConnectivityKit.*
+import kit.ConnectivityKit.*
 import std.collection.*
 import std.unittest.*
 import std.unittest.common.*
 import std.unittest.testmacro.*
 import ohos.base.*
-import PerformanceAnalysisKit.Hilog
+import kit.PerformanceAnalysisKit.Hilog
 import ohos.ability_access_ctrl.Permissions
 import ohos.callback_invoke.*
 import ohos.business_exception.*

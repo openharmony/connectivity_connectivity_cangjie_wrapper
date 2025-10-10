@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.wifi_manager
 
 import ohos.business_exception.{ ERR_NO_PERMISSION, ERR_NOT_SYSTEM_APP, ERR_PARAMETER_ERROR, ERR_NOT_SUPPOERTED }

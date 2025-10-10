@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.hfp
 
 import std.collection.ArrayList
@@ -36,7 +38,6 @@ foreign {
  * create the instance of hfp profile.
  *
  * @returns { HandsFreeAudioGatewayProfile } Returns the instance of profile.
- * @relation createHfpAgProfile(): HandsFreeAudioGatewayProfile
  */
 @!APILevel[
     since: "22",
@@ -48,8 +49,6 @@ public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
 
 /**
  * Manager hfp source profile.
- *
- * @relation interface HandsFreeAudioGatewayProfile extends BaseProfile
  */
 @!APILevel[
     since: "22",
@@ -84,7 +83,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @relation getConnectedDevices(): Array<string>
      */
     @!APILevel[
         since: "22",
@@ -116,7 +114,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation getConnectionState(deviceId: string): ProfileConnectionState
      */
     @!APILevel[
         since: "22",
@@ -144,7 +141,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation on(type: 'connectionStateChange', callback: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -182,7 +178,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     *  @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",
@@ -207,7 +202,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @relation off(type: 'connectionStateChange', callback?: Callback<StateChangeParam>): void
      */
     @!APILevel[
         since: "22",

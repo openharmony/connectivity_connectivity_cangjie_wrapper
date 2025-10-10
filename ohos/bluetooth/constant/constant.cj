@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.constant
 
 import std.deriving.Derive
@@ -20,7 +22,6 @@ import ohos.labels.APILevel
 
 /**
  * The enum of profile connection state.
- * @relation export enum ProfileConnectionState
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -30,7 +31,6 @@ import ohos.labels.APILevel
 public enum ProfileConnectionState {
     /**
      * the current profile is disconnected
-     * @relation STATE_DISCONNECTED = 0
      */
     @!APILevel[
         since: "22",
@@ -39,7 +39,6 @@ public enum ProfileConnectionState {
     StateDisconnected
     /**
      * the current profile is being connected
-     * @relation STATE_CONNECTING = 1
      */
     | @!APILevel[
         since: "22",
@@ -48,7 +47,6 @@ public enum ProfileConnectionState {
     StateConnecting
     /**
      * the current profile is connected
-     * @relation STATE_CONNECTED = 2
      */
     | @!APILevel[
         since: "22",
@@ -57,7 +55,6 @@ public enum ProfileConnectionState {
     StateConnected
     /**
      * the current profile is being disconnected
-     * @relation STATE_DISCONNECTING = 3
      */
     | @!APILevel[
         since: "22",

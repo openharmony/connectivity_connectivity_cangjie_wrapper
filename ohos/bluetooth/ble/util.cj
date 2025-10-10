@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
+
 package ohos.bluetooth.ble
 
 import ohos.labels.*
@@ -26,8 +28,6 @@ const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
 
 /**
  * Describes the criteria for filtering scanning results can be set.
- *
- * @relation interface ScanFilter
  */
 @!APILevel[
     since: "22",
@@ -36,8 +36,6 @@ const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
 public class ScanFilter {
     /**
      * The address of a BLE peripheral device
-     *
-     * @relation deviceId?: string
      */
     @!APILevel[
         since: "22",
@@ -47,8 +45,6 @@ public class ScanFilter {
 
     /**
      * The name of a BLE peripheral device
-     *
-     * @relation name?: string
      */
     @!APILevel[
         since: "22",
@@ -58,8 +54,6 @@ public class ScanFilter {
 
     /**
      * The service UUID of a BLE peripheral device
-     *
-     * @relation serviceUuid?: string
      */
     @!APILevel[
         since: "22",
@@ -69,8 +63,6 @@ public class ScanFilter {
 
     /**
      * Service UUID mask.
-     *
-     * @relation serviceUuidMask?: string
      */
     @!APILevel[
         since: "22",
@@ -80,8 +72,6 @@ public class ScanFilter {
 
     /**
      * Service solicitation UUID.
-     *
-     * @relation serviceSolicitationUuid?: string
      */
     @!APILevel[
         since: "22",
@@ -91,8 +81,6 @@ public class ScanFilter {
 
     /**
      * Service solicitation UUID mask.
-     *
-     * @relation serviceSolicitationUuidMask?: string
      */
     @!APILevel[
         since: "22",
@@ -102,8 +90,6 @@ public class ScanFilter {
 
     /**
      * Service data.
-     *
-     * @relation serviceData?: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -113,8 +99,6 @@ public class ScanFilter {
 
     /**
      * Service data mask.
-     *
-     * @relation serviceDataMask?: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -124,8 +108,6 @@ public class ScanFilter {
 
     /**
      * Manufacture id.
-     *
-     * @relation manufactureId?: number
      */
     @!APILevel[
         since: "22",
@@ -135,8 +117,6 @@ public class ScanFilter {
 
     /**
      * Manufacture data.
-     *
-     * @relation manufactureData?: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -146,8 +126,6 @@ public class ScanFilter {
 
     /**
      * Manufacture data mask.
-     *
-     * @relation manufactureDataMask?: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -301,8 +279,6 @@ struct NativeScanOptions {
 
 /**
  * Describes the parameters for scan.
- *
- * @relation interface ScanOptions
  */
 @!APILevel[
     since: "22",
@@ -311,8 +287,6 @@ struct NativeScanOptions {
 public class ScanOptions {
     /**
      * Time of delay for reporting the scan result
-     *
-     * @relation interval?: number
      */
     @!APILevel[
         since: "22",
@@ -322,8 +296,6 @@ public class ScanOptions {
 
     /**
      * Bluetooth LE scan mode
-     *
-     * @relation dutyMode?: ScanDuty
      */
     @!APILevel[
         since: "22",
@@ -333,8 +305,6 @@ public class ScanOptions {
 
     /**
      * Match mode for Bluetooth LE scan filters hardware match
-     *
-     * @relation matchMode?: MatchMode
      */
     @!APILevel[
         since: "22",
@@ -344,8 +314,6 @@ public class ScanOptions {
 
     /**
      * Physical Layer used during scan.
-     *
-     * @relation phyType?: PhyType
      */
     @!APILevel[
         since: "22",
@@ -400,8 +368,6 @@ struct NativeAdvertiseSetting {
 
 /**
  * Describes the settings for BLE advertising.
- *
- * @relation interface AdvertiseSetting
  */
 @!APILevel[
     since: "22",
@@ -412,8 +378,6 @@ public class AdvertiseSetting {
      * Minimum slot value for the advertising interval, which is 32 (20 ms)
      * Maximum slot value for the advertising interval, which is 16777215} (10485.759375s)
      * Default slot value for the advertising interval, which is 1600 (1s)
-     *
-     * @relation interval?: number
      */
     @!APILevel[
         since: "22",
@@ -425,8 +389,6 @@ public class AdvertiseSetting {
      * Minimum transmission power level for advertising, which is -127
      * Maximum transmission power level for advertising, which is 1
      * Default transmission power level for advertising, which is -7
-     *
-     * @relation txPower?: number
      */
     @!APILevel[
         since: "22",
@@ -436,8 +398,6 @@ public class AdvertiseSetting {
 
     /**
      * Indicates whether the BLE is connectable, default is true
-     *
-     * @relation connectable?: boolean
      */
     @!APILevel[
         since: "22",
@@ -531,8 +491,6 @@ struct NativeAdvertiseData {
 
 /**
  * Describes the advertising data.
- *
- * @relation interface AdvertiseData
  */
 @!APILevel[
     since: "22",
@@ -541,8 +499,6 @@ struct NativeAdvertiseData {
 public class AdvertiseData {
     /**
      * The specified service UUID list to this advertisement
-     *
-     * @relation serviceUuids: Array<string>
      */
     @!APILevel[
         since: "22",
@@ -551,8 +507,6 @@ public class AdvertiseData {
     public var serviceUuids: Array<String>
     /**
      * The specified manufacturer data list to this advertisement
-     *
-     * @relation manufactureData: Array<ManufactureData>
      */
     @!APILevel[
         since: "22",
@@ -561,8 +515,6 @@ public class AdvertiseData {
     public var manufactureData: Array<ManufactureData>
     /**
      * The specified service data list to this advertisement
-     *
-     * @relation serviceData: Array<ServiceData>
      */
     @!APILevel[
         since: "22",
@@ -571,8 +523,6 @@ public class AdvertiseData {
     public var serviceData: Array<ServiceData>
     /**
      * Indicates whether the device name will be included in the advertisement packet.
-     *
-     * @relation includeDeviceName?: boolean
      */
     @!APILevel[
         since: "22",
@@ -649,8 +599,6 @@ struct NativeManufactureData {
 
 /**
  * Describes the manufacturer data.
- *
- * @relation interface ManufactureData
  */
 @!APILevel[
     since: "22",
@@ -659,8 +607,6 @@ struct NativeManufactureData {
 public class ManufactureData {
     /**
      * Indicates the manufacturer ID assigned by Bluetooth SIG
-     *
-     * @relation manufactureId: number
      */
     @!APILevel[
         since: "22",
@@ -669,8 +615,6 @@ public class ManufactureData {
     public var manufactureId: UInt16
     /**
      * Indicates the manufacturer data to add
-     *
-     * @relation manufactureValue: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -718,8 +662,6 @@ struct NativeServiceData {
 
 /**
  * Describes the service data.
- *
- * @relation interface ServiceData
  */
 @!APILevel[
     since: "22",
@@ -728,8 +670,6 @@ struct NativeServiceData {
 public class ServiceData {
     /**
      * Indicates the UUID of the service data to add
-     *
-     * @relation serviceUuid: string
      */
     @!APILevel[
         since: "22",
@@ -738,8 +678,6 @@ public class ServiceData {
     public var serviceUuid: String
     /**
      * Indicates the service data to add
-     *
-     * @relation serviceValue: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -796,8 +734,6 @@ struct NativeAdvertisingParams {
 
 /**
  * Describes the advertising parameters.
- *
- * @relation interface AdvertisingParams
  */
 @!APILevel[
     since: "22",
@@ -806,8 +742,6 @@ struct NativeAdvertisingParams {
 public class AdvertisingParams {
     /**
      * Indicates the advertising settings.
-     *
-     * @relation advertisingSettings: AdvertiseSetting
      */
     @!APILevel[
         since: "22",
@@ -816,8 +750,6 @@ public class AdvertisingParams {
     public var advertisingSettings: AdvertiseSetting
     /**
      * Indicates the advertising data.
-     *
-     * @relation advertisingData: AdvertiseData
      */
     @!APILevel[
         since: "22",
@@ -826,8 +758,6 @@ public class AdvertisingParams {
     public var advertisingData: AdvertiseData
     /**
      * Indicates the advertising response.
-     *
-     * @relation advertisingResponse?: AdvertiseData
      */
     @!APILevel[
         since: "22",
@@ -838,8 +768,6 @@ public class AdvertisingParams {
      * Indicates the duration for advertising continuously.
      * The duration, in 10ms unit. Valid range is from 1 (10ms) to 65535 (655,350 ms).
      * If this parameter is not specified or is set to 0, advertisement is continuously sent.
-     *
-     * @relation duration?: number
      */
     @!APILevel[
         since: "22",
@@ -902,8 +830,6 @@ struct CAdvertisingStateChangeInfo {
 
 /**
  * Advertising state change information.
- *
- * @relation interface AdvertisingStateChangeInfo
  */
 @!APILevel[
     since: "22",
@@ -912,8 +838,6 @@ struct CAdvertisingStateChangeInfo {
 public class AdvertisingStateChangeInfo {
     /**
      * Indicates the ID of current advertising.
-     *
-     * @relation advertisingId: number
      */
     @!APILevel[
         since: "22",
@@ -922,8 +846,6 @@ public class AdvertisingStateChangeInfo {
     public var advertisingId: Int32
     /**
      * Indicates the advertising state.
-     *
-     * @relation state: AdvertisingState
      */
     @!APILevel[
         since: "22",
@@ -962,8 +884,6 @@ struct NativeScanResult {
 
 /**
  * Describes the contents of the scan results.
- *
- * @relation interface ScanResult
  */
 @!APILevel[
     since: "22",
@@ -972,8 +892,6 @@ struct NativeScanResult {
 public class ScanResult {
     /**
      * Address of the scanned device
-     *
-     * @relation deviceId: string
      */
     @!APILevel[
         since: "22",
@@ -982,8 +900,6 @@ public class ScanResult {
     public var deviceId: String
     /**
      * RSSI of the remote device
-     *
-     * @relation rssi: number
      */
     @!APILevel[
         since: "22",
@@ -992,8 +908,6 @@ public class ScanResult {
     public var rssi: Int32
     /**
      * The raw data of broadcast packet
-     *
-     * @relation data: ArrayBuffer
      */
     @!APILevel[
         since: "22",
@@ -1002,8 +916,6 @@ public class ScanResult {
     public var data: Array<Byte>
     /**
      * The local name of the BLE device
-     *
-     * @relation deviceName: string
      */
     @!APILevel[
         since: "22",
@@ -1012,8 +924,6 @@ public class ScanResult {
     public var deviceName: String
     /**
      * Connectable of the remote device
-     *
-     * @relation connectable: boolean
      */
     @!APILevel[
         since: "22",
@@ -1038,8 +948,6 @@ public class ScanResult {
 
 /**
  * The enum of scan duty.
- *
- * @relation enum ScanDuty
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1049,8 +957,6 @@ public class ScanResult {
 public enum ScanDuty {
     /**
      * low power mode
-     *
-     * @relation SCAN_MODE_LOW_POWER = 0
      */
     @!APILevel[
         since: "22",
@@ -1060,8 +966,6 @@ public enum ScanDuty {
     | 
     /**
      * balanced power mode
-     *
-     * @relation SCAN_MODE_BALANCED = 1
      */
     @!APILevel[
         since: "22",
@@ -1071,8 +975,6 @@ public enum ScanDuty {
     | 
     /**
      * Scan using highest duty cycle
-     *
-     * @relation SCAN_MODE_LOW_LATENCY = 2
      */
     @!APILevel[
         since: "22",
@@ -1096,8 +998,6 @@ public enum ScanDuty {
 
 /**
  * The enum of BLE match mode.
- *
- * @relation enum MatchMode
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1107,8 +1007,6 @@ public enum ScanDuty {
 public enum MatchMode {
     /**
      * aggressive mode
-     *
-     * @relation MATCH_MODE_AGGRESSIVE = 1
      */
     @!APILevel[
         since: "22",
@@ -1118,8 +1016,6 @@ public enum MatchMode {
     | 
     /**
      * sticky mode
-     *
-     * @relation MATCH_MODE_STICKY = 2
      */
     @!APILevel[
         since: "22",
@@ -1151,8 +1047,6 @@ let ADVERTISING_STATE_MAP = HashMap<Int32, AdvertisingState>(
 
 /**
  * The enum of BLE advertising state.
- *
- * @relation enum AdvertisingState
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1162,8 +1056,6 @@ let ADVERTISING_STATE_MAP = HashMap<Int32, AdvertisingState>(
 public enum AdvertisingState {
     /**
      * advertising started.
-     *
-     * @relation STARTED = 1
      */
     @!APILevel[
         since: "22",
@@ -1173,8 +1065,6 @@ public enum AdvertisingState {
     | 
     /**
      * advertising temporarily enabled.
-     *
-     * @relation ENABLED = 2
      */
     @!APILevel[
         since: "22",
@@ -1184,8 +1074,6 @@ public enum AdvertisingState {
     | 
     /**
      * advertising temporarily disabled.
-     *
-     * @relation DISABLED = 3
      */
     @!APILevel[
         since: "22",
@@ -1195,8 +1083,6 @@ public enum AdvertisingState {
     | 
     /**
      * advertising stopped.
-     *
-     * @relation STOPPED = 4
      */
     @!APILevel[
         since: "22",
@@ -1216,8 +1102,6 @@ public enum AdvertisingState {
 
 /**
  * Phy type used during scan.
- *
- * @relation enum PhyType
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1227,8 +1111,6 @@ public enum AdvertisingState {
 public enum PhyType {
     /**
      * Use 1M phy for scanning.
-     *
-     * @relation PHY_LE_1M = 1
      */
     @!APILevel[
         since: "22",
@@ -1238,8 +1120,6 @@ public enum PhyType {
     | 
     /**
      * Use all supported Phys for scanning.
-     *
-     * @relation PHY_LE_ALL_SUPPORTED = 255
      */
     @!APILevel[
         since: "22",
@@ -1310,8 +1190,6 @@ struct CArrScanResult {
 
 /**
  * Report mode used during scan.
- *
- * @relation enum ScanReportMode
  */
 @Derive[ToString, Equatable]
 @!APILevel[
@@ -1321,8 +1199,6 @@ struct CArrScanResult {
 public enum ScanReportMode {
     /**
      * In normal mode, the advertisement packet is reported immediately after being scanned.
-     *
-     * @relation NORMAL = 1
      */
     @!APILevel[
         since: "22",
@@ -1333,8 +1209,6 @@ public enum ScanReportMode {
     /**
      * Enables the batch mode in which advertisement packets are sent after the interval specified by {@link
      * ScanOptions#interval}.
-     *
-     * @relation BATCH = 2
      */
     @!APILevel[
         since: "22",
@@ -1345,8 +1219,6 @@ public enum ScanReportMode {
     /**
      * In low sensitivity fence mode, the advertisement packets are reported only when they are received for
      * the first time and lost for the last time. The reception sensitivity is low.
-     *
-     * @relation FENCE_SENSITIVITY_LOW = 10
      */
     @!APILevel[
         since: "22",
@@ -1357,8 +1229,6 @@ public enum ScanReportMode {
     /**
      * In high sensitivity fence mode, the advertisement packets are reported only when they are received for
      * the first time and lost for the last time. The reception sensitivity is high.
-     *
-     * @relation FENCE_SENSITIVITY_HIGH = 11
      */
     @!APILevel[
         since: "22",
