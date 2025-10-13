@@ -30,6 +30,8 @@ import std.deriving.*
 
 /**
  * create the instance of a2dp profile.
+ *
+ * @returns { A2dpSourceProfile } Returns the instance of profile.
  */
 @!APILevel[
     22,
@@ -67,13 +69,14 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Obtains the playing state of device.
      *
+     * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
+     * @returns { PlayingState } Returns the playing state.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -97,6 +100,7 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Obtains the connected devices list of profile.
      *
+     * @returns { Array<String> } Returns the connected devices list.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -127,13 +131,14 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Obtains the profile connection state.
      *
+     * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
+     * @returns { ProfileConnectionState } Returns the profile connection state.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -158,7 +163,8 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @param { ProfileCallbackType } eventType - The type of event to subscribe.
+     * @param { Callback1Argument<StateChangeParam> } callback - The callback function to be called when the event occurs.
      */
     @!APILevel[
         22,
@@ -191,6 +197,9 @@ public class A2dpSourceProfile <: BaseProfile {
 
     /**
      * Unsubscribe the event reported when the profile connection state changes.
+     *
+     * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
+     * @param { CallbackObject } callback - The callback function to be removed.
      */
     @!APILevel[
         22,
@@ -210,7 +219,7 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
      */
     @!APILevel[
         22,
@@ -219,7 +228,7 @@ public class A2dpSourceProfile <: BaseProfile {
     ]
     public func off(eventType: ProfileCallbackType): Unit {
         if (eventType != ConnectionStateChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is CONNECTIONSTATECHANGE")
+            throw BusinessException(401, "Parameter error.")
         }
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
         callbackList.clear()

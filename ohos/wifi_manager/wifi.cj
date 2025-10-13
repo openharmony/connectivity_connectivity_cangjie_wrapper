@@ -30,6 +30,8 @@ let LOGGER = HilogChannel(0, 0xD001560, "CJ-wifi")
 
 /**
  * Query the Wi-Fi status
+ *
+ * @returns { Bool } Returns {@code true} if the Wi-Fi is active, returns {@code false} otherwise.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2501000 - Operation failed.
  */
@@ -50,6 +52,8 @@ public func isWifiActive(): Bool {
 /**
  * Obtain the scanned station list. If does't have the permission of ohos.permission.GET_WIFI_PEERS_MAC,
  * return random bssid.
+ *
+ * @returns { Array<WifiScanInfo> } Returns information about scanned Wi-Fi hotspot if any.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2501000 - Operation failed.
@@ -82,6 +86,8 @@ public func getScanInfoList(): Array<WifiScanInfo> {
 
 /**
  * Initiate a P2P connection to a device with the specified configuration.
+ *
+ * @param { WifiP2PConfig } config - Indicates the P2P connection configuration.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -104,6 +110,7 @@ public func p2pConnect(config: WifiP2PConfig): Unit {
 
 /**
  * Stop an ongoing p2p connection that is being established.
+ *
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -124,6 +131,7 @@ public func p2pCancelConnect(): Unit {
 
 /**
  * Start discover Wi-Fi P2P devices.
+ *
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -144,6 +152,7 @@ public func startDiscoverDevices(): Unit {
 
 /**
  * Stop discover Wi-Fi P2P devices.
+ *
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -233,6 +242,9 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
 
 /**
  * Subscribe Wi-Fi scan status change events.
+ *
+ * @param { WifiCallbackType } eventType - Indicates the Wi-Fi event type.
+ * @param { Callback1Argument<Int32> } callback - Indicates the callback to receive Wi-Fi scan status change events.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -249,6 +261,10 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
 /**
  * Unsubscribe Wi-Fi related events.
  * All callback functions will be deregistered If there is no specific callback parameter.
+ *
+ * @param { WifiCallbackType } eventType - Indicates the Wi-Fi event type.
+ * @param { ?CallbackObject } callback - Indicates the callback to unsubscribe. 
+ *                                       If not specified, all callbacks will be removed.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -285,7 +301,7 @@ public enum WifiCallbackType {
     func getValue(): String {
         match(this) {
             case WifiScanStateChange => "wifiStateChange"
-            case _ => throw IllegalArgumentException("types are not supported")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 }

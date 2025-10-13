@@ -18,6 +18,7 @@
 package ohos.bluetooth.base_profile
 
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
+import ohos.business_exception.BusinessException
 import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.labels.APILevel
 
@@ -172,6 +173,7 @@ public interface BaseProfile {
     /**
      * Get connection strategy of this profile.
      *
+     * @returns { Array<String> } Returns the connected devices list.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -189,8 +191,9 @@ public interface BaseProfile {
     /**
      * Obtains the profile connection state.
      *
+     * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
+     * @returns { ProfileConnectionState } Returns the profile connection state.
      * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
@@ -207,9 +210,8 @@ public interface BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
+     * @param { ProfileCallbackType } eventType - The type of event to subscribe.
+     * @param { Callback1Argument<StateChangeParam> } callback - The callback function to be called when the event occurs.
      */
     @!APILevel[
         22,
@@ -221,9 +223,8 @@ public interface BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
+     * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
+     * @param { CallbackObject } callback - The callback function to be removed.
      */
     @!APILevel[
         22,
@@ -235,9 +236,7 @@ public interface BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes.
      *
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
-     * @throws { BusinessException } 801 - Capability not supported.
+     * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
      */
     @!APILevel[
         22,
@@ -268,7 +267,7 @@ public enum ProfileCallbackType {
     protected func getValue(): Int32 {
         match (this) {
             case ConnectionStateChange => 0
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(401, "Parameter error.")
         }
     }
 }

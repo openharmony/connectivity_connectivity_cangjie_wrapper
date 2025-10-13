@@ -18,8 +18,8 @@
 package ohos.wifi_manager
 
 import ohos.labels.APILevel
-
 import std.deriving.Derive
+import ohos.business_exception.BusinessException
 
 const EVENT_STA_POWER_STATE_CHANGE = "wifiStateChange"
 const EVENT_STA_CONN_STATE_CHANGE = "wifiConnectionChange"
@@ -73,7 +73,7 @@ public enum DeviceAddressType {
         match (this) {
             case RandomDeviceAddress => 0
             case RealDeviceAddress => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 
@@ -84,7 +84,7 @@ public enum DeviceAddressType {
         match (val) {
             case 0 => RandomDeviceAddress
             case 1 => RealDeviceAddress
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 
@@ -212,7 +212,7 @@ public enum WifiSecurityType {
             case WifiSecTypeOwe => 7
             case WifiSecTypeWapiCert => 8
             case WifiSecTypeWapiPsk => 9
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 
@@ -231,7 +231,7 @@ public enum WifiSecurityType {
             case 7 => WifiSecTypeOwe
             case 8 => WifiSecTypeWapiCert
             case 9 => WifiSecTypeWapiPsk
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 }
@@ -281,7 +281,7 @@ public enum WifiCategory {
             case Default => 1
             case Wifi6 => 2
             case Wifi6Plus => 3
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 
@@ -293,7 +293,7 @@ public enum WifiCategory {
             case 1 => Default
             case 2 => Wifi6
             case 3 => Wifi6Plus
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 }
@@ -340,7 +340,7 @@ public enum GroupOwnerBand {
             case GoBandAuto => 0
             case GoBand2GHz => 1
             case GoBand5GHz => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 
@@ -349,7 +349,7 @@ public enum GroupOwnerBand {
             case 0 => GoBandAuto
             case 1 => GoBand2GHz
             case 2 => GoBand5GHz
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
 }
