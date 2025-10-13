@@ -72,7 +72,6 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[
@@ -135,6 +134,7 @@ public func stopBLEScan(): Unit {
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
+ * @throws { BusinessException } 2900010 - The numeber of advertising resources reaches the upper limit.
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
@@ -174,6 +174,7 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
+ * @throws { BusinessException } 2902055 - Invalid advertising id.
  */
 @!APILevel[
     22,
@@ -195,7 +196,9 @@ public func stopAdvertising(): Unit {
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
+ * @throws { BusinessException } 2900010 - The numeber of advertising resources reaches the upper limit.
  * @throws { BusinessException } 2900099 - Operation failed.
+ * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[
@@ -228,6 +231,7 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
+ * @throws { BusinessException } 2902055 - Invalid advertising id.
  * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[

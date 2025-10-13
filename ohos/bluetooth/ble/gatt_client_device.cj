@@ -189,8 +189,14 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2901000 - Read forbidden.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901000 - Read forbidden.
+     * @throws { BusinessException } 2901003 - The connection is not established.
+     * @throws { BusinessException } 2901004 - The connection is congested.
+     * @throws { BusinessException } 2901005 - The connection is not encrypted.
+     * @throws { BusinessException } 2901006 - The connection is not authenticated.
+     * @throws { BusinessException } 2901007 - The connection is not authorized.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
@@ -272,8 +278,14 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2901001 - Write forbidden.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901001 - Write forbidden.
+     * @throws { BusinessException } 2901003 - The connection is not established.
+     * @throws { BusinessException } 2901004 - The connection is congested.
+     * @throws { BusinessException } 2901005 - The connection is not encrypted.
+     * @throws { BusinessException } 2901006 - The connection is not authenticated.
+     * @throws { BusinessException } 2901007 - The connection is not authorized.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
@@ -308,8 +320,14 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
-     * @throws { BusinessException } 2901001 - Write forbidden.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not complete.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901001 - Write forbidden.
+     * @throws { BusinessException } 2901003 - The connection is not established.
+     * @throws { BusinessException } 2901004 - The connection is congested.
+     * @throws { BusinessException } 2901005 - The connection is not encrypted.
+     * @throws { BusinessException } 2901006 - The connection is not authenticated.
+     * @throws { BusinessException } 2901007 - The connection is not authorized.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
@@ -342,7 +360,9 @@ public class GattClientDevice <: RemoteDataLite {
      *
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901003 - The connection is not established.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
@@ -393,7 +413,9 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901003 - The connection is not established.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
@@ -427,7 +449,9 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
+     * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
+     * @throws { BusinessException } 2901003 - The connection is not established.
      * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
