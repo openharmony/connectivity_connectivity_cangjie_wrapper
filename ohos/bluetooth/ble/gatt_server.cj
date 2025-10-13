@@ -96,11 +96,11 @@ public class GattServer <: RemoteDataLite {
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func removeService(serviceUuid: String): Unit {
+    public func removeService(serviceUUID: String): Unit {
         var errorCode: Int32 = 0
         unsafe {
-            try (serviceUuidCString = LibC.mallocCString(serviceUuid).asResource()) {
-                FfiBluetoothBleGattServerRemoveService(getID(), serviceUuidCString.value, inout errorCode)
+            try (serviceUUIDCString = LibC.mallocCString(serviceUUID).asResource()) {
+                FfiBluetoothBleGattServerRemoveService(getID(), serviceUUIDCString.value, inout errorCode)
             }
         }
         checkRet(errorCode)
