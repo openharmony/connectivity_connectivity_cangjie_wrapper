@@ -26,7 +26,8 @@ import ohos.labels.APILevel
 import std.collection.{ArrayList, HashMap}
 
 /**
- * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer instance.
+ * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer
+ * instance.
  */
 @!APILevel[
     since: "22",
@@ -57,12 +58,12 @@ public class GattServer <: RemoteDataLite {
      * Adds a specified service to be hosted.
      * The added service and its characteristics are provided by the local device.
      *
+     * @param { GattService } service - Indicates the service to add.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -82,24 +83,24 @@ public class GattServer <: RemoteDataLite {
     /**
      * Removes a specified service from the list of GATT services provided by this device.
      *
+     * @param { String } serviceUuid - Indicates the UUID of the service to remove.
      * @throws { BusinessException} 201 - Permission denied.
      * @throws { BusinessException} 801 - Capability not supported.
      * @throws { BusinessException} 2900001 - Service stopped.
      * @throws { BusinessException} 2900003 - Bluetooth disabled.
      * @throws { BusinessException} 2900004 - Profile not supported.
      * @throws { BusinessException} 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public func removeService(serviceUuid: String): Unit {
+    public func removeService(serviceUUID: String): Unit {
         var errorCode: Int32 = 0
         unsafe {
-            try (serviceUuidCString = LibC.mallocCString(serviceUuid).asResource()) {
-                FfiBluetoothBleGattServerRemoveService(getID(), serviceUuidCString.value, inout errorCode)
+            try (serviceUUIDCString = LibC.mallocCString(serviceUUID).asResource()) {
+                FfiBluetoothBleGattServerRemoveService(getID(), serviceUUIDCString.value, inout errorCode)
             }
         }
         checkRet(errorCode)
@@ -132,12 +133,12 @@ public class GattServer <: RemoteDataLite {
      * This method should be called for every BLE peripheral device that has requested notifications.
      *
      * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
+     * @param { NotifyCharacteristic } notifyCharacteristic - Indicates the local characteristic that has changed.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -160,12 +161,12 @@ public class GattServer <: RemoteDataLite {
     /**
      * Sends a response to a specified read or write request to a given BLE peripheral device.
      *
+     * @param { ServerResponse } serverResponse - Indicates the response parameters {@link ServerResponse}.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -185,9 +186,10 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe characteristic read event.
      *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the characteristic read event to listen for.
+     * @param { Callback1Argument<CharacteristicReadRequest> } callback - Callback used to listen for the characteristic read event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -209,9 +211,10 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe characteristic write event.
      *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the characteristic write event to listen for.
+     * @param { Callback1Argument<CharacteristicWriteRequest> } callback - Callback used to listen for the characteristic write event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -232,9 +235,10 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe descriptor read event.
      *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the descriptor read event to listen for.
+     * @param { Callback1Argument<DescriptorReadRequest> } callback - Callback used to listen for the descriptor read event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -255,9 +259,10 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe descriptor write event.
      *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the descriptor write event to listen for.
+     * @param { Callback1Argument<DescriptorWriteRequest> } callback - Callback used to listen for the descriptor write event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -278,9 +283,10 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe server connection state changed event.
      *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the connection state changed event to listen for.
+     * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -301,7 +307,8 @@ public class GattServer <: RemoteDataLite {
     /**
      * Subscribe mtu changed event.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of the mtu changed event to listen for.
+     * @param { Callback<Int32> } callback - Callback used to listen for the mtu changed event.
      */
     @!APILevel[
         since: "22",
@@ -321,6 +328,9 @@ public class GattServer <: RemoteDataLite {
 
     /**
      * Unsubscribe mtu changed event.
+     *
+     * @param { BluetoothBleGattServerCallbackType } eventType - Type of unsubscribe event.
+     * @param { ?CallbackObject } callback - Callback used to listen.
      */
     @!APILevel[
         since: "22",

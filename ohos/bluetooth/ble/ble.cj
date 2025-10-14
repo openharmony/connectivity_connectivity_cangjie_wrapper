@@ -27,6 +27,8 @@ import std.collection.{ArrayList, HashMap}
 
 /**
  * create a Gatt server instance.
+ *
+ * @returns { GattServer } Returns a Gatt server instance {@code GattServer}.
  */
 @!APILevel[
     since: "22",
@@ -43,8 +45,8 @@ public func createGattServer(): GattServer {
  * create a Gatt client device instance.
  *
  * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
+ * @returns { GattClientDevice } Returns a Gatt client device instance {@code GattClientDevice}.
  * @throws { BusinessException } 801 - Capability not supported.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[
     since: "22",
@@ -65,14 +67,14 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
 /**
  * Starts scanning for specified BLE devices with filters.
  *
- * @param { ?ScanOptions } options - Indicates the parameters for scanning and if the user does not assign a value, the default value will be used.
+ * @param { Array<ScanFilter> } filters - Indicates the list of filters used to filter out specified devices.
+ * @param { ?ScanOptions } options - Indicates the parameters for scanning and if the user does not assign a value,
+ * the default value will be used.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[
     since: "22",
@@ -130,13 +132,16 @@ public func stopBLEScan(): Unit {
 /**
  * Starts BLE advertising.
  *
+ * @param { AdvertiseSetting } setting - Indicates the settings for BLE advertising.
+ * @param { AdvertiseData } advData - Indicates the advertising data.
+ * @param { ?AdvertiseData } advResponse - Indicates the scan response associated with the advertising data.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
+ * @throws { BusinessException } 2900010 - The numeber of advertising resources reaches the upper limit.
  * @throws { BusinessException } 2900099 - Operation failed.
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
  */
 @!APILevel[
     since: "22",
@@ -173,6 +178,7 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
+ * @throws { BusinessException } 2902055 - Invalid advertising id.
  */
 @!APILevel[
     since: "22",
@@ -190,12 +196,15 @@ public func stopAdvertising(): Unit {
 /**
  * Starts BLE advertising.
  *
+ * @param { AdvertisingParams } advertisingParams - Indicates the param for BLE advertising.
+ * @returns { UInt32 }the callback of advertise ID.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
+ * @throws { BusinessException } 2900010 - The numeber of advertising resources reaches the upper limit.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  */
 @!APILevel[
     since: "22",
@@ -222,12 +231,13 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
  * Stops BLE advertising.
  * Completely stop the advertising corresponding to the ID.
  *
+ * @param { UInt32 } advertisingId - Indicates the ID for this BLE advertising.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
  * @throws { BusinessException } 2900003 - Bluetooth disabled.
  * @throws { BusinessException } 2900099 - Operation failed.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @throws { BusinessException } 2902055 - Invalid advertising id.
  */
 @!APILevel[
     since: "22",
@@ -299,7 +309,8 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
 /**
  * Subscribing to advertising state change event.
  *
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @param { BluetoothBleCallbackType } eventType - Type of the advertising state to listen for.
+ * @param { Callback1Argument<AdvertisingStateChangeInfo> } callback - Callback used to listen for the advertising state.
  */
 @!APILevel[
     since: "22",
@@ -308,7 +319,7 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
 ]
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<AdvertisingStateChangeInfo>): Unit {
     if (eventType != AdvertisingStateChange) {
-        throw IllegalArgumentException("Invalid name ${eventType}, valid name is AdvertisingStateChange")
+        throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
     }
 
     commonSubscribe1Arg(eventType, callback) {
@@ -320,7 +331,8 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 /**
  * Subscribe BLE scan result.
  *
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+ * @param { BluetoothBleCallbackType } eventType - Type of the scan result event to listen for.
+ * @param { Callback1Argument<Array<ScanResult>> } callback - Callback used to listen for the scan result event.
  */
 @!APILevel[
     since: "22",
@@ -330,7 +342,7 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<Array<ScanResult>>): Unit {
     if (eventType != BleDeviceFind) {
         BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is BleDeviceFind")
-        throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
+        throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
     }
 
     commonSubscribe1Arg(eventType, callback) {
@@ -345,6 +357,9 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 
 /**
  * Unsubscribe from callback event.
+ *
+ * @param { BluetoothBleCallbackType } eventType - Type of unsubscribe event.
+ * @param { ?CallbackObject } callback - Callback used to listen.
  */
 @!APILevel[
     since: "22",

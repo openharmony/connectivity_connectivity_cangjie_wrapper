@@ -17,7 +17,9 @@
 
 package ohos.bluetooth.ble
 
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.bluetooth.constant.ProfileConnectionState
+import ohos.business_exception.BusinessException
 import ohos.ffi.{ CArrUI8, cArr2cjArr, cjArr2CArr}
 import ohos.labels.APILevel
 
@@ -26,7 +28,7 @@ import std.deriving.Derive
 @C
 struct NativeGattService {
     NativeGattService(
-        let serviceUuid: CString,
+        let serviceUUID: CString,
         let isPrimary: Bool,
         let characteristics: CArrBLECharacteristic,
         let includeServices: CArrGattService
@@ -35,7 +37,7 @@ struct NativeGattService {
     func toObject(): GattService {
         GattService(
             // Universally Unique Identifier translation does not throw exception.
-            serviceUuid.toString(),
+            serviceUUID.toString(),
             isPrimary,
             unsafe {
                 cArr2cjArr<NativeBLECharacteristic, BLECharacteristic>(characteristics.size, characteristics.head) {
@@ -51,7 +53,7 @@ struct NativeGattService {
     }
 
     unsafe func free(): Unit {
-        LibC.free(serviceUuid)
+        LibC.free(serviceUUID)
         characteristics.free()
         includeServices.free()
     }
@@ -108,7 +110,7 @@ public class GattService {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
     /**
      * Indicates whether the GattService instance is primary or secondary.
      */
@@ -142,23 +144,23 @@ public class GattService {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuid: String,
+        serviceUUID: String,
         isPrimary: Bool,
         characteristics: Array<BLECharacteristic>,
         includeServices!: Array<GattService> = []
     ) {
-        this.serviceUuid = serviceUuid
+        this.serviceUUID = serviceUUID
         this.isPrimary = isPrimary
         this.characteristics = characteristics
         this.includeServices = includeServices
     }
 
     unsafe func toNative(): NativeGattService {
-        var cServiceUuid: CString = CString(CPointer())
+        var cServiceUUID: CString = CString(CPointer())
         var cCharacteristics: CArrBLECharacteristic = CArrBLECharacteristic(CPointer(), 0)
         var cIncludeServices: CArrGattService = CArrGattService(CPointer(), 0)
         try {
-            cServiceUuid = LibC.mallocCString(serviceUuid)
+            cServiceUUID = LibC.mallocCString(serviceUUID)
             cCharacteristics = CArrBLECharacteristic(
                 cjArr2CArr<BLECharacteristic, NativeBLECharacteristic>(characteristics,
                     {v: BLECharacteristic => v.toNative()}), characteristics.size)
@@ -166,13 +168,13 @@ public class GattService {
                 cjArr2CArr<GattService, NativeGattService>(includeServices, {v: GattService => v.toNative()}),
                 includeServices.size)
             NativeGattService(
-                cServiceUuid,
+                cServiceUUID,
                 isPrimary,
                 cCharacteristics,
                 cIncludeServices
             )
         } catch (e: Exception) {
-            LibC.free(cServiceUuid)
+            LibC.free(cServiceUUID)
             cCharacteristics.free()
             cIncludeServices.free()
             throw e
@@ -190,28 +192,28 @@ struct RetNativeBLECharacteristic {
 
 @C
 struct NativeBLECharacteristic {
-    let serviceUuid: CString
-    let characteristicUuid: CString
+    let serviceUUID: CString
+    let characteristicUUID: CString
     let characteristicValue: CArrUI8
     let descriptors: CArrBLEDescriptor
     let properties: NativeGattProperties
     NativeBLECharacteristic(
-        serviceUuid: CString,
-        characteristicUuid: CString,
+        serviceUUID: CString,
+        characteristicUUID: CString,
         characteristicValue: CArrUI8,
         descriptors: CArrBLEDescriptor,
         properties: NativeGattProperties
     ) {
-        this.serviceUuid = serviceUuid
-        this.characteristicUuid = characteristicUuid
+        this.serviceUUID = serviceUUID
+        this.characteristicUUID = characteristicUUID
         this.characteristicValue = characteristicValue
         this.descriptors = descriptors
         this.properties = properties
     }
 
     init() {
-        this.serviceUuid = CString(CPointer())
-        this.characteristicUuid = CString(CPointer())
+        this.serviceUUID = CString(CPointer())
+        this.characteristicUUID = CString(CPointer())
         this.characteristicValue = CArrUI8(CPointer(), 0)
         this.descriptors = CArrBLEDescriptor(CPointer(), 0)
         this.properties = NativeGattProperties()
@@ -220,8 +222,8 @@ struct NativeBLECharacteristic {
     func toObject(): BLECharacteristic {
         BLECharacteristic(
             // Universally Unique Identifier translation does not throw exception.
-            serviceUuid.toString(),
-            characteristicUuid.toString(),
+            serviceUUID.toString(),
+            characteristicUUID.toString(),
             unsafe { cArr2cjArr<UInt8, Byte>(characteristicValue.size, characteristicValue.head) {i => i} },
             unsafe {
                 cArr2cjArr<NativeBLEDescriptor, BLEDescriptor>(descriptors.size, descriptors.head) {
@@ -233,8 +235,8 @@ struct NativeBLECharacteristic {
     }
 
     unsafe func free(): Unit {
-        LibC.free(serviceUuid)
-        LibC.free(characteristicUuid)
+        LibC.free(serviceUUID)
+        LibC.free(characteristicUUID)
         LibC.free<UInt8>(characteristicValue.head)
         descriptors.free()
         // Members of NativeGattProperties do not need to be released.
@@ -274,7 +276,7 @@ public class BLECharacteristic {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
     /**
      * The UUID of a BLECharacteristic instance
      */
@@ -282,7 +284,7 @@ public class BLECharacteristic {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The value of a BLECharacteristic instance
      */    
@@ -319,16 +321,16 @@ public class BLECharacteristic {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuid: String,
-        characteristicUuid: String,
+        serviceUUID: String,
+        characteristicUUID: String,
         characteristicValue: Array<Byte>,
         descriptors: Array<BLEDescriptor>,
         properties!: GattProperties = GattProperties(),
         permissions!: GattPermissions = GattPermissions(),
         characteristicValueHandle!: UInt32 = 0
     ) {
-        this.serviceUuid = serviceUuid
-        this.characteristicUuid = characteristicUuid
+        this.serviceUUID = serviceUUID
+        this.characteristicUUID = characteristicUUID
         this.characteristicValue = characteristicValue
         this.descriptors = descriptors
         this.properties = properties
@@ -340,14 +342,14 @@ public class BLECharacteristic {
     }
 
     unsafe func toNative(): NativeBLECharacteristic {
-        var cServiceUuid: CString = CString(CPointer())
-        var cCharacteristicUuid: CString = CString(CPointer())
+        var cServiceUUID: CString = CString(CPointer())
+        var cCharacteristicUUID: CString = CString(CPointer())
         var cCharacteristicValue: CArrUI8 = CArrUI8(CPointer(), 0)
         var cDescriptors: CArrBLEDescriptor = CArrBLEDescriptor(CPointer(), 0)
         var cProperties: NativeGattProperties = NativeGattProperties()
         try {
-            cServiceUuid = LibC.mallocCString(serviceUuid)
-            cCharacteristicUuid = LibC.mallocCString(characteristicUuid)
+            cServiceUUID = LibC.mallocCString(serviceUUID)
+            cCharacteristicUUID = LibC.mallocCString(characteristicUUID)
             cCharacteristicValue = CArrUI8(cjArr2CArr<Byte, UInt8>(characteristicValue, {i => i}),
                 characteristicValue.size)
             cDescriptors = CArrBLEDescriptor(
@@ -355,15 +357,15 @@ public class BLECharacteristic {
                 descriptors.size)
             cProperties = properties.toNative()
             NativeBLECharacteristic(
-                cServiceUuid,
-                cCharacteristicUuid,
+                cServiceUUID,
+                cCharacteristicUUID,
                 cCharacteristicValue,
                 cDescriptors,
                 cProperties
             )
         } catch (e: Exception) {
-            LibC.free(cServiceUuid)
-            LibC.free(cCharacteristicUuid)
+            LibC.free(cServiceUUID)
+            LibC.free(cCharacteristicUUID)
             cCharacteristicValue.free()
             cDescriptors.free()
             throw e
@@ -382,26 +384,26 @@ struct RetNativeBLEDescriptor {
 @C
 struct NativeBLEDescriptor {
     NativeBLEDescriptor(
-        let serviceUuid: CString,
-        let characteristicUuid: CString,
-        let descriptorUuid: CString,
+        let serviceUUID: CString,
+        let characteristicUUID: CString,
+        let descriptorUUID: CString,
         let descriptorValue: CArrUI8
     ) {}
 
     func toObject(): BLEDescriptor {
         BLEDescriptor(
             // Universally Unique Identifier translation does not throw exception.
-            serviceUuid.toString(),
-            characteristicUuid.toString(),
-            descriptorUuid.toString(),
+            serviceUUID.toString(),
+            characteristicUUID.toString(),
+            descriptorUUID.toString(),
             unsafe { cArr2cjArr<UInt8, Byte>(descriptorValue.size, descriptorValue.head) {i => i} }
         )
     }
 
     unsafe func free(): Unit {
-        LibC.free(serviceUuid)
-        LibC.free(characteristicUuid)
-        LibC.free(descriptorUuid)
+        LibC.free(serviceUUID)
+        LibC.free(characteristicUUID)
+        LibC.free(descriptorUUID)
         LibC.free<UInt8>(descriptorValue.head)
     }
 }
@@ -421,7 +423,7 @@ public class BLEDescriptor {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
     /**
      * The UUID of the BLECharacteristic instance to which the descriptor belongs
      */
@@ -429,7 +431,7 @@ public class BLEDescriptor {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The UUID of the BLEDescriptor instance
      */
@@ -437,7 +439,7 @@ public class BLEDescriptor {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var descriptorUuid: String
+    public var descriptorUUID: String
     /**
      * The value of the BLEDescriptor instance
      */
@@ -458,16 +460,16 @@ public class BLEDescriptor {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuid: String,
-        characteristicUuid: String,
-        descriptorUuid: String,
+        serviceUUID: String,
+        characteristicUUID: String,
+        descriptorUUID: String,
         descriptorValue: Array<Byte>,
         descriptorHandle!: UInt32 = 0,
         permissions!: GattPermissions = GattPermissions()
     ) {
-        this.serviceUuid = serviceUuid
-        this.characteristicUuid = characteristicUuid
-        this.descriptorUuid = descriptorUuid
+        this.serviceUUID = serviceUUID
+        this.characteristicUUID = characteristicUUID
+        this.descriptorUUID = descriptorUUID
         this.descriptorValue = descriptorValue
         if (descriptorHandle!= 0 || permissions != GattPermissions()) {
             throw IllegalArgumentException("the feature is temporarily not supported.")
@@ -477,23 +479,23 @@ public class BLEDescriptor {
     }
 
     unsafe func toNative(): NativeBLEDescriptor {
-        var nativeServiceUuid: CString = CString(CPointer())
-        var nativeCharacteristicUuid: CString = CString(CPointer())
-        var nativeDescriptorUuid: CString = CString(CPointer())
+        var nativeServiceUUID: CString = CString(CPointer())
+        var nativeCharacteristicUUID: CString = CString(CPointer())
+        var nativeDescriptorUUID: CString = CString(CPointer())
 
         try {
-            nativeServiceUuid = LibC.mallocCString(serviceUuid)
-            nativeCharacteristicUuid = LibC.mallocCString(characteristicUuid)
-            nativeDescriptorUuid = LibC.mallocCString(descriptorUuid)
+            nativeServiceUUID = LibC.mallocCString(serviceUUID)
+            nativeCharacteristicUUID = LibC.mallocCString(characteristicUUID)
+            nativeDescriptorUUID = LibC.mallocCString(descriptorUUID)
         } catch (e: Exception) {
-            LibC.free(nativeServiceUuid)
-            LibC.free(nativeCharacteristicUuid)
+            LibC.free(nativeServiceUUID)
+            LibC.free(nativeCharacteristicUUID)
             throw e
         }
         NativeBLEDescriptor(
-            nativeServiceUuid,
-            nativeCharacteristicUuid,
-            nativeDescriptorUuid,
+            nativeServiceUUID,
+            nativeCharacteristicUUID,
+            nativeDescriptorUUID,
             CArrUI8(cjArr2CArr<Byte, UInt8>(descriptorValue, {i => i}), descriptorValue.size)
         )
     }
@@ -637,15 +639,15 @@ public class GattProperties {
 @C
 struct NativeNotifyCharacteristic {
     NativeNotifyCharacteristic(
-        let serviceUuid: CString,
-        let characteristicUuid: CString,
+        let serviceUUID: CString,
+        let characteristicUUID: CString,
         let characteristicValue: CArrUI8,
         let confirm: Bool
     ) {}
 
     unsafe func free(): Unit {
-        LibC.free(serviceUuid)
-        LibC.free(characteristicUuid)
+        LibC.free(serviceUUID)
+        LibC.free(characteristicUUID)
         LibC.free<UInt8>(characteristicValue.head)
     }
 }
@@ -665,7 +667,7 @@ public class NotifyCharacteristic {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
     /**
      * The UUID of a NotifyCharacteristic instance
      */
@@ -673,7 +675,7 @@ public class NotifyCharacteristic {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The value of a NotifyCharacteristic instance
      */
@@ -700,35 +702,35 @@ public class NotifyCharacteristic {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuid: String,
-        characteristicUuid: String,
+        serviceUUID: String,
+        characteristicUUID: String,
         characteristicValue: Array<Byte>,
         confirm: Bool
     ) {
-        this.serviceUuid = serviceUuid
-        this.characteristicUuid = characteristicUuid
+        this.serviceUUID = serviceUUID
+        this.characteristicUUID = characteristicUUID
         this.characteristicValue = characteristicValue
         this.confirm = confirm
     }
 
     unsafe func toNative(): NativeNotifyCharacteristic {
-        var cServiceUuid: CString = CString(CPointer())
-        var cCharacteristicUuid: CString = CString(CPointer())
+        var cServiceUUID: CString = CString(CPointer())
+        var cCharacteristicUUID: CString = CString(CPointer())
         var cCharacteristicValue: CArrUI8 = CArrUI8(CPointer(), 0)
         try {
-            cServiceUuid = LibC.mallocCString(serviceUuid)
-            cCharacteristicUuid = LibC.mallocCString(characteristicUuid)
+            cServiceUUID = LibC.mallocCString(serviceUUID)
+            cCharacteristicUUID = LibC.mallocCString(characteristicUUID)
             cCharacteristicValue = CArrUI8(cjArr2CArr<Byte, UInt8>(characteristicValue, {i => i}),
                 characteristicValue.size)
             NativeNotifyCharacteristic(
-                cServiceUuid,
-                cCharacteristicUuid,
+                cServiceUUID,
+                cCharacteristicUUID,
                 cCharacteristicValue,
                 confirm
             )
         } catch (e: Exception) {
-            LibC.free(cServiceUuid)
-            LibC.free(cCharacteristicUuid)
+            LibC.free(cServiceUUID)
+            LibC.free(cCharacteristicUUID)
             cCharacteristicValue.free()
             throw e
         }
@@ -870,14 +872,11 @@ public enum GattWriteType {
     WriteNoResponse
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case Write => 0
             case WriteNoResponse => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -888,8 +887,8 @@ struct NativeCharacteristicReadRequest {
         let deviceId: CString,
         let transId: Int32,
         let offset: Int32,
-        let characteristicUuid: CString,
-        let serviceUuid: CString
+        let characteristicUUID: CString,
+        let serviceUUID: CString
     ) {}
 
     func toObject(): CharacteristicReadRequest {
@@ -899,8 +898,8 @@ struct NativeCharacteristicReadRequest {
             transId,
             offset,
             // Universally Unique Identifier translation does not throw exception.
-            characteristicUuid.toString(),
-            serviceUuid.toString()
+            characteristicUUID.toString(),
+            serviceUUID.toString()
         )
     }
 }
@@ -944,7 +943,7 @@ public class CharacteristicReadRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The UUID of the service to which the characteristic belongs
      */
@@ -952,20 +951,20 @@ public class CharacteristicReadRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
 
     init(
         deviceId: String,
         transId: Int32,
         offset: Int32,
-        characteristicUuid: String,
-        serviceUuid: String
+        characteristicUUID: String,
+        serviceUUID: String
     ) {
         this.deviceId = deviceId
         this.transId = transId
         this.offset = offset
-        this.characteristicUuid = characteristicUuid
-        this.serviceUuid = serviceUuid
+        this.characteristicUUID = characteristicUUID
+        this.serviceUUID = serviceUUID
     }
 }
 
@@ -978,8 +977,8 @@ struct NativeCharacteristicWriteRequest {
         let isPrepared: Bool,
         let needRsp: Bool,
         let value: CArrUI8,
-        let characteristicUuid: CString,
-        let serviceUuid: CString
+        let characteristicUUID: CString,
+        let serviceUUID: CString
     ) {}
 
     func toObject(): CharacteristicWriteRequest {
@@ -992,8 +991,8 @@ struct NativeCharacteristicWriteRequest {
             needRsp,
             unsafe { cArr2cjArr<UInt8, Byte>(value.size, value.head) {i => i} },
             // Universally Unique Identifier translation does not throw exception.
-            characteristicUuid.toString(),
-            serviceUuid.toString()
+            characteristicUUID.toString(),
+            serviceUUID.toString()
         )
     }
 }
@@ -1061,7 +1060,7 @@ public class CharacteristicWriteRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The UUID of the service to which the characteristic belongs
      */
@@ -1069,7 +1068,7 @@ public class CharacteristicWriteRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
 
     init(
         deviceId: String,
@@ -1078,8 +1077,8 @@ public class CharacteristicWriteRequest {
         isPrepared: Bool,
         needRsp: Bool,
         value: Array<Byte>,
-        characteristicUuid: String,
-        serviceUuid: String
+        characteristicUUID: String,
+        serviceUUID: String
     ) {
         this.deviceId = deviceId
         this.transId = transId
@@ -1087,8 +1086,8 @@ public class CharacteristicWriteRequest {
         this.isPrepared = isPrepared
         this.needRsp = needRsp
         this.value = value
-        this.characteristicUuid = characteristicUuid
-        this.serviceUuid = serviceUuid
+        this.characteristicUUID = characteristicUUID
+        this.serviceUUID = serviceUUID
     }
 }
 
@@ -1098,9 +1097,9 @@ struct NativeDescriptorReadRequest {
         let deviceId: CString,
         let transId: Int32,
         let offset: Int32,
-        let descriptorUuid: CString,
-        let characteristicUuid: CString,
-        let serviceUuid: CString
+        let descriptorUUID: CString,
+        let characteristicUUID: CString,
+        let serviceUUID: CString
     ) {}
 
     func toObject(): DescriptorReadRequest {
@@ -1110,9 +1109,9 @@ struct NativeDescriptorReadRequest {
             transId,
             offset,
             // Universally Unique Identifier translation does not throw exception.
-            descriptorUuid.toString(),
-            characteristicUuid.toString(),
-            serviceUuid.toString()
+            descriptorUUID.toString(),
+            characteristicUUID.toString(),
+            serviceUUID.toString()
         )
     }
 }
@@ -1156,7 +1155,7 @@ public class DescriptorReadRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var descriptorUuid: String
+    public var descriptorUUID: String
     /**
      * The UUID of the characteristic to which the descriptor belongs
      */
@@ -1164,7 +1163,7 @@ public class DescriptorReadRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The UUID of the service to which the descriptor belongs
      */
@@ -1172,22 +1171,22 @@ public class DescriptorReadRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
 
     init(
         deviceId: String,
         transId: Int32,
         offset: Int32,
-        descriptorUuid: String,
-        characteristicUuid: String,
-        serviceUuid: String
+        descriptorUUID: String,
+        characteristicUUID: String,
+        serviceUUID: String
     ) {
         this.deviceId = deviceId
         this.transId = transId
         this.offset = offset
-        this.descriptorUuid = descriptorUuid
-        this.characteristicUuid = characteristicUuid
-        this.serviceUuid = serviceUuid
+        this.descriptorUUID = descriptorUUID
+        this.characteristicUUID = characteristicUUID
+        this.serviceUUID = serviceUUID
     }
 }
 
@@ -1200,9 +1199,9 @@ struct NativeDescriptorWriteRequest {
         let isPrepared: Bool,
         let needRsp: Bool,
         let value: CArrUI8,
-        let descriptorUuid: CString,
-        let characteristicUuid: CString,
-        let serviceUuid: CString
+        let descriptorUUID: CString,
+        let characteristicUUID: CString,
+        let serviceUUID: CString
     ) {}
 
     func toObject(): DescriptorWriteRequest {
@@ -1215,9 +1214,9 @@ struct NativeDescriptorWriteRequest {
             needRsp,
             unsafe { cArr2cjArr<UInt8, Byte>(value.size, value.head) {i => i} },
             // Universally Unique Identifier translation does not throw exception.
-            descriptorUuid.toString(),
-            characteristicUuid.toString(),
-            serviceUuid.toString()
+            descriptorUUID.toString(),
+            characteristicUUID.toString(),
+            serviceUUID.toString()
         )
     }
 }
@@ -1285,7 +1284,7 @@ public class DescriptorWriteRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var descriptorUuid: String
+    public var descriptorUUID: String
     /**
      * The UUID of the characteristic to which the descriptor belongs
      */
@@ -1293,7 +1292,7 @@ public class DescriptorWriteRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristicUuid: String
+    public var characteristicUUID: String
     /**
      * The UUID of the service to which the descriptor belongs
      */
@@ -1301,7 +1300,7 @@ public class DescriptorWriteRequest {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
 
     init(
         deviceId: String,
@@ -1310,9 +1309,9 @@ public class DescriptorWriteRequest {
         isPrepared: Bool,
         needRsp: Bool,
         value: Array<Byte>,
-        descriptorUuid: String,
-        characteristicUuid: String,
-        serviceUuid: String
+        descriptorUUID: String,
+        characteristicUUID: String,
+        serviceUUID: String
     ) {
         this.deviceId = deviceId
         this.transId = transId
@@ -1320,9 +1319,9 @@ public class DescriptorWriteRequest {
         this.isPrepared = isPrepared
         this.needRsp = needRsp
         this.value = value
-        this.descriptorUuid = descriptorUuid
-        this.characteristicUuid = characteristicUuid
-        this.serviceUuid = serviceUuid
+        this.descriptorUUID = descriptorUUID
+        this.characteristicUUID = characteristicUUID
+        this.serviceUUID = serviceUUID
     }
 }
 
@@ -1447,9 +1446,6 @@ public enum BluetoothBleGattServerCallbackType {
     ServerBleMtuChange
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case CharacteristicRead => 0
@@ -1458,7 +1454,7 @@ public enum BluetoothBleGattServerCallbackType {
             case DescriptorWrite => 3
             case ConnectionStateChange => 4
             case ServerBleMtuChange => 5
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1504,15 +1500,12 @@ public enum BluetoothBleGattClientDeviceCallbackType {
     ClientBleMtuChange
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case BleCharacteristicChange => 0
             case BleConnectionStateChange => 1
             case ClientBleMtuChange => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }

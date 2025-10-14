@@ -17,6 +17,8 @@
 
 package ohos.bluetooth.ble
 
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
+import ohos.business_exception.BusinessException
 import ohos.labels.*
 import ohos.ffi.*
 
@@ -59,7 +61,7 @@ public class ScanFilter {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
 
     /**
      * Service UUID mask.
@@ -68,7 +70,7 @@ public class ScanFilter {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuidMask: String
+    public var serviceUUIDMask: String
 
     /**
      * Service solicitation UUID.
@@ -77,7 +79,7 @@ public class ScanFilter {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceSolicitationUuid: String
+    public var serviceSolicitationUUID: String
 
     /**
      * Service solicitation UUID mask.
@@ -86,7 +88,7 @@ public class ScanFilter {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceSolicitationUuidMask: String
+    public var serviceSolicitationUUIDMask: String
 
     /**
      * Service data.
@@ -143,10 +145,10 @@ public class ScanFilter {
     public init(
         deviceId!: String = "",
         name!: String = "",
-        serviceUuid!: String = "",
-        serviceUuidMask!: String = "",
-        serviceSolicitationUuid!: String = "",
-        serviceSolicitationUuidMask!: String = "",
+        serviceUUID!: String = "",
+        serviceUUIDMask!: String = "",
+        serviceSolicitationUUID!: String = "",
+        serviceSolicitationUUIDMask!: String = "",
         serviceData!: Array<Byte> = [],
         serviceDataMask!: Array<Byte> = [],
         manufactureId!: UInt16 = 0,
@@ -155,10 +157,10 @@ public class ScanFilter {
     ) {
         this.deviceId = deviceId
         this.name = name
-        this.serviceUuid = serviceUuid
-        this.serviceUuidMask = serviceUuidMask
-        this.serviceSolicitationUuid = serviceSolicitationUuid
-        this.serviceSolicitationUuidMask = serviceSolicitationUuidMask
+        this.serviceUUID = serviceUUID
+        this.serviceUUIDMask = serviceUUIDMask
+        this.serviceSolicitationUUID = serviceSolicitationUUID
+        this.serviceSolicitationUUIDMask = serviceSolicitationUUIDMask
         this.serviceData = serviceData
         this.serviceDataMask = serviceDataMask
         this.manufactureId = manufactureId
@@ -170,10 +172,10 @@ public class ScanFilter {
         unsafe {
             var cDeviceId = CString(CPointer<UInt8>())
             var cName = CString(CPointer<UInt8>())
-            var cServiceUuid = CString(CPointer<UInt8>())
-            var cServiceUuidMask = CString(CPointer<UInt8>())
-            var cServiceSolicitationUuid = CString(CPointer<UInt8>())
-            var cServiceSolicitationUuidMask = CString(CPointer<UInt8>())
+            var cServiceUUID = CString(CPointer<UInt8>())
+            var cServiceUUIDMask = CString(CPointer<UInt8>())
+            var cServiceSolicitationUUID = CString(CPointer<UInt8>())
+            var cServiceSolicitationUUIDMask = CString(CPointer<UInt8>())
             var cServiceData = CArrUI8(CPointer<UInt8>(), 0)
             var cServiceDataMask = CArrUI8(CPointer<UInt8>(), 0)
             var cManufactureData = CArrUI8(CPointer<UInt8>(), 0)
@@ -181,10 +183,10 @@ public class ScanFilter {
             try {
                 cDeviceId = LibC.mallocCString(deviceId)
                 cName = LibC.mallocCString(name)
-                cServiceUuid = LibC.mallocCString(serviceUuid)
-                cServiceUuidMask = LibC.mallocCString(serviceUuidMask)
-                cServiceSolicitationUuid = LibC.mallocCString(serviceSolicitationUuid)
-                cServiceSolicitationUuidMask = LibC.mallocCString(serviceSolicitationUuidMask)
+                cServiceUUID = LibC.mallocCString(serviceUUID)
+                cServiceUUIDMask = LibC.mallocCString(serviceUUIDMask)
+                cServiceSolicitationUUID = LibC.mallocCString(serviceSolicitationUUID)
+                cServiceSolicitationUUIDMask = LibC.mallocCString(serviceSolicitationUUIDMask)
                 cServiceData = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceData, {i => i}), serviceData.size)
                 cServiceDataMask = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceDataMask, {i => i}), serviceDataMask.size)
                 cManufactureData = CArrUI8(cjArr2CArr<UInt8, UInt8>(manufactureData, {i => i}), manufactureData.size)
@@ -193,10 +195,10 @@ public class ScanFilter {
                 return NativeScanFilter(
                     cDeviceId,
                     cName,
-                    cServiceUuid,
-                    cServiceUuidMask,
-                    cServiceSolicitationUuid,
-                    cServiceSolicitationUuidMask,
+                    cServiceUUID,
+                    cServiceUUIDMask,
+                    cServiceSolicitationUUID,
+                    cServiceSolicitationUUIDMask,
                     cServiceData,
                     cServiceDataMask,
                     manufactureId,
@@ -206,10 +208,10 @@ public class ScanFilter {
             } catch (e: Exception) {
                 LibC.free(cDeviceId)
                 LibC.free(cName)
-                LibC.free(cServiceUuid)
-                LibC.free(cServiceUuidMask)
-                LibC.free(cServiceSolicitationUuid)
-                LibC.free(cServiceSolicitationUuidMask)
+                LibC.free(cServiceUUID)
+                LibC.free(cServiceUUIDMask)
+                LibC.free(cServiceSolicitationUUID)
+                LibC.free(cServiceSolicitationUUIDMask)
                 LibC.free<UInt8>(cServiceData.head)
                 LibC.free<UInt8>(cServiceDataMask.head)
                 LibC.free<UInt8>(cManufactureData.head)
@@ -224,10 +226,10 @@ struct NativeScanFilter {
     NativeScanFilter(
         let deviceId: CString,
         let name: CString,
-        let serviceUuid: CString,
-        let serviceUuidMask: CString,
-        let serviceSolicitationUuid: CString,
-        let serviceSolicitationUuidMask: CString,
+        let serviceUUID: CString,
+        let serviceUUIDMask: CString,
+        let serviceSolicitationUUID: CString,
+        let serviceSolicitationUUIDMask: CString,
         let serviceData: CArrUI8,
         let serviceDataMask: CArrUI8,
         let manufactureId: UInt16,
@@ -238,10 +240,10 @@ struct NativeScanFilter {
     unsafe func free() {
         LibC.free(deviceId)
         LibC.free(name)
-        LibC.free(serviceUuid)
-        LibC.free(serviceUuidMask)
-        LibC.free(serviceSolicitationUuid)
-        LibC.free(serviceSolicitationUuidMask)
+        LibC.free(serviceUUID)
+        LibC.free(serviceUUIDMask)
+        LibC.free(serviceSolicitationUUID)
+        LibC.free(serviceSolicitationUUIDMask)
         LibC.free<UInt8>(serviceData.head)
         LibC.free<UInt8>(serviceDataMask.head)
         LibC.free<UInt8>(manufactureData.head)
@@ -459,31 +461,31 @@ struct CArrNativeServiceData {
 
 @C
 struct NativeAdvertiseData {
-    let serviceUuids: CArrString
+    let serviceUUIDs: CArrString
     let manufactureData: CArrNativeManufactureData
     let serviceData: CArrNativeServiceData
     let includeDeviceName: Bool
     NativeAdvertiseData(
-        serviceUuids: CArrString,
+        serviceUUIDs: CArrString,
         manufactureData: CArrNativeManufactureData,
         serviceData: CArrNativeServiceData,
         includeDeviceName: Bool
     ) {
-        this.serviceUuids = serviceUuids
+        this.serviceUUIDs = serviceUUIDs
         this.manufactureData = manufactureData
         this.serviceData = serviceData
         this.includeDeviceName = includeDeviceName
     }
 
     init() {
-        this.serviceUuids = CArrString(CPointer(), 0)
+        this.serviceUUIDs = CArrString(CPointer(), 0)
         this.manufactureData = CArrNativeManufactureData(CPointer(), 0)
         this.serviceData = CArrNativeServiceData(CPointer(), 0)
         this.includeDeviceName = false
     }
 
     unsafe func free() {
-        serviceUuids.free()
+        serviceUUIDs.free()
         manufactureData.free()
         serviceData.free()
     }
@@ -504,7 +506,7 @@ public class AdvertiseData {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuids: Array<String>
+    public var serviceUUIDs: Array<String>
     /**
      * The specified manufacturer data list to this advertisement
      */
@@ -540,13 +542,13 @@ public class AdvertiseData {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuids: Array<String>,
+        serviceUUIDs: Array<String>,
         manufactureData: Array<ManufactureData>,
         serviceData: Array<ServiceData>,
         includeDeviceName!: Bool = false,
         includeTxPower!: Bool = false
     ) {
-        this.serviceUuids = serviceUuids
+        this.serviceUUIDs = serviceUUIDs
         this.manufactureData = manufactureData
         this.serviceData = serviceData
         this.includeDeviceName = includeDeviceName
@@ -557,26 +559,26 @@ public class AdvertiseData {
     }
 
     func toNative(): NativeAdvertiseData {
-        var cServiceUuids: CArrString = CArrString(CPointer(), 0)
+        var cServiceUUIDs: CArrString = CArrString(CPointer(), 0)
         var cManufactureData: CArrNativeManufactureData = CArrNativeManufactureData(CPointer(), 0)
         var cServiceData: CArrNativeServiceData = CArrNativeServiceData(CPointer(), 0)
         unsafe {
             try {
-                cServiceUuids = CArrString(cjArr2CArr<String, CString>(serviceUuids, {i => LibC.mallocCString(i)}),
-                    serviceUuids.size)
+                cServiceUUIDs = CArrString(cjArr2CArr<String, CString>(serviceUUIDs, {i => LibC.mallocCString(i)}),
+                    serviceUUIDs.size)
                 cManufactureData = CArrNativeManufactureData(
                     cjArr2CArr<ManufactureData, NativeManufactureData>(manufactureData, {i => i.toNative()}),
                     manufactureData.size)
                 cServiceData = CArrNativeServiceData(
                     cjArr2CArr<ServiceData, NativeServiceData>(serviceData, {i => i.toNative()}), serviceData.size)
                 return NativeAdvertiseData(
-                    cServiceUuids,
+                    cServiceUUIDs,
                     cManufactureData,
                     cServiceData,
                     includeDeviceName
                 )
             } catch (e: Exception) {
-                cServiceUuids.free()
+                cServiceUUIDs.free()
                 cManufactureData.free()
                 cServiceData.free()
                 throw e
@@ -650,12 +652,12 @@ public class ManufactureData {
 @C
 struct NativeServiceData {
     NativeServiceData(
-        let serviceUuid: CString,
+        let serviceUUID: CString,
         let serviceValue: CArrUI8
     ) {}
 
     unsafe func free() {
-        LibC.free(serviceUuid)
+        LibC.free(serviceUUID)
         LibC.free<UInt8>(serviceValue.head)
     }
 }
@@ -675,7 +677,7 @@ public class ServiceData {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var serviceUuid: String
+    public var serviceUUID: String
     /**
      * Indicates the service data to add
      */
@@ -693,23 +695,23 @@ public class ServiceData {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(
-        serviceUuid: String,
+        serviceUUID: String,
         serviceValue: Array<Byte>
     ) {
-        this.serviceUuid = serviceUuid
+        this.serviceUUID = serviceUUID
         this.serviceValue = serviceValue
     }
 
     func toNative(): NativeServiceData {
-        var cUuid: CString = CString(CPointer())
+        var cUUID: CString = CString(CPointer())
         var cValue: CArrUI8 = CArrUI8(CPointer(), 0)
         unsafe {
             try {
-                cUuid = LibC.mallocCString(serviceUuid)
+                cUUID = LibC.mallocCString(serviceUUID)
                 cValue = CArrUI8(cjArr2CArr<UInt8, UInt8>(serviceValue, {i => i}), serviceValue.size)
-                return NativeServiceData(cUuid, cValue)
+                return NativeServiceData(cUUID, cValue)
             } catch (e: Exception) {
-                LibC.free(cUuid)
+                LibC.free(cUUID)
                 cValue.free()
                 throw e
             }
@@ -983,15 +985,12 @@ public enum ScanDuty {
     ScanModeLowLatency
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case ScanModeLowPower => 0
             case ScanModeBalanced => 1
             case ScanModeLowLatency => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1024,14 +1023,11 @@ public enum MatchMode {
     MatchModeSticky
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case MatchModeAggressive => 1
             case MatchModeSticky => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1128,14 +1124,11 @@ public enum PhyType {
     PhyLeAllSupported
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case PhyLe1M => 1
             case PhyLeAllSupported => 255
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1168,14 +1161,11 @@ public enum BluetoothBleCallbackType {
     BleDeviceFind
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case AdvertisingStateChange => 0
             case BleDeviceFind => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }

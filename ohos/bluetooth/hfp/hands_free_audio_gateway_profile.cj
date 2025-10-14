@@ -75,7 +75,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Obtains the connected devices list of profile.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @returns { Array<String> } Returns the address of connected devices list.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -104,7 +103,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Obtains the profile connection state.
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
      * @returns { ProfileConnectionState } Returns the connection state.
      * @throws { BusinessException } 201 - Permission denied.
@@ -113,7 +111,6 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 2900003 - Bluetooth disabled.
      * @throws { BusinessException } 2900004 - Profile not supported.
      * @throws { BusinessException } 2900099 - Operation failed.
- * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -135,12 +132,10 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes .
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      * @param { Callback1Argument<StateChangeParam> } callback - Callback used to listen for event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -172,12 +167,8 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes .
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      * @param { CallbackObject } callback - Callback used to listen for event.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
@@ -197,11 +188,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes .
      *
-     * @permission ohos.permission.ACCESS_BLUETOOTH
      * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         since: "22",
