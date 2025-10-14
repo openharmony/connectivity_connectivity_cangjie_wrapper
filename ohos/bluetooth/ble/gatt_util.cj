@@ -17,7 +17,9 @@
 
 package ohos.bluetooth.ble
 
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.bluetooth.constant.ProfileConnectionState
+import ohos.business_exception.BusinessException
 import ohos.ffi.{ CArrUI8, cArr2cjArr, cjArr2CArr}
 import ohos.labels.APILevel
 
@@ -870,14 +872,11 @@ public enum GattWriteType {
     WriteNoResponse
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case Write => 0
             case WriteNoResponse => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1447,9 +1446,6 @@ public enum BluetoothBleGattServerCallbackType {
     ServerBleMtuChange
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case CharacteristicRead => 0
@@ -1458,7 +1454,7 @@ public enum BluetoothBleGattServerCallbackType {
             case DescriptorWrite => 3
             case ConnectionStateChange => 4
             case ServerBleMtuChange => 5
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1504,15 +1500,12 @@ public enum BluetoothBleGattClientDeviceCallbackType {
     ClientBleMtuChange
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case BleCharacteristicChange => 0
             case BleConnectionStateChange => 1
             case ClientBleMtuChange => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }

@@ -17,7 +17,7 @@
 
 package ohos.bluetooth.ble
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg }
+import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg, OPERATION_FAILED }
 import ohos.business_exception.{ BusinessException, AsyncCallback, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{ Callback1Param, RemoteDataLite, RetDataI32, SUCCESS_CODE, cArr2cjArr, releaseFFIData }
@@ -121,11 +121,11 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Obtains the name of BLE peripheral device.
      *
+     * @returns { String } Returns a string representation of the name if obtained;
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -151,11 +151,11 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Starts discovering services.
      *
+     * @param { AsyncCallback<Array<GattService>> } callback - Callback used to catch the services.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -186,6 +186,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Reads the characteristic of a BLE peripheral device.
      *
+     * @param { BLECharacteristic } characteristic - Indicates the characteristic to read.
+     * @param { AsyncCallback<BLECharacteristic> } callback - Callback invoked to return the characteristic value read.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -197,7 +199,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901005 - The connection is not encrypted.
      * @throws { BusinessException } 2901006 - The connection is not authenticated.
      * @throws { BusinessException } 2901007 - The connection is not authorized.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -232,6 +233,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Reads the descriptor of a BLE peripheral device.
      *
+     * @param { BLEDescriptor } descriptor - Indicates the descriptor to read.
+     * @param { AsyncCallback<BLEDescriptor> } callback - Callback invoked to return the descriptor read.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -243,7 +246,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901005 - The connection is not encrypted.
      * @throws { BusinessException } 2901006 - The connection is not authenticated.
      * @throws { BusinessException } 2901007 - The connection is not authorized.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -275,6 +277,9 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Writes the characteristic of a BLE peripheral device.
      *
+     * @param { BLECharacteristic } characteristic - Indicates the characteristic to write.
+     * @param { GattWriteType } writeType - Write type of the characteristic.
+     * @param { AsyncCallback<Unit> } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -286,7 +291,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901005 - The connection is not encrypted.
      * @throws { BusinessException } 2901006 - The connection is not authenticated.
      * @throws { BusinessException } 2901007 - The connection is not authorized.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -317,6 +321,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Writes the descriptor of a BLE peripheral device.
      *
+     * @param { BLEDescriptor } descriptor - Indicates the descriptor to write.
+     * @param { AsyncCallback<Unit> } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -328,7 +334,6 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901005 - The connection is not encrypted.
      * @throws { BusinessException } 2901006 - The connection is not authenticated.
      * @throws { BusinessException } 2901007 - The connection is not authorized.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -358,12 +363,12 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Get the RSSI value of this BLE peripheral device.
      *
+     * @param { AsyncCallback<Int32> } callback - Callback invoked to return the RSSI, in dBm.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { BusinessException } 2901003 - The connection is not established.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -388,11 +393,11 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Set the mtu size of a BLE peripheral device.
      *
+     * @param { Int32 } mtu - The maximum transmission unit.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900099 - Operation failed.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -410,13 +415,16 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Enables or disables indication of a characteristic when value changed.
      *
+     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
+     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
+     * that notification is enabled, and the value {@code false} indicates that indication is disabled.
+     * @param { AsyncCallback<Unit> } callback - the callback of setCharacteristicChangeNotification.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { BusinessException } 2901003 - The connection is not established.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -446,13 +454,16 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Enables or disables indication of a characteristic when value changed.
      *
+     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
+     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
+     * that indication is enabled, and the value {@code false} indicates that indication is disabled.
+     * @param { AsyncCallback<Unit> } callback - the callback of setCharacteristicChangeIndication.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
      * @throws { BusinessException } 2900011 - The operation is busy. The last operation is not completed.
      * @throws { BusinessException } 2900099 - Operation failed.
      * @throws { BusinessException } 2901003 - The connection is not established.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -482,9 +493,10 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Subscribe characteristic value changed event.
      *
+     * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the characteristic value changed event to listen for.
+     * @param { Callback1Argument<BLECharacteristic> } callback - Callback used to listen for the characteristic value changed event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
      */
     @!APILevel[
         22,
@@ -505,7 +517,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Subscribe client connection state changed event.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the connection state changed event to listen for.
+     * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
      */
     @!APILevel[
         22,
@@ -517,7 +530,7 @@ public class GattClientDevice <: RemoteDataLite {
         callback: Callback1Argument<BLEConnectionChangeState>
     ): Unit {
         if (eventType != BleConnectionStateChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
+            throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
         commonSubscribe1Arg(eventType, callback) {
             state: NativeBLEConnectionChangeState => state.toObject()
@@ -528,7 +541,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Subscribe mtu changed event.
      *
-     * @throws { IllegalArgumentException } - Invalid parameter, Parameter verification failed.
+     * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the mtu changed event to listen for.
+     * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
      */
     @!APILevel[
         22,
@@ -537,7 +551,7 @@ public class GattClientDevice <: RemoteDataLite {
     ]
     public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
         if (eventType != ClientBleMtuChange) {
-            throw IllegalArgumentException("Invalid name ${eventType}, valid name is ClientBleMtuChange")
+            throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
         commonSubscribe1Arg(eventType, callback) {
             i: Int32 => i
@@ -547,6 +561,9 @@ public class GattClientDevice <: RemoteDataLite {
 
     /**
      * Unsubscribe mtu changed event.
+     *
+     * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of unsubscribe event.
+     * @param { ?CallbackObject } callback - Callback used to listen.
      */
     @!APILevel[
         22,

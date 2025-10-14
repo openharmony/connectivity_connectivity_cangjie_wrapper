@@ -17,6 +17,8 @@
 
 package ohos.bluetooth.ble
 
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
+import ohos.business_exception.BusinessException
 import ohos.labels.*
 import ohos.ffi.*
 
@@ -983,15 +985,12 @@ public enum ScanDuty {
     ScanModeLowLatency
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case ScanModeLowPower => 0
             case ScanModeBalanced => 1
             case ScanModeLowLatency => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1024,14 +1023,11 @@ public enum MatchMode {
     MatchModeSticky
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case MatchModeAggressive => 1
             case MatchModeSticky => 2
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1128,14 +1124,11 @@ public enum PhyType {
     PhyLeAllSupported
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case PhyLe1M => 1
             case PhyLeAllSupported => 255
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
@@ -1168,14 +1161,11 @@ public enum BluetoothBleCallbackType {
     BleDeviceFind
     | ...
 
-    /**
-     * @throws IllegalArgumentException - Value conversion failed.
-     */
     func getValue(): Int32 {
         match (this) {
             case AdvertisingStateChange => 0
             case BleDeviceFind => 1
-            case _ => throw IllegalArgumentException("The type is not supported.")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }

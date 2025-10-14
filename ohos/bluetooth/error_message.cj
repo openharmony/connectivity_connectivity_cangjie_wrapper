@@ -93,7 +93,7 @@ const INVALID_PARAMETER: Int32 = 401
 
 protected func checkRet(errorCode: Int32): Unit {
     if (errorCode == INVALID_PARAMETER) {
-        throw IllegalArgumentException("Invalid parameter.")
+        throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
     }
     if (errorCode != SUCCESS_CODE) {
         throw BusinessException(errorCode, getErrorMsg(errorCode))
