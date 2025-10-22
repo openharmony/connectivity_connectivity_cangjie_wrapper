@@ -208,11 +208,11 @@ class Test_ble {
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_GattService() {
-        let serviceUuid = "114514"
+        let serviceUUID = "114514"
         let isPrimary = true
         let characteristics: Array<BLECharacteristic> = []
         let includeServices: Array<GattService> = []
-        var gattService: GattService = GattService(serviceUuid, isPrimary, characteristics, includeServices: includeServices)
+        var gattService: GattService = GattService(serviceUUID, isPrimary, characteristics, includeServices: includeServices)
         gattService.serviceUUID = "12"
         gattService.isPrimary = false
         gattService.characteristics = characteristics
@@ -222,14 +222,14 @@ class Test_ble {
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_BLECharacteristic() {
-        let serviceUuid: String = "11"
-        let characteristicUuid: String = "11"
+        let serviceUUID: String = "11"
+        let characteristicUUID: String = "11"
         let characteristicValue: Array<Byte> = []
         let descriptors: Array<BLEDescriptor> = []
         let properties: GattProperties = GattProperties()
-        let bleCharacteristic = BLECharacteristic(serviceUuid, characteristicUuid, characteristicValue, descriptors, properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0)
-        bleCharacteristic.serviceUUID = serviceUuid
-        bleCharacteristic.characteristicUuid = characteristicUuid
+        let bleCharacteristic = BLECharacteristic(serviceUUID, characteristicUUID, characteristicValue, descriptors, properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0)
+        bleCharacteristic.serviceUUID = serviceUUID
+        bleCharacteristic.characteristicUUID = characteristicUUID
         bleCharacteristic.characteristicValue = characteristicValue
         bleCharacteristic.descriptors = descriptors
         bleCharacteristic.properties = properties
@@ -238,27 +238,27 @@ class Test_ble {
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_BLEDescriptor() {
-        let serviceUuid = "11"
-        let characteristicUuid = "11"
-        let descriptorUuid = "11"
+        let serviceUUID = "11"
+        let characteristicUUID = "11"
+        let descriptorUUID = "11"
         let descriptorValue: Array<Byte> = []
-        let bleDescriptor = BLEDescriptor(serviceUuid, characteristicUuid, descriptorUuid, descriptorValue)
-        bleDescriptor.serviceUUID = serviceUuid
-        bleDescriptor.characteristicUuid = characteristicUuid
-        bleDescriptor.descriptorUuid = descriptorUuid
+        let bleDescriptor = BLEDescriptor(serviceUUID, characteristicUUID, descriptorUUID, descriptorValue)
+        bleDescriptor.serviceUUID = serviceUUID
+        bleDescriptor.characteristicUUID = characteristicUUID
+        bleDescriptor.descriptorUUID = descriptorUUID
         bleDescriptor.descriptorValue = descriptorValue
     }
 
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_NotifyCharacteristic() {
-        let serviceUuid = "11"
-        let characteristicUuid = "11"
+        let serviceUUID = "11"
+        let characteristicUUID = "11"
         let characteristicValue: Array<Byte> = []
         let confirm = true
-        let notifyCharacteristic = NotifyCharacteristic(serviceUuid, characteristicUuid, characteristicValue, confirm)
+        let notifyCharacteristic = NotifyCharacteristic(serviceUUID, characteristicUUID, characteristicValue, confirm)
         notifyCharacteristic.serviceUUID = "12"
-        notifyCharacteristic.characteristicUuid = "12"
+        notifyCharacteristic.characteristicUUID = "12"
         notifyCharacteristic.characteristicValue = []
         notifyCharacteristic.confirm = false
     }
@@ -268,10 +268,10 @@ class Test_ble {
     func test_ScanFilter() {
         let deviceId = "11"
         let name = "test"
-        let serviceUuid = "11"
-        let serviceUuidMask = "11"
-        let serviceSolicitationUuid = "11"
-        let serviceSolicitationUuidMask = "11"
+        let serviceUUID = "11"
+        let serviceUUIDMask = "11"
+        let serviceSolicitationUUID = "11"
+        let serviceSolicitationUUIDMask = "11"
         let serviceData: Array<Byte> = []
         let serviceDataMask: Array<Byte> = []
         let manufactureId = 1u16
@@ -282,10 +282,10 @@ class Test_ble {
 
         scanFilter.deviceId = deviceId
         scanFilter.name = name
-        scanFilter.serviceUUID = serviceUuid
-        scanFilter.serviceUUIDMask = serviceUuidMask
-        scanFilter.serviceSolicitationUuid = serviceSolicitationUuid
-        scanFilter.serviceSolicitationUuidMask = serviceSolicitationUuidMask
+        scanFilter.serviceUUID = serviceUUID
+        scanFilter.serviceUUIDMask = serviceUUIDMask
+        scanFilter.serviceSolicitationUUID = serviceSolicitationUUID
+        scanFilter.serviceSolicitationUUIDMask = serviceSolicitationUUIDMask
         scanFilter.serviceData = serviceData
         scanFilter.serviceDataMask = serviceDataMask
         scanFilter.manufactureId = manufactureId
@@ -322,12 +322,12 @@ class Test_ble {
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_AdvertiseData() {
-        let serviceUuids: Array<String> = []
+        let serviceUUIDs: Array<String> = []
         let manufactureData: Array<ManufactureData> = []
         let serviceData: Array<ServiceData> = []
         let includeDeviceName: Bool = false
         let advertiseData: AdvertiseData = AdvertiseData(
-            serviceUuids, manufactureData, serviceData, includeDeviceName: includeDeviceName)
+            serviceUUIDs, manufactureData, serviceData, includeDeviceName: includeDeviceName)
         advertiseData.serviceUUIDs = []
         advertiseData.manufactureData = []
         advertiseData.serviceData = []
@@ -347,9 +347,9 @@ class Test_ble {
     @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_ServiceData() {
-        let serviceUuid: String = "11"
+        let serviceUUID: String = "11"
         let serviceValue: Array<Byte> = []
-        let serviceData: ServiceData = ServiceData(serviceUuid, serviceValue)
+        let serviceData: ServiceData = ServiceData(serviceUUID, serviceValue)
         serviceData.serviceUUID = "12"
         serviceData.serviceValue = []
     }
@@ -608,7 +608,7 @@ class Test_ble {
 
     @TestCase
     @Tag[APILevel22, TestLevel0]
-    func test_stopAdvertising() {
+    func testStopAdvertisingWithInvalidId() {
         try {
             // Invalid id
             stopAdvertising(UInt32(99))
@@ -743,7 +743,7 @@ class Test_ble {
                     throw e
                 }
                 if (let Some(c) <- outData) {
-                    loggerInfo( "read characteristic value uuid is ${c.characteristicUuid}")
+                    loggerInfo( "read characteristic value uuid is ${c.characteristicUUID}")
                     let message = StringBuilder("logCharacteristic value: ")
                     for (i in 0..c.characteristicValue.size) {
                         message.append(c.characteristicValue[i])
@@ -778,7 +778,7 @@ class Test_ble {
                     throw e
                 }
                 if (let Some(d) <- outDescriptor) {
-                    loggerInfo( "read descriptor value uuid is ${d.descriptorUuid}")
+                    loggerInfo( "read descriptor value uuid is ${d.descriptorUUID}")
                     let message = StringBuilder("logDescriptor value: ")
                     for (i in 0..d.descriptorValue.size) {
                         message.append(d.descriptorValue[i])

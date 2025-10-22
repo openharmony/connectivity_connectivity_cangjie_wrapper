@@ -72,7 +72,7 @@ class Test_hfp {
             let hdfProfile = createHfpAgProfile()
             // 有效的参数格式： 0-9，A-F, a-f
             let ret = hdfProfile.getConnectionState("XX:XX:XX:AA:BB:FF")
-        } catch (e: IllegalArgumentException) {
+        } catch (e: BusinessException) {
             loggerInfo("getConnectionState error ${e}")
             // 参数格式无效，报错 Invalid parameter.
             @Expect(true)
