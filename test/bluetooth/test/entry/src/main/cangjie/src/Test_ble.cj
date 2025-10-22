@@ -205,7 +205,7 @@ class Test_ble {
         }
     }
 
-        @TestCase
+    @TestCase
     @Tag[APILevel22, TestLevel0]
     func test_GattService() {
         let serviceUuid = "114514"
@@ -213,7 +213,7 @@ class Test_ble {
         let characteristics: Array<BLECharacteristic> = []
         let includeServices: Array<GattService> = []
         var gattService: GattService = GattService(serviceUuid, isPrimary, characteristics, includeServices: includeServices)
-        gattService.serviceUuid = "12"
+        gattService.serviceUUID = "12"
         gattService.isPrimary = false
         gattService.characteristics = characteristics
         gattService.includeServices = includeServices
@@ -228,7 +228,7 @@ class Test_ble {
         let descriptors: Array<BLEDescriptor> = []
         let properties: GattProperties = GattProperties()
         let bleCharacteristic = BLECharacteristic(serviceUuid, characteristicUuid, characteristicValue, descriptors, properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0)
-        bleCharacteristic.serviceUuid = serviceUuid
+        bleCharacteristic.serviceUUID = serviceUuid
         bleCharacteristic.characteristicUuid = characteristicUuid
         bleCharacteristic.characteristicValue = characteristicValue
         bleCharacteristic.descriptors = descriptors
@@ -243,7 +243,7 @@ class Test_ble {
         let descriptorUuid = "11"
         let descriptorValue: Array<Byte> = []
         let bleDescriptor = BLEDescriptor(serviceUuid, characteristicUuid, descriptorUuid, descriptorValue)
-        bleDescriptor.serviceUuid = serviceUuid
+        bleDescriptor.serviceUUID = serviceUuid
         bleDescriptor.characteristicUuid = characteristicUuid
         bleDescriptor.descriptorUuid = descriptorUuid
         bleDescriptor.descriptorValue = descriptorValue
@@ -257,7 +257,7 @@ class Test_ble {
         let characteristicValue: Array<Byte> = []
         let confirm = true
         let notifyCharacteristic = NotifyCharacteristic(serviceUuid, characteristicUuid, characteristicValue, confirm)
-        notifyCharacteristic.serviceUuid = "12"
+        notifyCharacteristic.serviceUUID = "12"
         notifyCharacteristic.characteristicUuid = "12"
         notifyCharacteristic.characteristicValue = []
         notifyCharacteristic.confirm = false
@@ -282,8 +282,8 @@ class Test_ble {
 
         scanFilter.deviceId = deviceId
         scanFilter.name = name
-        scanFilter.serviceUuid = serviceUuid
-        scanFilter.serviceUuidMask = serviceUuidMask
+        scanFilter.serviceUUID = serviceUuid
+        scanFilter.serviceUUIDMask = serviceUuidMask
         scanFilter.serviceSolicitationUuid = serviceSolicitationUuid
         scanFilter.serviceSolicitationUuidMask = serviceSolicitationUuidMask
         scanFilter.serviceData = serviceData
@@ -328,7 +328,7 @@ class Test_ble {
         let includeDeviceName: Bool = false
         let advertiseData: AdvertiseData = AdvertiseData(
             serviceUuids, manufactureData, serviceData, includeDeviceName: includeDeviceName)
-        advertiseData.serviceUuids = []
+        advertiseData.serviceUUIDs = []
         advertiseData.manufactureData = []
         advertiseData.serviceData = []
         advertiseData.includeDeviceName = true
@@ -350,7 +350,7 @@ class Test_ble {
         let serviceUuid: String = "11"
         let serviceValue: Array<Byte> = []
         let serviceData: ServiceData = ServiceData(serviceUuid, serviceValue)
-        serviceData.serviceUuid = "12"
+        serviceData.serviceUUID = "12"
         serviceData.serviceValue = []
     }
 
@@ -1195,7 +1195,7 @@ class BLEMtuChangeCallback <: Callback1Argument<Int32> {
 
 class BLECharacteristicChangeCallback <: Callback1Argument<BLECharacteristic> {
     public func invoke(err: ?BusinessException, characteristic: BLECharacteristic): Unit {
-        loggerInfo( "characteristic ${characteristic.serviceUuid} has change")
+        loggerInfo( "characteristic ${characteristic.serviceUUID} has change")
     }
 }
 
