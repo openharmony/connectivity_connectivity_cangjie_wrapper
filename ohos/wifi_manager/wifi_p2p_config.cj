@@ -35,7 +35,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let deviceAddress: String
+    public var deviceAddress: String
 
     /**
      * Group network ID. When creating a group, -1 indicates creates a temporary group,
@@ -45,7 +45,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let netId: Int32
+    public var netId: Int32
 
     /**
      * The passphrase of this {@code WifiP2pConfig} instance 
@@ -54,7 +54,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let passphrase: String
+    public var passphrase: String
 
     /**
      * Group name 
@@ -63,7 +63,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let groupName: String
+    public var groupName: String
 
     /**
      * Group owner band
@@ -72,7 +72,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let goBand: GroupOwnerBand
+    public var goBand: GroupOwnerBand
 
     /**
      * Device mac address type
@@ -81,7 +81,7 @@ public class WifiP2PConfig {
         22,
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
-    public let deviceAddressType: DeviceAddressType
+    public var deviceAddressType: DeviceAddressType
 
     /**
      * WifiP2PConfig constructor
