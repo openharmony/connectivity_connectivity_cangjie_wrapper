@@ -35,7 +35,7 @@ public class WifiInfoElem {
         22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let eid: UInt32
+    public var eid: UInt32
 
     /**
      * Element content
@@ -44,7 +44,7 @@ public class WifiInfoElem {
         22,
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let content: Array<UInt8>
+    public var content: Array<UInt8>
 
     init(eid: UInt32, content: Array<UInt8>) {
         this.eid = eid
