@@ -344,7 +344,7 @@ public class ScanOptions {
         this.matchMode = matchMode
         this.phyType = phyType
         if (reportMode != Normal) {
-            throw IllegalArgumentException("the feature is temporarily not supported.")
+            throw BusinessException(OPERATION_FAILED, "The feature is temporarily not supported.")
         }
         this.reportMode = reportMode
     }
@@ -553,7 +553,7 @@ public class AdvertiseData {
         this.serviceData = serviceData
         this.includeDeviceName = includeDeviceName
         if (includeTxPower != false) {
-            throw IllegalArgumentException("the feature is temporarily not supported.")
+            throw BusinessException(OPERATION_FAILED, "The feature is temporarily not supported.")
         }
         this.includeTxPower = includeTxPower
     }
