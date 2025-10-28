@@ -17,7 +17,7 @@
 
 package ohos.wifi_manager
 
-import ohos.ffi.*
+import ohos.ffi.CArrUI8
 
 foreign {
     func FfiWifiIsWifiActive(ret: CPointer<Bool>): Int32

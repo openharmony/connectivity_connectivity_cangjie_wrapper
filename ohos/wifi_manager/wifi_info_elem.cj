@@ -17,8 +17,8 @@
 
 package ohos.wifi_manager
 
-import ohos.labels.*
-import ohos.ffi.*
+import ohos.labels.APILevel
+import ohos.ffi.cArr2cjArr
 
 /**
  * Wi-Fi information elements.
