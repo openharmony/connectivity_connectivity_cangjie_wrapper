@@ -35,7 +35,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let ssid: String
+    public var ssid: String
 
     /**
      * Wi-Fi bssid(MAC): the length is 6
@@ -44,7 +44,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let bssid: String
+    public var bssid: String
 
     /**
      * Wi-Fi bssid type
@@ -53,7 +53,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let bssidType: DeviceAddressType
+    public var bssidType: DeviceAddressType
 
     /**
      * Hotspot capability
@@ -62,7 +62,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let capabilities: String
+    public var capabilities: String
 
     /**
      * Security type: reference definition of WifiSecurityType
@@ -71,7 +71,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let securityType: WifiSecurityType
+    public var securityType: WifiSecurityType
 
     /**
      * Received signal strength indicator (RSSI)
@@ -80,7 +80,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let rssi: Int32
+    public var rssi: Int32
 
     /**
      * Frequency band, 1: 2.4G, 2: 5G
@@ -89,7 +89,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let band: Int32
+    public var band: Int32
 
     /**
      * Frequency
@@ -98,7 +98,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let frequency: Int32
+    public var frequency: Int32
 
     /**
      * Channel width
@@ -107,7 +107,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let channelWidth: Int32
+    public var channelWidth: Int32
 
     /**
      * Center frequency 0.
@@ -116,7 +116,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let centerFrequency0: Int32
+    public var centerFrequency0: Int32
 
     /**
      * Center frequency 1.
@@ -125,7 +125,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let centerFrequency1: Int32
+    public var centerFrequency1: Int32
 
     /**
      * Information elements.
@@ -134,7 +134,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let infoElems: Array<WifiInfoElem>
+    public var infoElems: Array<WifiInfoElem>
 
     /**
      * Time stamp
@@ -143,7 +143,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let timestamp: Int64
+    public var timestamp: Int64
 
     /**
      * Supported wifi category
@@ -152,7 +152,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let supportedWifiCategory: WifiCategory
+    public var supportedWifiCategory: WifiCategory
 
     /**
      * Whether the Wi-Fi hotspot is HiLink network.
@@ -161,7 +161,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public let isHiLinkNetwork: Bool
+    public var isHiLinkNetwork: Bool
 
     init(ssid: String, bssid: String, bssidType: DeviceAddressType, capabilities: String,
         securityType: WifiSecurityType, rssi: Int32, band: Int32, frequency: Int32,
