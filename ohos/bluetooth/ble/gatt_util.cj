@@ -335,7 +335,7 @@ public class BLECharacteristic {
         this.descriptors = descriptors
         this.properties = properties
         if (permissions != GattPermissions() || characteristicValueHandle != 0) {
-            throw IllegalArgumentException("the feature is temporarily not supported.")
+            throw BusinessException(OPERATION_FAILED, "The feature is temporarily not supported.")
         }
         this.permissions = permissions
         this.characteristicValueHandle = characteristicValueHandle
@@ -472,7 +472,7 @@ public class BLEDescriptor {
         this.descriptorUUID = descriptorUUID
         this.descriptorValue = descriptorValue
         if (descriptorHandle!= 0 || permissions != GattPermissions()) {
-            throw IllegalArgumentException("the feature is temporarily not supported.")
+            throw BusinessException(OPERATION_FAILED, "The feature is temporarily not supported.")
         }
         this.descriptorHandle = descriptorHandle
         this.permissions = permissions
@@ -618,7 +618,7 @@ public class GattProperties {
         this.notify = notify
         this.indicate = indicate
         if (broadcast != false || authenticatedSignedWrite != false || extendedProperties != false) {
-            throw IllegalArgumentException("the feature is temporarily not supported.")
+            throw BusinessException(OPERATION_FAILED, "The feature is temporarily not supported.")
         }
         this.broadcast = broadcast
         this.authenticatedSignedWrite = authenticatedSignedWrite

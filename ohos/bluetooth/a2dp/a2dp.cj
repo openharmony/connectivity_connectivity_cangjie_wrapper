@@ -268,7 +268,7 @@ public enum PlayingState {
         match (v) {
             case 0x0000 => StateNotPlaying
             case 0x0001 => StatePlaying
-            case _ => throw NoneValueException("Value does not exist!")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }
