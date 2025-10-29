@@ -19,8 +19,8 @@ package ohos.bluetooth.ble
 
 import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.business_exception.BusinessException
-import ohos.labels.*
-import ohos.ffi.*
+import ohos.labels.APILevel
+import ohos.ffi.{CArrUI8, CArrString, cjArr2CArr, cArr2cjArr}
 
 import std.collection.HashMap
 import std.deriving.Derive

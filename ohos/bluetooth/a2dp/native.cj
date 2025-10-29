@@ -17,7 +17,7 @@
 
 package ohos.bluetooth.a2dp
 
-import ohos.ffi.*
+import ohos.ffi.CArrString
 
 foreign {
     func FfiBluetoothA2dpGetPlayingState(deviceId: CString, errCode: CPointer<Int32>): Int32

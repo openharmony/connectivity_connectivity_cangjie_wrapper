@@ -17,8 +17,8 @@
 
 package ohos.wifi_manager
 
-import ohos.ffi.*
-import ohos.labels.*
+import ohos.ffi.cArr2cjArr
+import ohos.labels.APILevel
 
 /**
  * Describes the scanned Wi-Fi information.

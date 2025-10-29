@@ -18,7 +18,7 @@
 package ohos.bluetooth
 
 import ohos.business_exception.{BusinessException, getUniversalErrorMsg}
-import ohos.ffi.*
+import ohos.ffi.SUCCESS_CODE
 import ohos.hilog.HilogChannel
 
 import std.collection.HashMap

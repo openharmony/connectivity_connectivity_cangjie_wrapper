@@ -19,8 +19,8 @@ package ohos.wifi_manager
 
 import ohos.business_exception.BusinessException
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
-import ohos.ffi.*
-import ohos.hilog.*
+import ohos.ffi.{SUCCESS_CODE, cArr2cjArr, Callback1Param}
+import ohos.hilog.HilogChannel
 import ohos.labels.APILevel
 
 import std.collection.{HashMap, ArrayList}
