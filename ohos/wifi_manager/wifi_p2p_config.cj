@@ -17,8 +17,7 @@
 
 package ohos.wifi_manager
 
-import ohos.labels.*
-import ohos.ffi.*
+import ohos.labels.APILevel
 
 /**
  * P2P config.

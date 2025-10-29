@@ -17,16 +17,16 @@
 
 package ohos.bluetooth.a2dp
 
-import ohos.bluetooth.*
-import ohos.bluetooth.base_profile.*
-import ohos.bluetooth.constant.*
+import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG}
+import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
+import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
-import ohos.ffi.*
-import ohos.labels.*
+import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
+import ohos.labels.APILevel
 
 import std.collection.{ArrayList, HashMap}
-import std.deriving.*
+import std.deriving.Derive
 
 /**
  * create the instance of a2dp profile.
@@ -268,7 +268,7 @@ public enum PlayingState {
         match (v) {
             case 0x0000 => StateNotPlaying
             case 0x0001 => StatePlaying
-            case _ => throw NoneValueException("Value does not exist!")
+            case _ => throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
         }
     }
 }

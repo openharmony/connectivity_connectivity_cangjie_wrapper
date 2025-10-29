@@ -96,7 +96,7 @@ public enum DisconnectCause {
             case 3 => ConnectFromCar
             case 4 => TooManyConnectedDevices
             case 5 => ConnectFailInternal
-            case _ => throw NoneValueException("Value does not exist!")
+            case _ => throw BusinessException(2900099, "Operation failed.")
         }
     }
 }

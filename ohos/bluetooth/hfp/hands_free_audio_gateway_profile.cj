@@ -20,11 +20,11 @@ package ohos.bluetooth.hfp
 import std.collection.ArrayList
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
-import ohos.bluetooth.*
-import ohos.bluetooth.base_profile.*
-import ohos.bluetooth.constant.*
-import ohos.ffi.*
-import ohos.labels.*
+import ohos.bluetooth.{checkRet, BLUETOOTH_LOG, getErrorMsg}
+import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
+import ohos.bluetooth.constant.ProfileConnectionState
+import ohos.ffi.{cArr2cjArr, CArrString, Callback1Param}
+import ohos.labels.APILevel
 
 foreign {
     func FfiBluetoothHfpGetConnectedDevices(errCode: CPointer<Int32>): CArrString
