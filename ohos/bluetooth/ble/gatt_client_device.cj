@@ -30,7 +30,7 @@ import std.collection.{ArrayList, HashMap}
  * GattClientDevice instance.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattClientDevice <: RemoteDataLite {
@@ -61,7 +61,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -83,7 +83,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -106,7 +106,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -128,7 +128,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -158,7 +158,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -201,7 +201,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901007 - The connection is not authorized.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -248,7 +248,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901007 - The connection is not authorized.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -293,7 +293,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901007 - The connection is not authorized.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -336,7 +336,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901007 - The connection is not authorized.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -371,7 +371,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901003 - The connection is not established.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -400,7 +400,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -427,7 +427,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901003 - The connection is not established.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -466,7 +466,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 2901003 - The connection is not established.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -499,7 +499,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -521,7 +521,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -545,7 +545,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -566,7 +566,7 @@ public class GattClientDevice <: RemoteDataLite {
      * @param { ?CallbackObject } callback - Callback used to listen.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

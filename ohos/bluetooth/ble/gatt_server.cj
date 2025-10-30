@@ -30,7 +30,7 @@ import std.collection.{ArrayList, HashMap}
  * instance.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattServer <: RemoteDataLite {
@@ -66,7 +66,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -92,7 +92,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException} 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -116,7 +116,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -141,7 +141,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -169,7 +169,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -192,7 +192,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -217,7 +217,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -241,7 +241,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -265,7 +265,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -289,7 +289,7 @@ public class GattServer <: RemoteDataLite {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -311,7 +311,7 @@ public class GattServer <: RemoteDataLite {
      * @param { Callback<Int32> } callback - Callback used to listen for the mtu changed event.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -333,7 +333,7 @@ public class GattServer <: RemoteDataLite {
      * @param { ?CallbackObject } callback - Callback used to listen.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

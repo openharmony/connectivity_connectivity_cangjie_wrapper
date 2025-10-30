@@ -36,7 +36,7 @@ let LOGGER = HilogChannel(0, 0xD001560, "CJ-wifi")
  * @throws {BusinessException} 2501000 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func isWifiActive(): Bool {
@@ -59,7 +59,7 @@ public func isWifiActive(): Bool {
  * @throws {BusinessException} 2501000 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -94,7 +94,7 @@ public func getScanInfoList(): Array<WifiScanInfo> {
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -117,7 +117,7 @@ public func p2pConnect(config: WifiP2PConfig): Unit {
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -138,7 +138,7 @@ public func p2pCancelConnect(): Unit {
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -159,7 +159,7 @@ public func startDiscoverDevices(): Unit {
  * @throws {BusinessException} 2801001 - Wi-Fi STA disabled.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
@@ -250,7 +250,7 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
  * @throws {BusinessException} 2801000 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -270,7 +270,7 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
  * @throws {BusinessException} 2801000 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
@@ -283,7 +283,7 @@ public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None):
  */
 @Derive[ToString, Equatable, Hashable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public enum WifiCallbackType {
@@ -291,7 +291,7 @@ public enum WifiCallbackType {
      * Wi-Fi scan status change event type.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     WifiScanStateChange

@@ -34,7 +34,7 @@ import std.deriving.Derive
  * @returns { A2dpSourceProfile } Returns the instance of profile.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createA2dpSrcProfile(): A2dpSourceProfile {
@@ -45,7 +45,7 @@ public func createA2dpSrcProfile(): A2dpSourceProfile {
  * Manager a2dp source profile.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class A2dpSourceProfile <: BaseProfile {
@@ -79,7 +79,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -109,7 +109,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -141,7 +141,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -167,7 +167,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @param { Callback1Argument<StateChangeParam> } callback - The callback function to be called when the event occurs.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -202,7 +202,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @param { CallbackObject } callback - The callback function to be removed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -222,7 +222,7 @@ public class A2dpSourceProfile <: BaseProfile {
      * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -241,7 +241,7 @@ public class A2dpSourceProfile <: BaseProfile {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum PlayingState {
@@ -249,7 +249,7 @@ public enum PlayingState {
      * Not playing.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateNotPlaying
@@ -258,7 +258,7 @@ public enum PlayingState {
      * Playing.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StatePlaying
@@ -277,7 +277,7 @@ public enum PlayingState {
  * Describes the codec information.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class CodecInfo {
@@ -285,7 +285,7 @@ public class CodecInfo {
      * codec type
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var codecType: CodecType
@@ -294,7 +294,7 @@ public class CodecInfo {
      * codec bits per sample.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var codecBitsPerSample: CodecBitsPerSample
@@ -303,7 +303,7 @@ public class CodecInfo {
      * codec channel mode.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var codecChannelMode: CodecChannelMode
@@ -312,7 +312,7 @@ public class CodecInfo {
      * codec sample rate.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var codecSampleRate: CodecSampleRate
@@ -335,7 +335,7 @@ public class CodecInfo {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum CodecType {
@@ -343,7 +343,7 @@ public enum CodecType {
      * invalid codec type.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecTypeInvalid
@@ -352,7 +352,7 @@ public enum CodecType {
      * SBC - Sub-band coding.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecTypeSbc
@@ -361,7 +361,7 @@ public enum CodecType {
      * AAC -Advanced Audio Coding.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecTypeAac
@@ -370,7 +370,7 @@ public enum CodecType {
      * L2HC.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecTypeL2hc
@@ -382,7 +382,7 @@ public enum CodecType {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum CodecChannelMode {
@@ -390,7 +390,7 @@ public enum CodecChannelMode {
      * Codec channel mode none.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecChannelModeNone
@@ -399,7 +399,7 @@ public enum CodecChannelMode {
      * Codec channel mode MONO.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecChannelModeMono
@@ -408,7 +408,7 @@ public enum CodecChannelMode {
      * Codec channel mode STEREO.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecChannelModeStereo
@@ -420,7 +420,7 @@ public enum CodecChannelMode {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum CodecBitsPerSample {
@@ -428,7 +428,7 @@ public enum CodecBitsPerSample {
      * Codec bits per sample none.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecBitsPerSampleNone
@@ -437,7 +437,7 @@ public enum CodecBitsPerSample {
      * Codec 16 bits per sample.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecBitsPerSample16
@@ -446,7 +446,7 @@ public enum CodecBitsPerSample {
      * Codec 24 bits per sample.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecBitsPerSample24
@@ -455,7 +455,7 @@ public enum CodecBitsPerSample {
      * Codec 32 bits per sample.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecBitsPerSample32
@@ -467,7 +467,7 @@ public enum CodecBitsPerSample {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum CodecSampleRate {
@@ -475,7 +475,7 @@ public enum CodecSampleRate {
      * Codec sample rate none.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRateNone
@@ -484,7 +484,7 @@ public enum CodecSampleRate {
      * Codec sample rate 44.1k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate44100
@@ -493,7 +493,7 @@ public enum CodecSampleRate {
      * Codec sample rate 48k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate48000
@@ -502,7 +502,7 @@ public enum CodecSampleRate {
      * Codec sample rate 88.2k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate88200
@@ -511,7 +511,7 @@ public enum CodecSampleRate {
      * Codec sample rate 96k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate96000
@@ -520,7 +520,7 @@ public enum CodecSampleRate {
      * Codec sample rate 176.4k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate176400
@@ -529,7 +529,7 @@ public enum CodecSampleRate {
      * Codec sample rate 192k.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate192000

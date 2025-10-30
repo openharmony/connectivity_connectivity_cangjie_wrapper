@@ -29,7 +29,7 @@ import std.deriving.Derive
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum DisconnectCause {
@@ -37,7 +37,7 @@ public enum DisconnectCause {
      * User disconnect device.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     UserDisconnect
@@ -46,7 +46,7 @@ public enum DisconnectCause {
      * The connection needs to be initiated from the keyboard side.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromKeyboard
@@ -55,7 +55,7 @@ public enum DisconnectCause {
      * The connection needs to be initiated from the mouse side.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromMouse
@@ -64,7 +64,7 @@ public enum DisconnectCause {
      * The connection needs to be initiated from the car side.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFromCar
@@ -73,7 +73,7 @@ public enum DisconnectCause {
      * Too many devices are currently connected.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     TooManyConnectedDevices
@@ -82,7 +82,7 @@ public enum DisconnectCause {
      * Connection failed due to an internal error.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectFailInternal
@@ -122,7 +122,7 @@ protected struct NativeStateChangeParam {
  * Profile state change parameters.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class StateChangeParam {
@@ -130,7 +130,7 @@ public class StateChangeParam {
      * The address of device.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var deviceId: String
@@ -138,7 +138,7 @@ public class StateChangeParam {
      * Profile state value.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var state: ProfileConnectionState
@@ -146,7 +146,7 @@ public class StateChangeParam {
      * Cause of disconnect.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var cause: DisconnectCause
@@ -166,7 +166,7 @@ public class StateChangeParam {
  * Base interface of profile.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public interface BaseProfile {
@@ -182,7 +182,7 @@ public interface BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -201,7 +201,7 @@ public interface BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -214,7 +214,7 @@ public interface BaseProfile {
      * @param { Callback1Argument<StateChangeParam> } callback - The callback function to be called when the event occurs.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -227,7 +227,7 @@ public interface BaseProfile {
      * @param { CallbackObject } callback - The callback function to be removed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -239,7 +239,7 @@ public interface BaseProfile {
      * @param { ProfileCallbackType } eventType - The type of event to unsubscribe.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -251,7 +251,7 @@ public interface BaseProfile {
  */
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ProfileCallbackType {
@@ -259,7 +259,7 @@ public enum ProfileCallbackType {
      * Connection State Change.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectionStateChange | ...

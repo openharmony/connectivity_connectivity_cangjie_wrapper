@@ -40,7 +40,7 @@ foreign {
  * @returns { HandsFreeAudioGatewayProfile } Returns the instance of profile.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
@@ -51,7 +51,7 @@ public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
  * Manager hfp source profile.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class HandsFreeAudioGatewayProfile <: BaseProfile {
@@ -84,7 +84,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -113,7 +113,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -138,7 +138,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -171,7 +171,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @param { CallbackObject } callback - Callback used to listen for event.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
@@ -191,7 +191,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
      */
     @!APILevel[
-        22,
+        since: "22",
         permission: "ohos.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

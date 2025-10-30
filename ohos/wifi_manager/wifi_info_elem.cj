@@ -24,7 +24,7 @@ import ohos.ffi.cArr2cjArr
  * Wi-Fi information elements.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public class WifiInfoElem {
@@ -32,7 +32,7 @@ public class WifiInfoElem {
      * Element id
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var eid: UInt32
@@ -41,7 +41,7 @@ public class WifiInfoElem {
      * Element content
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var content: Array<UInt8>

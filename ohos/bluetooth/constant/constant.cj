@@ -25,7 +25,7 @@ import ohos.labels.APILevel
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum ProfileConnectionState {
@@ -33,7 +33,7 @@ public enum ProfileConnectionState {
      * the current profile is disconnected
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateDisconnected
@@ -41,7 +41,7 @@ public enum ProfileConnectionState {
      * the current profile is being connected
      */
     | @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateConnecting
@@ -49,7 +49,7 @@ public enum ProfileConnectionState {
      * the current profile is connected
      */
     | @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateConnected
@@ -57,7 +57,7 @@ public enum ProfileConnectionState {
      * the current profile is being disconnected
      */
     | @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateDisconnecting

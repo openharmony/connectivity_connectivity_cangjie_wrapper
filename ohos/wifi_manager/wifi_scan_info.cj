@@ -24,7 +24,7 @@ import ohos.labels.APILevel
  * Describes the scanned Wi-Fi information.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public class WifiScanInfo {
@@ -32,7 +32,7 @@ public class WifiScanInfo {
      * Wi-Fi SSID: the maximum length is 32 
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var ssid: String
@@ -41,7 +41,7 @@ public class WifiScanInfo {
      * Wi-Fi bssid(MAC): the length is 6
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var bssid: String
@@ -50,7 +50,7 @@ public class WifiScanInfo {
      * Wi-Fi bssid type
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var bssidType: DeviceAddressType
@@ -59,7 +59,7 @@ public class WifiScanInfo {
      * Hotspot capability
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var capabilities: String
@@ -68,7 +68,7 @@ public class WifiScanInfo {
      * Security type: reference definition of WifiSecurityType
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var securityType: WifiSecurityType
@@ -77,7 +77,7 @@ public class WifiScanInfo {
      * Received signal strength indicator (RSSI)
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var rssi: Int32
@@ -86,7 +86,7 @@ public class WifiScanInfo {
      * Frequency band, 1: 2.4G, 2: 5G
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var band: Int32
@@ -95,7 +95,7 @@ public class WifiScanInfo {
      * Frequency
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var frequency: Int32
@@ -104,7 +104,7 @@ public class WifiScanInfo {
      * Channel width
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var channelWidth: Int32
@@ -113,7 +113,7 @@ public class WifiScanInfo {
      * Center frequency 0.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var centerFrequency0: Int32
@@ -122,7 +122,7 @@ public class WifiScanInfo {
      * Center frequency 1.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var centerFrequency1: Int32
@@ -131,7 +131,7 @@ public class WifiScanInfo {
      * Information elements.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var infoElems: Array<WifiInfoElem>
@@ -140,7 +140,7 @@ public class WifiScanInfo {
      * Time stamp
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var timestamp: Int64
@@ -149,7 +149,7 @@ public class WifiScanInfo {
      * Supported wifi category
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var supportedWifiCategory: WifiCategory
@@ -158,7 +158,7 @@ public class WifiScanInfo {
      * Whether the Wi-Fi hotspot is HiLink network.
      */
     @!APILevel[
-        22,
+        since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var isHiLinkNetwork: Bool

@@ -31,7 +31,7 @@ import std.collection.{ArrayList, HashMap}
  * @returns { GattServer } Returns a Gatt server instance {@code GattServer}.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createGattServer(): GattServer {
@@ -49,7 +49,7 @@ public func createGattServer(): GattServer {
  * @throws { BusinessException } 801 - Capability not supported.
  */
 @!APILevel[
-    22,
+    since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public func createGattClientDevice(deviceId: String): GattClientDevice {
@@ -77,7 +77,7 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -117,7 +117,7 @@ public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = No
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -144,7 +144,7 @@ public func stopBLEScan(): Unit {
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -181,7 +181,7 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
  * @throws { BusinessException } 2902055 - Invalid advertising id.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -207,7 +207,7 @@ public func stopAdvertising(): Unit {
  * @throws { BusinessException } 2902054 - The length of the advertising data exceeds the upper limit.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -240,7 +240,7 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
  * @throws { BusinessException } 2902055 - Invalid advertising id.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -313,7 +313,7 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
  * @param { Callback1Argument<AdvertisingStateChangeInfo> } callback - Callback used to listen for the advertising state.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -335,7 +335,7 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * @param { Callback1Argument<Array<ScanResult>> } callback - Callback used to listen for the scan result event.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
@@ -362,7 +362,7 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * @param { ?CallbackObject } callback - Callback used to listen.
  */
 @!APILevel[
-    22,
+    since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
