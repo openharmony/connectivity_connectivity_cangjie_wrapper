@@ -17,7 +17,7 @@
 
 package ohos.bluetooth.a2dp
 
-import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG}
+import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG, OPERATION_FAILED}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
