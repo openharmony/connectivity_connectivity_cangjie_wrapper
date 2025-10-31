@@ -1381,7 +1381,7 @@ public class BLEConnectionChangeState {
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     since: "22",
-    permission: "ohos.ACCESS_BLUETOOTH",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattServerCallbackType {
@@ -1390,7 +1390,7 @@ public enum BluetoothBleGattServerCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CharacteristicRead
@@ -1400,7 +1400,7 @@ public enum BluetoothBleGattServerCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CharacteristicWrite
@@ -1410,7 +1410,7 @@ public enum BluetoothBleGattServerCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     DescriptorRead
@@ -1420,7 +1420,7 @@ public enum BluetoothBleGattServerCallbackType {
      */    
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     DescriptorWrite
@@ -1430,7 +1430,7 @@ public enum BluetoothBleGattServerCallbackType {
      */    
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectionStateChange
@@ -1440,7 +1440,7 @@ public enum BluetoothBleGattServerCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ServerBleMtuChange
@@ -1465,7 +1465,7 @@ public enum BluetoothBleGattServerCallbackType {
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     since: "22",
-    permission: "ohos.ACCESS_BLUETOOTH",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattClientDeviceCallbackType {
@@ -1474,7 +1474,7 @@ public enum BluetoothBleGattClientDeviceCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     BleCharacteristicChange
@@ -1484,7 +1484,7 @@ public enum BluetoothBleGattClientDeviceCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     BleConnectionStateChange
@@ -1494,7 +1494,7 @@ public enum BluetoothBleGattClientDeviceCallbackType {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ClientBleMtuChange
