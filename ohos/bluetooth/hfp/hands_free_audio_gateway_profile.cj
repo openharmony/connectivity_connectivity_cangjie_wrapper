@@ -85,7 +85,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func getConnectedDevices(): Array<String> {
@@ -114,7 +114,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func getConnectionState(deviceId: String): ProfileConnectionState {
@@ -139,7 +139,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
@@ -172,7 +172,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
@@ -192,7 +192,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.ACCESS_BLUETOOTH",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func off(eventType: ProfileCallbackType): Unit {

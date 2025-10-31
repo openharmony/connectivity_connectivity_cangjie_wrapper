@@ -251,7 +251,7 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
  */
 @!APILevel[
     since: "22",
-    permission: "ohos.GET_WIFI_INFO",
+    permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>): Unit {
@@ -271,7 +271,7 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
  */
 @!APILevel[
     since: "22",
-    permission: "ohos.GET_WIFI_INFO",
+    permission: "ohos.permission.GET_WIFI_INFO",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
 public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None): Unit {
