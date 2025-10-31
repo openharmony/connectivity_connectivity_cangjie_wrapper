@@ -89,9 +89,9 @@ protected func getErrorMsg(code: Int32): String {
     }
 }
 
-const INVALID_PARAMETER: Int32 = 401
 
 protected func checkRet(errorCode: Int32): Unit {
+    const INVALID_PARAMETER: Int32 = 401
     if (errorCode == INVALID_PARAMETER) {
         throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
     }

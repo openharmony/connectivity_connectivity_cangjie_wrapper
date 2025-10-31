@@ -519,6 +519,7 @@ public class GattClientDevice <: RemoteDataLite {
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the connection state changed event to listen for.
      * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
+     * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
         since: "22",
@@ -543,6 +544,7 @@ public class GattClientDevice <: RemoteDataLite {
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the mtu changed event to listen for.
      * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
+     * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
         since: "22",

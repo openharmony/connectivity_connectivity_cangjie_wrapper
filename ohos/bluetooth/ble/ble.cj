@@ -311,6 +311,7 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
  *
  * @param { BluetoothBleCallbackType } eventType - Type of the advertising state to listen for.
  * @param { Callback1Argument<AdvertisingStateChangeInfo> } callback - Callback used to listen for the advertising state.
+ * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
     since: "22",
@@ -333,6 +334,7 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  *
  * @param { BluetoothBleCallbackType } eventType - Type of the scan result event to listen for.
  * @param { Callback1Argument<Array<ScanResult>> } callback - Callback used to listen for the scan result event.
+ * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
     since: "22",

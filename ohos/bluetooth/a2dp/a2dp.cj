@@ -264,6 +264,9 @@ public enum PlayingState {
     StatePlaying
     | ...
 
+    /**
+     * @throws { BusinessException } 2900099 - Operation failed.
+     */
     static func parse(v: Int32): PlayingState {
         match (v) {
             case 0x0000 => StateNotPlaying

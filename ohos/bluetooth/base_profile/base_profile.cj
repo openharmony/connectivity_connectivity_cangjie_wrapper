@@ -88,6 +88,9 @@ public enum DisconnectCause {
     ConnectFailInternal
     | ...
 
+    /**
+     * @throws { BusinessException } 2900099 - Operation failed.
+     */
     static func parse(cause: Int32) {
         match (cause) {
             case 0 => UserDisconnect

@@ -315,6 +315,8 @@ public class BLECharacteristic {
 
     /**
      * BLECharacteristic constructor.
+     *
+     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
      */
     @!APILevel[
         since: "22",
@@ -454,6 +456,8 @@ public class BLEDescriptor {
 
     /**
      * BLEDescriptor constructor.
+     *
+     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
      */
     @!APILevel[
         since: "22",
@@ -597,6 +601,8 @@ public class GattProperties {
 
     /**
      * GattProperties constructor.
+     *
+     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
      */
     @!APILevel[
         since: "22",
