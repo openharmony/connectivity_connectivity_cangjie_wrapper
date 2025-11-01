@@ -67,7 +67,7 @@ public enum DeviceAddressType {
     | ...
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     func getValue(): Int32 {
         match (this) {
@@ -78,7 +78,7 @@ public enum DeviceAddressType {
     }
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     static func parse(val: Int32): DeviceAddressType {
         match (val) {
@@ -198,7 +198,7 @@ public enum WifiSecurityType {
     | ...
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     func getValue(): Int32 {
         match (this) {
@@ -217,7 +217,7 @@ public enum WifiSecurityType {
     }
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     static func parse(val: Int32): WifiSecurityType {
         match (val) {
@@ -274,7 +274,7 @@ public enum WifiCategory {
     | ...
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     func getValue(): Int32 {
         match (this) {
@@ -286,7 +286,7 @@ public enum WifiCategory {
     }
 
     /**
-     * @throws IllegalArgumentException - Value conversion failed.
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     static func parse(val: Int32): WifiCategory {
         match (val) {
@@ -335,6 +335,9 @@ public enum GroupOwnerBand {
     GoBand5GHz
     | ...
 
+    /**
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
+     */
     func getValue(): Int32 {
         match (this) {
             case GoBandAuto => 0
@@ -344,6 +347,9 @@ public enum GroupOwnerBand {
         }
     }
 
+    /**
+     * @throws { BusinessException } 2501007 - Parameter validation failed.
+     */
     static func parse(val: Int32): GroupOwnerBand {
         match (val) {
             case 0 => GoBandAuto

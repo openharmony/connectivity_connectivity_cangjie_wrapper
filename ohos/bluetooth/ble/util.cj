@@ -327,6 +327,8 @@ public class ScanOptions {
 
     /**
      * ScanOptions constructor.
+     *
+     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
      */    
     @!APILevel[
         since: "22",
@@ -536,6 +538,8 @@ public class AdvertiseData {
 
     /**
      * AdvertiseData constructor.
+     *
+     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
      */
     @!APILevel[
         since: "22",

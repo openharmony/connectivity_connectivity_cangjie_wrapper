@@ -192,10 +192,12 @@ private func findCallbackObject(callbackType: WifiCallbackType, callback: Callba
     return -1
 }
 
+/*
+ * @throws { BusinessException } 1000 - Operation failed.
+*/
 private func on(callbackType: WifiCallbackType, id: Int64) {
-    let code: Int32
     try (cstr = unsafe { LibC.mallocCString(callbackType.getValue()) }.asResource()) {
-        code = unsafe { FfiWifiWifiOn(cstr.value, id) }
+        let code: Int32 = unsafe { FfiWifiWifiOn(cstr.value, id) }
         if (code != SUCCESS_CODE) {
             let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
             throw BusinessException(err[0], "on ${callbackType} failed: ${err[1]}")
