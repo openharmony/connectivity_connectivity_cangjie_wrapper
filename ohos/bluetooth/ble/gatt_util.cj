@@ -21,7 +21,7 @@ import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.business_exception.BusinessException
 import ohos.ffi.{ CArrUI8, cArr2cjArr, cjArr2CArr}
-import ohos.labels.APILevel
+import ohos.labels.{APILevel, Hide}
 
 import std.deriving.Derive
 
@@ -1366,6 +1366,9 @@ public class BLEConnectionChangeState {
     ]
     public var state: ProfileConnectionState
 
+    @!Hide
+    internal var reason: Option<GattDisconnectReason> = None
+
     init(
         deviceId: String,
         state: ProfileConnectionState
@@ -1617,4 +1620,20 @@ public class GattPermissions {
         this.writeSigned = writeSigned
         this.writeSignedMitm = writeSignedMitm
     }
+}
+
+@!Hide
+enum GattDisconnectReason {
+    @!Hide
+    CONN_TIMEOUT
+    |
+    @!Hide
+    CONN_TERMINATE_PEER_USER
+    |
+    @!Hide
+    CONN_TERMINATE_LOCAL_HOST
+    |
+    @!Hide
+    CONN_UNKNOWN
+    | ...
 }

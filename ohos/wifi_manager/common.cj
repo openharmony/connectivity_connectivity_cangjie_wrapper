@@ -17,7 +17,7 @@
 
 package ohos.wifi_manager
 
-import ohos.labels.APILevel
+import ohos.labels.{APILevel, Hide}
 import std.deriving.Derive
 import ohos.business_exception.BusinessException
 
@@ -271,6 +271,12 @@ public enum WifiCategory {
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     Wifi6Plus
+    |
+    @!Hide
+    Wifi7
+    |
+    @!Hide
+    Wifi7Plus
     | ...
 
     /**
