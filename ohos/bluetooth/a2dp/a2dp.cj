@@ -23,7 +23,7 @@ import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
-import ohos.labels.APILevel
+import ohos.labels.{APILevel, Hide}
 
 import std.collection.{ArrayList, HashMap}
 import std.deriving.Derive
@@ -320,6 +320,12 @@ public class CodecInfo {
     ]
     public var codecSampleRate: CodecSampleRate
 
+    @!Hide
+    internal var codecBitRate: CodecBitRate = CodecBitRate.CodecBitRate96000
+
+    @!Hide
+    internal var codecFrameLength: CodecFrameLength = CodecFrameLength.CodecFrameLength5ms
+
     init(
         codecType!: CodecType = CodecTypeSbc,
         codecBitsPerSample!: CodecBitsPerSample = CodecBitsPerSampleNone,
@@ -377,6 +383,12 @@ public enum CodecType {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecTypeL2hc
+    |
+    @!Hide
+    CodecTypeL2hcst
+    |
+    @!Hide
+    CodecTypeLdac
     | ...
 }
 
@@ -536,5 +548,63 @@ public enum CodecSampleRate {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CodecSampleRate192000
+    | ...
+}
+
+@!Hide
+enum CodecBitRate {
+    @!Hide
+    CodecBitRate96000
+    |
+
+    @!Hide
+    CodecBitRate128000
+    |
+    
+    @!Hide
+    CodecBitRate192000
+    |
+    
+    @!Hide
+    CodecBitRate256000
+    |
+    
+    @!Hide
+    CodecBitRate320000
+    |
+    
+    @!Hide
+    CodecBitRate480000
+    |
+    
+    @!Hide
+    CodecBitRate640000
+    |
+    
+    @!Hide
+    CodecBitRate960000
+    |
+    
+    @!Hide
+    CodecBitRateAbr
+    |
+    
+    @!Hide
+    CodecBitRate1500000
+    |
+    
+    @!Hide
+    CodecBitRate2300000
+    | ...
+}
+
+@!Hide
+enum CodecFrameLength {
+    @!Hide
+    CodecFrameLength5ms
+    |
+    
+    @!Hide
+    CodecFrameLength10ms
     | ...
 }

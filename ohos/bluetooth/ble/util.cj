@@ -19,7 +19,7 @@ package ohos.bluetooth.ble
 
 import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.business_exception.BusinessException
-import ohos.labels.APILevel
+import ohos.labels.{APILevel, Hide}
 import ohos.ffi.{CArrUI8, CArrString, cjArr2CArr, cArr2cjArr}
 
 import std.collection.HashMap
@@ -936,6 +936,24 @@ public class ScanResult {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var connectable: Bool
+
+    @!Hide
+    internal var advertiseFlags: Option<Int32> = None
+
+    @!Hide
+    internal var manufacturerDataMap: Option<HashMap<Int32, Array<UInt8>>> = None
+
+    @!Hide
+    internal var serviceDataMap: Option<HashMap<String, Array<UInt8>>> = None
+
+    @!Hide
+    internal var serviceUuids: Option<Array<String>> = None
+
+    @!Hide
+    internal var txPowerLevel: Option<Int32> = None
+
+    @!Hide
+    internal var advertisingDataMap: Option<HashMap<Int32, Array<UInt8>>> = None
 
     init(
         deviceId: String,

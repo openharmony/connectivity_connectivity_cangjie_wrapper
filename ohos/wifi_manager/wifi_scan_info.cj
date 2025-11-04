@@ -18,7 +18,7 @@
 package ohos.wifi_manager
 
 import ohos.ffi.cArr2cjArr
-import ohos.labels.APILevel
+import ohos.labels.{APILevel, Hide}
 
 /**
  * Describes the scanned Wi-Fi information.
@@ -153,6 +153,9 @@ public class WifiScanInfo {
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
     public var supportedWifiCategory: WifiCategory
+
+    @!Hide
+    internal var isHiLinkProNetwork: Option<Bool> = None
 
     /**
      * Whether the Wi-Fi hotspot is HiLink network.
