@@ -37,6 +37,15 @@ public class WifiP2PConfig {
     public var deviceAddress: String
 
     /**
+     * Device mac address type
+     */
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.WiFi.P2P"
+    ]
+    public var deviceAddressType: DeviceAddressType
+
+    /**
      * Group network ID. When creating a group, -1 indicates creates a temporary group,
      * -2: indicates creates a persistent group
      */
@@ -72,15 +81,6 @@ public class WifiP2PConfig {
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]
     public var goBand: GroupOwnerBand
-
-    /**
-     * Device mac address type
-     */
-    @!APILevel[
-        since: "22",
-        syscap: "SystemCapability.Communication.WiFi.P2P"
-    ]
-    public var deviceAddressType: DeviceAddressType
 
     /**
      * WifiP2PConfig constructor

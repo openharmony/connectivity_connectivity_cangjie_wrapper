@@ -318,10 +318,10 @@ public class CodecInfo {
     public var codecSampleRate: CodecSampleRate
 
     @!Hide
-    internal var codecBitRate: CodecBitRate = CodecBitRate.CodecBitRate96000
+    internal var codecBitRate: CodecBitRate = CodecBitRate.CodecBitRateAbr
 
     @!Hide
-    internal var codecFrameLength: CodecFrameLength = CodecFrameLength.CodecFrameLength5ms
+    internal var codecFrameLength: CodecFrameLength = CodecFrameLength.CodecFrameLength10ms
 
     init(
         codecType!: CodecType = CodecTypeSbc,

@@ -310,8 +310,9 @@ public class BLECharacteristic {
     ]
     public var properties: GattProperties
 
-    var permissions: GattPermissions
     var characteristicValueHandle: UInt32
+
+    var permissions: GattPermissions
 
     /**
      * BLECharacteristic constructor.
