@@ -40,7 +40,7 @@ struct NativeGattService {
             serviceUUID.toString(),
             isPrimary,
             unsafe {
-                cArr2cjArr<NativeBLECharacteristic, BLECharacteristic>(characteristics.size, characteristics.head) {
+                cArr2cjArr<NativeBLECharacteristic, BleCharacteristic>(characteristics.size, characteristics.head) {
                     v: NativeBLECharacteristic => v.toObject()
                 }
             },
@@ -120,13 +120,13 @@ public class GattService {
     ]
     public var isPrimary: Bool
     /**
-     * The BLECharacteristic list belongs to this GattService instance.
+     * The BleCharacteristic list belongs to this GattService instance.
      */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var characteristics: Array<BLECharacteristic>
+    public var characteristics: Array<BleCharacteristic>
     /**
      * The list of GATT services contained in the service.
      */
@@ -138,6 +138,11 @@ public class GattService {
 
     /**
      * GattService constructor.
+     *
+     * @param { String } serviceUUID - The UUID of a GattService instance.
+     * @param { Bool } isPrimary - Indicates whether the GattService instance is primary or secondary.
+     * @param { Array<BleCharacteristic> } characteristics - The BleCharacteristic list belongs to this GattService instance
+     * @param { Array<GattService> } includeServices - The list of GATT services contained in the service.
      */
     @!APILevel[
         since: "22",
@@ -146,7 +151,7 @@ public class GattService {
     public init(
         serviceUUID: String,
         isPrimary: Bool,
-        characteristics: Array<BLECharacteristic>,
+        characteristics: Array<BleCharacteristic>,
         includeServices!: Array<GattService> = []
     ) {
         this.serviceUUID = serviceUUID
@@ -162,8 +167,8 @@ public class GattService {
         try {
             cServiceUUID = LibC.mallocCString(serviceUUID)
             cCharacteristics = CArrBLECharacteristic(
-                cjArr2CArr<BLECharacteristic, NativeBLECharacteristic>(characteristics,
-                    {v: BLECharacteristic => v.toNative()}), characteristics.size)
+                cjArr2CArr<BleCharacteristic, NativeBLECharacteristic>(characteristics,
+                    {v: BleCharacteristic => v.toNative()}), characteristics.size)
             cIncludeServices = CArrGattService(
                 cjArr2CArr<GattService, NativeGattService>(includeServices, {v: GattService => v.toNative()}),
                 includeServices.size)
@@ -219,14 +224,14 @@ struct NativeBLECharacteristic {
         this.properties = NativeGattProperties()
     }
 
-    func toObject(): BLECharacteristic {
-        BLECharacteristic(
+    func toObject(): BleCharacteristic {
+        BleCharacteristic(
             // Universally Unique Identifier translation does not throw exception.
             serviceUUID.toString(),
             characteristicUUID.toString(),
             unsafe { cArr2cjArr<UInt8, Byte>(characteristicValue.size, characteristicValue.head) {i => i} },
             unsafe {
-                cArr2cjArr<NativeBLEDescriptor, BLEDescriptor>(descriptors.size, descriptors.head) {
+                cArr2cjArr<NativeBLEDescriptor, BleDescriptor>(descriptors.size, descriptors.head) {
                     v: NativeBLEDescriptor => v.toObject()
                 }
             },
@@ -268,9 +273,9 @@ struct CArrBLEDescriptor {
     since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public class BLECharacteristic {
+public class BleCharacteristic {
     /**
-     * The UUID of the GattService instance to which the characteristic belongs
+     * The UUID of the GattService instance to which the characteristic belongs.
      */
     @!APILevel[
         since: "22",
@@ -278,7 +283,7 @@ public class BLECharacteristic {
     ]
     public var serviceUUID: String
     /**
-     * The UUID of a BLECharacteristic instance
+     * The UUID of a BleCharacteristic instance.
      */
     @!APILevel[
         since: "22",
@@ -286,24 +291,24 @@ public class BLECharacteristic {
     ]
     public var characteristicUUID: String
     /**
-     * The value of a BLECharacteristic instance
-     */    
+     * The value of a BleCharacteristic instance.
+     */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var characteristicValue: Array<Byte>
     /**
-     * The list of BLEDescriptor contained in the characteristic
-     */    
+     * The list of BleDescriptor contained in the characteristic.
+     */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var descriptors: Array<BLEDescriptor>
+    public var descriptors: Array<BleDescriptor>
     /**
-     * The properties of a BLECharacteristic instance
-     */    
+     * The properties of a BleCharacteristic instance.
+     */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
@@ -315,9 +320,16 @@ public class BLECharacteristic {
     var permissions: GattPermissions
 
     /**
-     * BLECharacteristic constructor.
+     * BleCharacteristic constructor.
      *
-     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
+     * @param { String } serviceUUID - The UUID of the GattService instance to which the characteristic belongs
+     * @param { String } characteristicUUID - The UUID of a BleCharacteristic instance
+     * @param { Array<Byte> } characteristicValue - The value of a BleCharacteristic instance
+     * @param { Array<BleDescriptor> } descriptors - The list of BleDescriptor contained in the characteristic
+     * @param { GattProperties } properties - The properties of a BleCharacteristic instance
+     * @param { GattPermissions } permissions - The permissions of a BleCharacteristic instance.
+     * The default value is Readable and Writable.
+     * @param { UInt32 } characteristicValueHandle - The characteristic value handle of a BleCharacteristic instance
      */
     @!APILevel[
         since: "22",
@@ -327,7 +339,7 @@ public class BLECharacteristic {
         serviceUUID: String,
         characteristicUUID: String,
         characteristicValue: Array<Byte>,
-        descriptors: Array<BLEDescriptor>,
+        descriptors: Array<BleDescriptor>,
         properties!: GattProperties = GattProperties(),
         permissions!: GattPermissions = GattPermissions(),
         characteristicValueHandle!: UInt32 = 0
@@ -356,7 +368,7 @@ public class BLECharacteristic {
             cCharacteristicValue = CArrUI8(cjArr2CArr<Byte, UInt8>(characteristicValue, {i => i}),
                 characteristicValue.size)
             cDescriptors = CArrBLEDescriptor(
-                cjArr2CArr<BLEDescriptor, NativeBLEDescriptor>(descriptors, {v: BLEDescriptor => v.toNative()}),
+                cjArr2CArr<BleDescriptor, NativeBLEDescriptor>(descriptors, {v: BleDescriptor => v.toNative()}),
                 descriptors.size)
             cProperties = properties.toNative()
             NativeBLECharacteristic(
@@ -393,8 +405,8 @@ struct NativeBLEDescriptor {
         let descriptorValue: CArrUI8
     ) {}
 
-    func toObject(): BLEDescriptor {
-        BLEDescriptor(
+    func toObject(): BleDescriptor {
+        BleDescriptor(
             // Universally Unique Identifier translation does not throw exception.
             serviceUUID.toString(),
             characteristicUUID.toString(),
@@ -418,9 +430,9 @@ struct NativeBLEDescriptor {
     since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public class BLEDescriptor {
+public class BleDescriptor {
     /**
-     * The UUID of the GattService instance to which the descriptor belongs
+     * The UUID of the GattService instance to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -428,7 +440,7 @@ public class BLEDescriptor {
     ]
     public var serviceUUID: String
     /**
-     * The UUID of the BLECharacteristic instance to which the descriptor belongs
+     * The UUID of the BleCharacteristic instance to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -436,7 +448,7 @@ public class BLEDescriptor {
     ]
     public var characteristicUUID: String
     /**
-     * The UUID of the BLEDescriptor instance
+     * The UUID of the BleDescriptor instance.
      */
     @!APILevel[
         since: "22",
@@ -444,7 +456,7 @@ public class BLEDescriptor {
     ]
     public var descriptorUUID: String
     /**
-     * The value of the BLEDescriptor instance
+     * The value of the BleDescriptor instance.
      */
     @!APILevel[
         since: "22",
@@ -456,9 +468,15 @@ public class BLEDescriptor {
     var permissions: GattPermissions
 
     /**
-     * BLEDescriptor constructor.
+     * BleDescriptor constructor.
      *
-     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
+     * @param { String } serviceUUID - The UUID of the GattService instance to which the descriptor belongs
+     * @param { String } characteristicUUID - The UUID of the GattService instance to which the descriptor belongs
+     * @param { String } descriptorUUID - The UUID of the BleDescriptor instance
+     * @param { Array<Byte> } descriptorValue - The value of the BleDescriptor instance
+     * @param { UInt32 } descriptorHandle - The descriptor handle of a BleDescriptor instance
+     * @param { GattPermissions } permissions - The permissions of a BleDescriptor instance. The default value is Readable and Writable.
+     * The default value is Readable and Writable.
      */
     @!APILevel[
         since: "22",
@@ -603,7 +621,14 @@ public class GattProperties {
     /**
      * GattProperties constructor.
      *
-     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
+     * @param { Bool } write - Support write property of the characteristic.
+     * @param { Bool } writeNoResponse - Support write no response property of the characteristic.
+     * @param { Bool } read - Support read property of the characteristic.
+     * @param { Bool } notify - Support notify property of the characteristic.
+     * @param { Bool } indicate - Support indicate property of the characteristic.
+     * @param { Bool } broadcast - Support broadcast property of the characteristic.
+     * @param { Bool } authenticatedSignedWrite - Support authenticated signed write property of the characteristic.
+     * @param { Bool } extendedProperties - Support extended properties property of the characteristic.
      */
     @!APILevel[
         since: "22",
@@ -668,7 +693,7 @@ struct NativeNotifyCharacteristic {
 ]
 public class NotifyCharacteristic {
     /**
-     * The UUID of the GattService instance to which the characteristic belongs
+     * The UUID of the GattService instance to which the characteristic belongs.
      */
     @!APILevel[
         since: "22",
@@ -676,7 +701,7 @@ public class NotifyCharacteristic {
     ]
     public var serviceUUID: String
     /**
-     * The UUID of a NotifyCharacteristic instance
+     * The UUID of a NotifyCharacteristic instance.
      */
     @!APILevel[
         since: "22",
@@ -684,7 +709,7 @@ public class NotifyCharacteristic {
     ]
     public var characteristicUUID: String
     /**
-     * The value of a NotifyCharacteristic instance
+     * The value of a NotifyCharacteristic instance.
      */
     @!APILevel[
         since: "22",
@@ -703,6 +728,12 @@ public class NotifyCharacteristic {
 
     /**
      * NotifyCharacteristic constructor.
+     *
+     * @param { String } serviceUUID - The UUID of the GattService instance to which the characteristic belongs
+     * @param { String } characteristicUUID - The UUID of a NotifyCharacteristic instance
+     * @param { Array<Byte> } characteristicValue - The value of a NotifyCharacteristic instance
+     * @param { Bool } confirm - Specifies whether to request confirmation from the BLE peripheral device (indication) or
+     * send a notification. Value true indicates the former and false
      */
     @!APILevel[
         since: "22",
@@ -769,7 +800,7 @@ struct NativeServerResponse {
 ]
 public class ServerResponse {
     /**
-     * Indicates the address of the client to which to send the response
+     * Indicates the address of the client to which to send the response.
      */
     @!APILevel[
         since: "22",
@@ -777,7 +808,7 @@ public class ServerResponse {
     ]
     public var deviceId: String
     /**
-     * The Id of the write request
+     * The Id of the write request.
      */
     @!APILevel[
         since: "22",
@@ -785,7 +816,7 @@ public class ServerResponse {
     ]
     public var transId: Int32
     /**
-     * Indicates the status of the read or write request, set this parameter to '0' in normal cases
+     * Indicates the status of the read or write request, set this parameter to '0' in normal cases.
      */
     @!APILevel[
         since: "22",
@@ -793,7 +824,7 @@ public class ServerResponse {
     ]
     public var status: Int32
     /**
-     * Indicates the byte offset of the start position for reading or writing operation
+     * Indicates the byte offset of the start position for reading or writing operation.
      */
     @!APILevel[
         since: "22",
@@ -801,7 +832,7 @@ public class ServerResponse {
     ]
     public var offset: Int32
     /**
-     * Indicates the value to be sent
+     * Indicates the value to be sent.
      */
     @!APILevel[
         since: "22",
@@ -811,6 +842,12 @@ public class ServerResponse {
 
     /**
      * ServerResponse constructor.
+     *
+     * @param { String } deviceId - Indicates the address of the client to which to send the response
+     * @param { Int32 } transId  - The Id of the write request
+     * @param { Int32 } status - Indicates the status of the read or write request, set this parameter to '0' in normal cases
+     * @param { Int32 } offset - Indicates the byte offset of the start position for reading or writing operation
+     * @param { Array<Byte> } value - Indicates the value to be sent
      */
     @!APILevel[
         since: "22",
@@ -920,7 +957,7 @@ struct NativeCharacteristicReadRequest {
 ]
 public class CharacteristicReadRequest {
     /**
-     * Indicates the address of the client that initiates the read request
+     * Indicates the address of the client that initiates the read request.
      */
     @!APILevel[
         since: "22",
@@ -928,7 +965,7 @@ public class CharacteristicReadRequest {
     ]
     public var deviceId: String
     /**
-     * The Id of the read request
+     * The Id of the read request.
      */
     @!APILevel[
         since: "22",
@@ -944,7 +981,7 @@ public class CharacteristicReadRequest {
     ]
     public var offset: Int32
     /**
-     * The UUID of a CharacteristicReadRequest instance
+     * The UUID of a CharacteristicReadRequest instance.
      */
     @!APILevel[
         since: "22",
@@ -952,7 +989,7 @@ public class CharacteristicReadRequest {
     ]
     public var characteristicUUID: String
     /**
-     * The UUID of the service to which the characteristic belongs
+     * The UUID of the service to which the characteristic belongs.
      */
     @!APILevel[
         since: "22",
@@ -1013,7 +1050,7 @@ struct NativeCharacteristicWriteRequest {
 ]
 public class CharacteristicWriteRequest {
     /**
-     * Indicates the address of the client that initiates the write request
+     * Indicates the address of the client that initiates the write request.
      */
     @!APILevel[
         since: "22",
@@ -1021,7 +1058,7 @@ public class CharacteristicWriteRequest {
     ]
     public var deviceId: String
     /**
-     * The Id of the write request
+     * The Id of the write request.
      */
     @!APILevel[
         since: "22",
@@ -1029,7 +1066,7 @@ public class CharacteristicWriteRequest {
     ]
     public var transId: Int32
     /**
-     * Indicates the byte offset of the start position for writing characteristic value
+     * Indicates the byte offset of the start position for writing characteristic value.
      */
     @!APILevel[
         since: "22",
@@ -1037,7 +1074,7 @@ public class CharacteristicWriteRequest {
     ]
     public var offset: Int32
     /**
-     * Whether this request should be pending for later operation
+     * Whether this request should be pending for later operation.
      */
     @!APILevel[
         since: "22",
@@ -1045,7 +1082,7 @@ public class CharacteristicWriteRequest {
     ]
     public var isPrepared: Bool
     /**
-     * Whether the remote client need a response
+     * Whether the remote client need a response.
      */
     @!APILevel[
         since: "22",
@@ -1053,7 +1090,7 @@ public class CharacteristicWriteRequest {
     ]
     public var needRsp: Bool
     /**
-     * Indicates the value to be written
+     * Indicates the value to be written.
      */
     @!APILevel[
         since: "22",
@@ -1061,7 +1098,7 @@ public class CharacteristicWriteRequest {
     ]
     public var value: Array<Byte>
     /**
-     * The UUID of a CharacteristicWriteRequest instance
+     * The UUID of a CharacteristicWriteRequest instance.
      */
     @!APILevel[
         since: "22",
@@ -1069,7 +1106,7 @@ public class CharacteristicWriteRequest {
     ]
     public var characteristicUUID: String
     /**
-     * The UUID of the service to which the characteristic belongs
+     * The UUID of the service to which the characteristic belongs.
      */
     @!APILevel[
         since: "22",
@@ -1132,7 +1169,7 @@ struct NativeDescriptorReadRequest {
 ]
 public class DescriptorReadRequest {
     /**
-     * Indicates the address of the client that initiates the read request
+     * Indicates the address of the client that initiates the read request.
      */
     @!APILevel[
         since: "22",
@@ -1140,7 +1177,7 @@ public class DescriptorReadRequest {
     ]
     public var deviceId: String
     /**
-     * The Id of the read request
+     * The Id of the read request.
      */
     @!APILevel[
         since: "22",
@@ -1148,7 +1185,7 @@ public class DescriptorReadRequest {
     ]
     public var transId: Int32
     /**
-     * Indicates the byte offset of the start position for reading characteristic value
+     * Indicates the byte offset of the start position for reading characteristic value.
      */
     @!APILevel[
         since: "22",
@@ -1156,7 +1193,7 @@ public class DescriptorReadRequest {
     ]
     public var offset: Int32
     /**
-     * The UUID of a DescriptorReadRequest instance
+     * The UUID of a DescriptorReadRequest instance.
      */
     @!APILevel[
         since: "22",
@@ -1164,7 +1201,7 @@ public class DescriptorReadRequest {
     ]
     public var descriptorUUID: String
     /**
-     * The UUID of the characteristic to which the descriptor belongs
+     * The UUID of the characteristic to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -1172,7 +1209,7 @@ public class DescriptorReadRequest {
     ]
     public var characteristicUUID: String
     /**
-     * The UUID of the service to which the descriptor belongs
+     * The UUID of the service to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -1237,7 +1274,7 @@ struct NativeDescriptorWriteRequest {
 ]
 public class DescriptorWriteRequest {
     /**
-     * Indicates the address of the client that initiates the write request
+     * Indicates the address of the client that initiates the write request.
      */
     @!APILevel[
         since: "22",
@@ -1245,7 +1282,7 @@ public class DescriptorWriteRequest {
     ]
     public var deviceId: String
     /**
-     * The Id of the write request
+     * The Id of the write request.
      */
     @!APILevel[
         since: "22",
@@ -1253,7 +1290,7 @@ public class DescriptorWriteRequest {
     ]
     public var transId: Int32
     /**
-     * Indicates the byte offset of the start position for writing characteristic value
+     * Indicates the byte offset of the start position for writing characteristic value.
      */
     @!APILevel[
         since: "22",
@@ -1261,7 +1298,7 @@ public class DescriptorWriteRequest {
     ]
     public var offset: Int32
     /**
-     * Whether this request should be pending for later operation
+     * Whether this request should be pending for later operation.
      */
     @!APILevel[
         since: "22",
@@ -1269,7 +1306,7 @@ public class DescriptorWriteRequest {
     ]
     public var isPrepared: Bool
     /**
-     * Whether the remote client need a response
+     * Whether the remote client need a response.
      */
     @!APILevel[
         since: "22",
@@ -1277,7 +1314,7 @@ public class DescriptorWriteRequest {
     ]
     public var needRsp: Bool
     /**
-     * Indicates the value to be written
+     * Indicates the value to be written.
      */
     @!APILevel[
         since: "22",
@@ -1285,7 +1322,7 @@ public class DescriptorWriteRequest {
     ]
     public var value: Array<Byte>
     /**
-     * The UUID of a DescriptorWriteRequest instance
+     * The UUID of a DescriptorWriteRequest instance.
      */
     @!APILevel[
         since: "22",
@@ -1293,7 +1330,7 @@ public class DescriptorWriteRequest {
     ]
     public var descriptorUUID: String
     /**
-     * The UUID of the characteristic to which the descriptor belongs
+     * The UUID of the characteristic to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -1301,7 +1338,7 @@ public class DescriptorWriteRequest {
     ]
     public var characteristicUUID: String
     /**
-     * The UUID of the service to which the descriptor belongs
+     * The UUID of the service to which the descriptor belongs.
      */
     @!APILevel[
         since: "22",
@@ -1339,8 +1376,8 @@ struct NativeBLEConnectionChangeState {
         let state: Int32
     ) {}
 
-    func toObject(): BLEConnectionChangeState {
-        BLEConnectionChangeState(
+    func toObject(): BleConnectionChangeState {
+        BleConnectionChangeState(
             // MAC address translation does not throw exception.
             deviceId.toString(),
             ProfileConnectionState.parse(state)
@@ -1355,9 +1392,9 @@ struct NativeBLEConnectionChangeState {
     since: "22",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
-public class BLEConnectionChangeState {
+public class BleConnectionChangeState {
     /**
-     * Indicates the peer device address
+     * Indicates the peer device address.
      */
     @!APILevel[
         since: "22",
@@ -1365,7 +1402,7 @@ public class BLEConnectionChangeState {
     ]
     public var deviceId: String
     /**
-     * Connection state of the Gatt profile
+     * Connection state of the Gatt profile.
      */
     @!APILevel[
         since: "22",
@@ -1391,66 +1428,60 @@ public class BLEConnectionChangeState {
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     since: "22",
-    permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattServerCallbackType {
     /**
-     * Characteristic Read
+     * Characteristic read request.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CharacteristicRead
     | 
     /**
-     * Characteristic Write
+     * Characteristic write request.
+     *
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     CharacteristicWrite
     | 
     /**
-     * Descriptor Read
+     * Descriptor read request.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     DescriptorRead
     | 
     /**
-     * Descriptor Write
-     */    
+     * Descriptor write request.
+     */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     DescriptorWrite
     | 
     /**
-     * Connection State Change
-     */    
+     * Connection state changed.
+     */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ConnectionStateChange
     | 
     /**
-     * Ble Mtu Change
+     * Server ble mtu changed.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ServerBleMtuChange
@@ -1475,36 +1506,32 @@ public enum BluetoothBleGattServerCallbackType {
 @Derive[ToString, Hashable, Equatable]
 @!APILevel[
     since: "22",
-    permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum BluetoothBleGattClientDeviceCallbackType {
     /**
-     * Ble Characteristic Change
+     * BLE characteristic changed.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     BleCharacteristicChange
     | 
     /**
-     * BleConnection State Change
+     * BLE connection state changed.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     BleConnectionStateChange
     | 
     /**
-     * Ble Mtu Change
+     * Client ble mtu changed.
      */
     @!APILevel[
         since: "22",
-        permission: "ohos.permission.ACCESS_BLUETOOTH",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     ClientBleMtuChange
@@ -1603,6 +1630,15 @@ public class GattPermissions {
 
     /**
      * GattPermissions constructor.
+     *
+     * @param { Bool } read -  The attribute field has the read permission.
+     * @param { Bool } readEncrypted - The attribute field has the encrypted read permission.
+     * @param { Bool } readEncryptedMitm - The attribute field has the read permission for encryption authentication.
+     * @param { Bool } write - The attribute field has the write permission.
+     * @param { Bool } writeEncrypted - The attribute field has the encrypted write permission.
+     * @param { Bool } writeEncryptedMitm - The attribute field has the write permission for encryption authentication.
+     * @param { Bool } writeSigned - The attribute field has the signed write permission.
+     * @param { Bool } writeSignedMitm - The attribute field has the write permission for signature authentication.
      */
     @!APILevel[
         since: "22",

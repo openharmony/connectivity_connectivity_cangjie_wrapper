@@ -115,82 +115,82 @@ public enum WifiSecurityType {
     ]
     WifiSecTypeInvalid
     |
-        /**
-         * Open
-         */
-        @!APILevel[
+    /**
+     * Open security type.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeOpen
     |
-        /**
-         * Wired Equivalent Privacy (WEP)
-         */
-        @!APILevel[
+    /**
+     * Wired Equivalent Privacy (WEP)
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeWep
     |
-        /**
-         * Pre-shared key (PSK)
-         */
-        @!APILevel[
+    /**
+     * Pre-shared key (PSK)
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypePsk
     |
-        /**
-        * Simultaneous Authentication of Equals (SAE)
-        */
-        @!APILevel[
+    /**
+     * Simultaneous Authentication of Equals (SAE)
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeSae
     |
-        /**
-        * EAP authentication.
-        */
-        @!APILevel[
+    /**
+     * EAP authentication.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeEap
     |
-        /**
-         * SUITE_B_192 192 bit level.
-         */
-        @!APILevel[
+    /**
+     * SUITE_B_192 192 bit level.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeEapSuiteB
     |
-        /**
-         * Opportunistic Wireless Encryption.
-         */
-        @!APILevel[
+    /**
+     * Opportunistic Wireless Encryption.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeOwe
     |
-        /**
-         * WAPI certificate to be specified.
-         */
-        @!APILevel[
+    /**
+     * WAPI certificate to be specified.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
     WifiSecTypeWapiCert
     |
-        /**
-         * WAPI pre-shared key to be specified.
-         */
-        @!APILevel[
+    /**
+     * WAPI pre-shared key to be specified.
+     */
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.Core"
     ]
@@ -325,7 +325,7 @@ public enum GroupOwnerBand {
     /**
      * 2.4G band.
      */
-     @!APILevel[
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.P2P"
     ]

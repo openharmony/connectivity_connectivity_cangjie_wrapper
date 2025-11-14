@@ -86,7 +86,8 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getConnectedDevices(): Array<String> {
         var errorCode: Int32 = 0
@@ -115,7 +116,8 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getConnectionState(deviceId: String): ProfileConnectionState {
         var errorCode: Int32 = 0
@@ -132,10 +134,8 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Subscribe the event reported when the profile connection state changes .
      *
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
+     * @param { ProfileCallbackType } eventType - Type of the profile connection state changes event to listen for.
      * @param { Callback1Argument<StateChangeParam> } callback - Callback used to listen for event.
-     * @throws { BusinessException } 201 - Permission denied.
-     * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
         since: "22",
@@ -167,7 +167,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes .
      *
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
+     * @param { ProfileCallbackType } eventType - Type of the profile connection state changes event to listen for.
      * @param { CallbackObject } callback - Callback used to listen for event.
      */
     @!APILevel[
@@ -188,7 +188,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     /**
      * Unsubscribe the event reported when the profile connection state changes .
      *
-     * @param { ProfileCallbackType } type - Type of the profile connection state changes event to listen for.
+     * @param { ProfileCallbackType } eventType - Type of the profile connection state changes event to listen for.
      */
     @!APILevel[
         since: "22",

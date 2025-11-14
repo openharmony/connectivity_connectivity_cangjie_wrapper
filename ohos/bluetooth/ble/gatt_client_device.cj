@@ -53,6 +53,7 @@ public class GattClientDevice <: RemoteDataLite {
 
     /**
      * Connects to a BLE peripheral device.
+     * The 'BLEConnectionStateChange' event is subscribed to return the connection state.
      *
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -63,7 +64,8 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func connect(): Unit {
         var errorCode: Int32 = 0
@@ -85,7 +87,8 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func disconnect(): Unit {
         var errorCode: Int32 = 0
@@ -108,7 +111,8 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func close(): Unit {
         var errorCode: Int32 = 0
@@ -130,7 +134,9 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true,
+        workerthread: true
     ]
     public func getDeviceName(): String {
         var errorCode: Int32 = 0
@@ -160,7 +166,8 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getServices(callback: AsyncCallback<Array<GattService>>): Unit {
         spawn {
@@ -186,8 +193,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Reads the characteristic of a BLE peripheral device.
      *
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to read.
-     * @param { AsyncCallback<BLECharacteristic> } callback - Callback invoked to return the characteristic value read.
+     * @param { BleCharacteristic } characteristic - Indicates the characteristic to read.
+     * @param { AsyncCallback<BleCharacteristic> } callback - Callback invoked to return the characteristic value read.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -203,11 +210,12 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func readCharacteristicValue(
-        characteristic: BLECharacteristic,
-        callback: AsyncCallback<BLECharacteristic>
+        characteristic: BleCharacteristic,
+        callback: AsyncCallback<BleCharacteristic>
     ): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
@@ -215,7 +223,7 @@ public class GattClientDevice <: RemoteDataLite {
             let regiestError = ret.code
             if (regiestError != SUCCESS_CODE) {
                 let error = BusinessException(regiestError, getErrorMsg(regiestError))
-                callback(error, None<BLECharacteristic>)
+                callback(error, None<BleCharacteristic>)
             } else {
                 callback(None<BusinessException>, ret.data.toObject())
             }
@@ -233,8 +241,8 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Reads the descriptor of a BLE peripheral device.
      *
-     * @param { BLEDescriptor } descriptor - Indicates the descriptor to read.
-     * @param { AsyncCallback<BLEDescriptor> } callback - Callback invoked to return the descriptor read.
+     * @param { BleDescriptor } descriptor - Indicates the descriptor to read.
+     * @param { AsyncCallback<BleDescriptor> } callback - Callback invoked to return the descriptor read.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -250,16 +258,17 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func readDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<BLEDescriptor>): Unit {
+    public func readDescriptorValue(descriptor: BleDescriptor, callback: AsyncCallback<BleDescriptor>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             ret: RetNativeBLEDescriptor =>
             let regiestError = ret.code
             if (regiestError != SUCCESS_CODE) {
                 let error = BusinessException(regiestError, getErrorMsg(regiestError))
-                callback(error, None<BLEDescriptor>)
+                callback(error, None<BleDescriptor>)
             } else {
                 callback(None<BusinessException>, ret.data.toObject())
             }
@@ -277,7 +286,7 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Writes the characteristic of a BLE peripheral device.
      *
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to write.
+     * @param { BleCharacteristic } characteristic - Indicates the characteristic to write.
      * @param { GattWriteType } writeType - Write type of the characteristic.
      * @param { AsyncCallback<Unit> } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
@@ -295,9 +304,10 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func writeCharacteristicValue(characteristic: BLECharacteristic, writeType: GattWriteType,
+    public func writeCharacteristicValue(characteristic: BleCharacteristic, writeType: GattWriteType,
         callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
@@ -321,7 +331,7 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Writes the descriptor of a BLE peripheral device.
      *
-     * @param { BLEDescriptor } descriptor - Indicates the descriptor to write.
+     * @param { BleDescriptor } descriptor - Indicates the descriptor to write.
      * @param { AsyncCallback<Unit> } callback - Callback used to return the result.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -338,9 +348,10 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func writeDescriptorValue(descriptor: BLEDescriptor, callback: AsyncCallback<Unit>): Unit {
+    public func writeDescriptorValue(descriptor: BleDescriptor, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
@@ -373,7 +384,8 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getRssiValue(callback: AsyncCallback<Int32>): Unit {
         var errorCode: Int32 = 0
@@ -402,9 +414,10 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func setBLEMtuSize(mtu: Int32): Unit {
+    public func setBleMtuSize(mtu: Int32): Unit {
         var errorCode: Int32 = 0
         unsafe {
             FfiBluetoothBleGattClientDeviceSetBLEMtuSize(getID(), mtu, inout errorCode)
@@ -413,11 +426,11 @@ public class GattClientDevice <: RemoteDataLite {
     }
 
     /**
-     * Enables or disables indication of a characteristic when value changed.
+     * Enables or disables notification of a characteristic when value changed.
      *
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
-     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
-     * that notification is enabled, and the value {@code false} indicates that indication is disabled.
+     * @param { BleCharacteristic } characteristic - Indicates the characteristic to indicate.
+     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value true indicates
+     * that notification is enabled, and the value false indicates that indication is disabled.
      * @param { AsyncCallback<Unit> } callback - the callback of setCharacteristicChangeNotification.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -429,9 +442,10 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func setCharacteristicChangeNotification(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
+    public func setCharacteristicChangeNotification(characteristic: BleCharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
@@ -454,9 +468,9 @@ public class GattClientDevice <: RemoteDataLite {
     /**
      * Enables or disables indication of a characteristic when value changed.
      *
-     * @param { BLECharacteristic } characteristic - Indicates the characteristic to indicate.
-     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value {@code true} indicates
-     * that indication is enabled, and the value {@code false} indicates that indication is disabled.
+     * @param { BleCharacteristic } characteristic - Indicates the characteristic to indicate.
+     * @param { Bool } enable - Specifies whether to enable indication of the characteristic. The value true indicates
+     * that indication is enabled, and the value false indicates that indication is disabled.
      * @param { AsyncCallback<Unit> } callback - the callback of setCharacteristicChangeIndication.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
@@ -468,9 +482,10 @@ public class GattClientDevice <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func setCharacteristicChangeIndication(characteristic: BLECharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
+    public func setCharacteristicChangeIndication(characteristic: BleCharacteristic, enable: Bool, callback: AsyncCallback<Unit>): Unit {
         var errorCode: Int32 = 0
         let wrapper = {
             regiestError: Int32 => if (regiestError != SUCCESS_CODE) {
@@ -494,16 +509,17 @@ public class GattClientDevice <: RemoteDataLite {
      * Subscribe characteristic value changed event.
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the characteristic value changed event to listen for.
-     * @param { Callback1Argument<BLECharacteristic> } callback - Callback used to listen for the characteristic value changed event.
+     * @param { Callback1Argument<BleCharacteristic> } callback - Callback used to listen for the characteristic value changed event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BLECharacteristic>): Unit {
+    public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BleCharacteristic>): Unit {
         if (eventType != BleCharacteristicChange) {
             BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is BleCharacteristicChange")
             throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
@@ -518,8 +534,7 @@ public class GattClientDevice <: RemoteDataLite {
      * Subscribe client connection state changed event.
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the connection state changed event to listen for.
-     * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
-     * @throws { BusinessException } 2900099 - Operation failed.
+     * @param { Callback1Argument<BleConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
      */
     @!APILevel[
         since: "22",
@@ -528,7 +543,7 @@ public class GattClientDevice <: RemoteDataLite {
     ]
     public func on(
         eventType: BluetoothBleGattClientDeviceCallbackType,
-        callback: Callback1Argument<BLEConnectionChangeState>
+        callback: Callback1Argument<BleConnectionChangeState>
     ): Unit {
         if (eventType != BleConnectionStateChange) {
             throw BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))
@@ -544,7 +559,6 @@ public class GattClientDevice <: RemoteDataLite {
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of the mtu changed event to listen for.
      * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
-     * @throws { BusinessException } 2900099 - Operation failed.
      */
     @!APILevel[
         since: "22",
@@ -562,10 +576,10 @@ public class GattClientDevice <: RemoteDataLite {
     }
 
     /**
-     * Unsubscribe mtu changed event.
+     * Unsubscribe gatt client device callback event.
      *
      * @param { BluetoothBleGattClientDeviceCallbackType } eventType - Type of unsubscribe event.
-     * @param { ?CallbackObject } callback - Callback used to listen.
+     * @param { ?CallbackObject } [callback] - Callback used to listen.
      */
     @!APILevel[
         since: "22",

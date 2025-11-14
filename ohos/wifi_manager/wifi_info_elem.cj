@@ -27,7 +27,7 @@ import ohos.ffi.cArr2cjArr
     since: "22",
     syscap: "SystemCapability.Communication.WiFi.STA"
 ]
-public class WifiInfoElem {
+public class WifiInfoElement {
     /**
      * Element id
      */

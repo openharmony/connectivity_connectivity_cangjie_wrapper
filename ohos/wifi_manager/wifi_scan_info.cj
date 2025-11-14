@@ -134,7 +134,7 @@ public class WifiScanInfo {
         since: "22",
         syscap: "SystemCapability.Communication.WiFi.STA"
     ]
-    public var infoElems: Array<WifiInfoElem>
+    public var infoElems: Array<WifiInfoElement>
 
     /**
      * Time stamp
@@ -169,7 +169,7 @@ public class WifiScanInfo {
     init(ssid: String, bssid: String, bssidType: DeviceAddressType, capabilities: String,
         securityType: WifiSecurityType, rssi: Int32, band: Int32, frequency: Int32,
         channelWidth: Int32, centerFrequency0: Int32, centerFrequency1: Int32,
-        infoElems: Array<WifiInfoElem>, timestamp: Int64, supportedWifiCategory: WifiCategory,
+        infoElems: Array<WifiInfoElement>, timestamp: Int64, supportedWifiCategory: WifiCategory,
         isHiLinkNetwork: Bool) {
         this.ssid = ssid
         this.bssid = bssid
@@ -201,8 +201,8 @@ public class WifiScanInfo {
         this.centerFrequency0 = info.centerFrequency0
         this.centerFrequency1 = info.centerFrequency1
         this.infoElems = unsafe {
-            cArr2cjArr<CWifiInfoElem, WifiInfoElem>(info.elemsSize, info.infoElems) {
-                elem => WifiInfoElem(elem)
+            cArr2cjArr<CWifiInfoElem, WifiInfoElement>(info.elemsSize, info.infoElems) {
+                elem => WifiInfoElement(elem)
             }
         }
         this.ssid = info.ssid.toString()
