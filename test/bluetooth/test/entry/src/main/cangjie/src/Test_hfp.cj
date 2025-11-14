@@ -47,8 +47,8 @@ class Test_hfp {
             let hdfProfile = createHfpAgProfile()
             let retArray = hdfProfile.getConnectedDevices()
             @Expect(retArray.size >= 0)
-        } catch (e: Exception) {
-            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(e.code, 2900099)
         }
     }
 
