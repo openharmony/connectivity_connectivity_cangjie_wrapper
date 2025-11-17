@@ -155,6 +155,9 @@ public class GattService {
         this.includeServices = includeServices
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     unsafe func toNative(): NativeGattService {
         var cServiceUUID: CString = CString(CPointer())
         var cCharacteristics: CArrBLECharacteristic = CArrBLECharacteristic(CPointer(), 0)
@@ -344,6 +347,9 @@ public class BLECharacteristic {
         this.characteristicValueHandle = characteristicValueHandle
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     unsafe func toNative(): NativeBLECharacteristic {
         var cServiceUUID: CString = CString(CPointer())
         var cCharacteristicUUID: CString = CString(CPointer())
@@ -483,6 +489,9 @@ public class BLEDescriptor {
         this.permissions = permissions
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     unsafe func toNative(): NativeBLEDescriptor {
         var nativeServiceUUID: CString = CString(CPointer())
         var nativeCharacteristicUUID: CString = CString(CPointer())
@@ -720,6 +729,9 @@ public class NotifyCharacteristic {
         this.confirm = confirm
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     unsafe func toNative(): NativeNotifyCharacteristic {
         var cServiceUUID: CString = CString(CPointer())
         var cCharacteristicUUID: CString = CString(CPointer())
@@ -830,6 +842,9 @@ public class ServerResponse {
         this.value = value
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     unsafe func toNative(): NativeServerResponse {
         var cDeviceId = CString(CPointer())
         var cValue = CArrUI8(CPointer(), 0)
