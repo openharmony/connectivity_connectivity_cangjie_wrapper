@@ -111,7 +111,7 @@ struct CWifiP2PConfig {
     let netId: Int32
     let deviceAddressType: Int32
 
-    init(cfg: WifiP2PConfig) {
+    init(cfg: WifiP2pConfig) {
         this.netId = cfg.netId
         this.goBand = cfg.goBand.getValue()
         this.deviceAddressType = cfg.deviceAddressType.getValue()

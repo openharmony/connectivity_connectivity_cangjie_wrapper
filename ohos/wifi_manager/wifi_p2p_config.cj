@@ -26,7 +26,7 @@ import ohos.labels.APILevel
     since: "22",
     syscap: "SystemCapability.Communication.WiFi.P2P"
 ]
-public class WifiP2PConfig {
+public class WifiP2pConfig {
     /**
      * Device mac address
      */
@@ -56,7 +56,7 @@ public class WifiP2PConfig {
     public var netId: Int32
 
     /**
-     * The passphrase of this {@code WifiP2pConfig} instance 
+     * The passphrase of this WifiP2pConfig instance 
      */
     @!APILevel[
         since: "22",
@@ -83,7 +83,15 @@ public class WifiP2PConfig {
     public var goBand: GroupOwnerBand
 
     /**
-     * WifiP2PConfig constructor
+     * WifiP2pConfig constructor
+     *
+     * @param { String } deviceAddress - Device mac address
+     * @param { Int32 } netId - Group network ID. When creating a group, -1 indicates creates a temporary group,
+     * -2: indicates creates a persistent group
+     * @param { String } passphrase - The passphrase of this WifiP2pConfig instance 
+     * @param { String } groupName - Group name 
+     * @param { GroupOwnerBand } goBand - Group owner band
+     * @param { DeviceAddressType } deviceAddressType - Device mac address type
      */
     @!APILevel[
         since: "22",

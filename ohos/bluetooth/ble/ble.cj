@@ -28,7 +28,7 @@ import std.collection.{ArrayList, HashMap}
 /**
  * create a Gatt server instance.
  *
- * @returns { GattServer } Returns a Gatt server instance {@code GattServer}.
+ * @returns { GattServer } Returns a Gatt server instance GattServer.
  */
 @!APILevel[
     since: "22",
@@ -45,12 +45,13 @@ public func createGattServer(): GattServer {
  * create a Gatt client device instance.
  *
  * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
- * @returns { GattClientDevice } Returns a Gatt client device instance {@code GattClientDevice}.
+ * @returns { GattClientDevice } Returns a Gatt client device instance GattClientDevice.
  * @throws { BusinessException } 801 - Capability not supported.
  */
 @!APILevel[
     since: "22",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
 ]
 public func createGattClientDevice(deviceId: String): GattClientDevice {
     var id = 0
@@ -68,8 +69,12 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
  * Starts scanning for specified BLE devices with filters.
  *
  * @param { Array<ScanFilter> } filters - Indicates the list of filters used to filter out specified devices.
- * @param { ?ScanOptions } options - Indicates the parameters for scanning and if the user does not assign a value,
+ * If you do not want to use filter, set this parameter to empty array.
+ * @param { ?ScanOptions } [options] - Indicates the parameters for scanning and if the user does not assign a value,
  * the default value will be used.
+ * interval set to 0, dutyMode set to SCAN_MODE_LOW_POWER
+ * and matchMode set to MATCH_MODE_AGGRESSIVE.
+ * and phyType set to PHY_LE_ALL_SUPPORTED.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
@@ -79,9 +84,10 @@ public func createGattClientDevice(deviceId: String): GattClientDevice {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
 ]
-public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = None): Unit {
+public func startBleScanning(filters: Array<ScanFilter>, options!: ?ScanOptions = None): Unit {
     var errorCode: Int32 = 0
     unsafe {
         let filtersSize = filters.size
@@ -119,9 +125,10 @@ public func startBLEScan(filters: Array<ScanFilter>, options!: ?ScanOptions = No
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
 ]
-public func stopBLEScan(): Unit {
+public func stopBleScanning(): Unit {
     var errorCode: Int32 = 0
     unsafe {
         FfiBluetoothBleStopBleScan(inout errorCode)
@@ -134,7 +141,7 @@ public func stopBLEScan(): Unit {
  *
  * @param { AdvertiseSetting } setting - Indicates the settings for BLE advertising.
  * @param { AdvertiseData } advData - Indicates the advertising data.
- * @param { ?AdvertiseData } advResponse - Indicates the scan response associated with the advertising data.
+ * @param { ?AdvertiseData } [advResponse] - Indicates the scan response associated with the advertising data.
  * @throws { BusinessException } 201 - Permission denied.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2900001 - Service stopped.
@@ -146,7 +153,9 @@ public func stopBLEScan(): Unit {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
 ]
 public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, advResponse!: ?AdvertiseData = None): Unit {
     var errorCode: Int32 = 0
@@ -183,7 +192,9 @@ public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, 
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
 ]
 public func stopAdvertising(): Unit {
     var errorCode: Int32 = 0
@@ -195,6 +206,8 @@ public func stopAdvertising(): Unit {
 
 /**
  * Starts BLE advertising.
+ * The API returns a advertising ID. The ID can be used to completely stop the advertising corresponding to the ID,
+ * invoke the API stopAdvertising with ID.
  *
  * @param { AdvertisingParams } advertisingParams - Indicates the param for BLE advertising.
  * @returns { UInt32 }the callback of advertise ID.
@@ -209,7 +222,9 @@ public func stopAdvertising(): Unit {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
 ]
 public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
     var errorCode: Int32 = 0
@@ -242,7 +257,9 @@ public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
-    syscap: "SystemCapability.Communication.Bluetooth.Core"
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
 ]
 public func stopAdvertising(advertisingId: UInt32): Unit {
     var errorCode: Int32 = 0
@@ -311,7 +328,6 @@ private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, 
  *
  * @param { BluetoothBleCallbackType } eventType - Type of the advertising state to listen for.
  * @param { Callback1Argument<AdvertisingStateChangeInfo> } callback - Callback used to listen for the advertising state.
- * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
     since: "22",
@@ -334,7 +350,6 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  *
  * @param { BluetoothBleCallbackType } eventType - Type of the scan result event to listen for.
  * @param { Callback1Argument<Array<ScanResult>> } callback - Callback used to listen for the scan result event.
- * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
     since: "22",
@@ -361,7 +376,7 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
  * Unsubscribe from callback event.
  *
  * @param { BluetoothBleCallbackType } eventType - Type of unsubscribe event.
- * @param { ?CallbackObject } callback - Callback used to listen.
+ * @param { ?CallbackObject } [callback] - Callback used to listen.
  */
 @!APILevel[
     since: "22",

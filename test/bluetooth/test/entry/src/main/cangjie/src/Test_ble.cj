@@ -210,7 +210,7 @@ class Test_ble {
     func test_GattService() {
         let serviceUUID = "114514"
         let isPrimary = true
-        let characteristics: Array<BLECharacteristic> = []
+        let characteristics: Array<BleCharacteristic> = []
         let includeServices: Array<GattService> = []
         var gattService: GattService = GattService(serviceUUID, isPrimary, characteristics, includeServices: includeServices)
         gattService.serviceUUID = "12"
@@ -225,9 +225,9 @@ class Test_ble {
         let serviceUUID: String = "11"
         let characteristicUUID: String = "11"
         let characteristicValue: Array<Byte> = []
-        let descriptors: Array<BLEDescriptor> = []
+        let descriptors: Array<BleDescriptor> = []
         let properties: GattProperties = GattProperties()
-        let bleCharacteristic = BLECharacteristic(serviceUUID, characteristicUUID, characteristicValue, descriptors, properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0)
+        let bleCharacteristic = BleCharacteristic(serviceUUID, characteristicUUID, characteristicValue, descriptors, properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0)
         bleCharacteristic.serviceUUID = serviceUUID
         bleCharacteristic.characteristicUUID = characteristicUUID
         bleCharacteristic.characteristicValue = characteristicValue
@@ -242,7 +242,7 @@ class Test_ble {
         let characteristicUUID = "11"
         let descriptorUUID = "11"
         let descriptorValue: Array<Byte> = []
-        let bleDescriptor = BLEDescriptor(serviceUUID, characteristicUUID, descriptorUUID, descriptorValue)
+        let bleDescriptor = BleDescriptor(serviceUUID, characteristicUUID, descriptorUUID, descriptorValue)
         bleDescriptor.serviceUUID = serviceUUID
         bleDescriptor.characteristicUUID = characteristicUUID
         bleDescriptor.descriptorUUID = descriptorUUID
@@ -449,7 +449,7 @@ class Test_ble {
         try {
             var scanFilter = ScanFilter()
             let scanOptions = ScanOptions(interval: 0, dutyMode: ScanDuty.ScanModeLowPower, matchMode: MatchMode.MatchModeAggressive, phyType: PhyType.PhyLe1M, reportMode: ScanReportMode.Normal)
-            startBLEScan([scanFilter], options: scanOptions)
+            startBleScanning([scanFilter], options: scanOptions)
         } catch (e: Exception) {
             loggerInfo("test_startBLEScan error ${e}")
         }
@@ -459,7 +459,7 @@ class Test_ble {
     @Tag[APILevel22, TestLevel0]
     func test_stopBLEScan() {
         try {
-            stopBLEScan()
+            stopBleScanning()
         } catch (e: Exception) {
             @Expect(false)
         }
@@ -718,18 +718,18 @@ class Test_ble {
         try {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
             let descBuffer: Array<Byte> = [31, 32]
-            let descriptor = BLEDescriptor(
+            let descriptor = BleDescriptor(
                 "00001810-0000-1000-8000-00805F9B34FB",
                 "00001820-0000-1000-8000-00805F9B34FB",
                 "00002902-0000-1000-8000-00805F9B34FB",
                 Array<Byte>(2, repeat: 0)
             )
             // 创建characteristics
-            let descriptors: Array<BLEDescriptor> = [descriptor]
+            let descriptors: Array<BleDescriptor> = [descriptor]
             let charBuffer: Array<Byte> = [21, 22]
             let properties = GattProperties()
 
-            let characteristic: BLECharacteristic = BLECharacteristic(
+            let characteristic: BleCharacteristic = BleCharacteristic(
                 "00001810-0000-1000-8000-00805F9B34FB",
                 "00001820-0000-1000-8000-00805F9B34FB",
                 charBuffer,
@@ -738,7 +738,7 @@ class Test_ble {
             )
 
             gattClient.readCharacteristicValue(characteristic) {
-                error: ?BusinessException, outData: ?BLECharacteristic =>
+                error: ?BusinessException, outData: ?BleCharacteristic =>
                 if (let Some(e) <- error) {
                     throw e
                 }
@@ -765,7 +765,7 @@ class Test_ble {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
 
             let descBuffer: Array<Byte> = [31, 32]
-            let descriptor = BLEDescriptor(
+            let descriptor = BleDescriptor(
                 "00001810-0000-1000-8000-00805F9B34FB",
                 "00001820-0000-1000-8000-00805F9B34FB",
                 "00002903-0000-1000-8000-00805F9B34FB",
@@ -773,7 +773,7 @@ class Test_ble {
             )
 
             gattClient.readDescriptorValue(descriptor) {
-                error: ?BusinessException, outDescriptor: ?BLEDescriptor =>
+                error: ?BusinessException, outDescriptor: ?BleDescriptor =>
                 if (let Some(e) <- error) {
                     throw e
                 }
@@ -800,18 +800,18 @@ class Test_ble {
             let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
 
             let descBuffer: Array<Byte> = [31, 32]
-            let descriptor = BLEDescriptor(
+            let descriptor = BleDescriptor(
                 "00001810-0000-1000-8000-00805F9B34FB",
                 "00001820-0000-1000-8000-00805F9B34FB",
                 "00002902-0000-1000-8000-00805F9B34FB",
                 Array<Byte>(2, repeat: 0)
             )
 
-            let descriptors: Array<BLEDescriptor> = [descriptor]
+            let descriptors: Array<BleDescriptor> = [descriptor]
             let charBuffer: Array<Byte> = [21, 22]
             let properties = GattProperties()
 
-            let characteristic: BLECharacteristic = BLECharacteristic(
+            let characteristic: BleCharacteristic = BleCharacteristic(
                 "00001810-0000-1000-8000-00805F9B34FB",
                 "00001820-0000-1000-8000-00805F9B34FB",
                 charBuffer,
@@ -892,13 +892,13 @@ class Test_ble {
     func test_writeDescriptorValue() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         let descBuffer: Array<Byte> = [31, 32]
-        let descriptor = BLEDescriptor(
+        let descriptor = BleDescriptor(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             "00002903-0000-1000-8000-00805F9B34FB",
             Array<Byte>(2, repeat: 0)
         )
-        let descriptors: BLEDescriptor = descriptor
+        let descriptors: BleDescriptor = descriptor
         let charBuffer: Array<Byte> = [1, 2]
         let properties = GattProperties()
 
@@ -935,7 +935,7 @@ class Test_ble {
     func test_setBLEMtuSize() {
         let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
         try {
-            gattClient.setBLEMtuSize(100)
+            gattClient.setBleMtuSize(100)
         } catch (e: BusinessException) {
             loggerInfo( "errCode: ${e.code}, errMessage: ${e.message}")
         }
@@ -948,18 +948,18 @@ class Test_ble {
 
         // 创建descriptors
         let descBuffer: Array<Byte> = [31, 32]
-        let descriptor = BLEDescriptor(
+        let descriptor = BleDescriptor(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             "00002902-0000-1000-8000-00805F9B34FB",
             Array<Byte>(2, repeat: 0)
         )
         // 创建characteristics
-        let descriptors: Array<BLEDescriptor> = [descriptor]
+        let descriptors: Array<BleDescriptor> = [descriptor]
         let charBuffer: Array<Byte> = [21, 22]
         let properties = GattProperties()
 
-        let characteristic: BLECharacteristic = BLECharacteristic(
+        let characteristic: BleCharacteristic = BleCharacteristic(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             charBuffer,
@@ -987,18 +987,18 @@ class Test_ble {
 
         // 创建descriptors
         let descBuffer: Array<Byte> = [31, 32]
-        let descriptor = BLEDescriptor(
+        let descriptor = BleDescriptor(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             "00002902-0000-1000-8000-00805F9B34FB",
             Array<Byte>(2, repeat: 0)
         )
         // 创建characteristics
-        let descriptors: Array<BLEDescriptor> = [descriptor]
+        let descriptors: Array<BleDescriptor> = [descriptor]
         let charBuffer: Array<Byte> = [21, 22]
         let properties = GattProperties()
 
-        let characteristic: BLECharacteristic = BLECharacteristic(
+        let characteristic: BleCharacteristic = BleCharacteristic(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             charBuffer,
@@ -1076,13 +1076,13 @@ class Test_ble {
     @Tag[APILevel22, TestLevel0]
     func test_addService() {
         let descBuffer: Array<Byte> = [31, 32]
-        let descriptors0 = BLEDescriptor(
+        let descriptors0 = BleDescriptor(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             "00002902-0000-1000-8000-00805F9B34FB",
             Array<Byte>(2, repeat: 0)
         )
-        let descriptors1 = BLEDescriptor(
+        let descriptors1 = BleDescriptor(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             "00002903-0000-1000-8000-00805F9B34FB",
@@ -1090,11 +1090,11 @@ class Test_ble {
         )
 
         // 创建characteristics
-        let descriptors: Array<BLEDescriptor> = [descriptors0, descriptors1]
+        let descriptors: Array<BleDescriptor> = [descriptors0, descriptors1]
         let charBuffer: Array<Byte> = [21, 22]
         let properties = GattProperties()
 
-        let characteristic: BLECharacteristic = BLECharacteristic(
+        let characteristic: BleCharacteristic = BleCharacteristic(
             "00001810-0000-1000-8000-00805F9B34FB",
             "00001820-0000-1000-8000-00805F9B34FB",
             charBuffer,
@@ -1102,7 +1102,7 @@ class Test_ble {
             properties: properties, permissions: GattPermissions(), characteristicValueHandle: 0
         )
 
-        let characteristics: Array<BLECharacteristic> = [characteristic]
+        let characteristics: Array<BleCharacteristic> = [characteristic]
         let gattService: GattService = GattService(
             "00001810-0000-1000-8000-00805F9B34FB",
             true,
@@ -1193,17 +1193,17 @@ class BLEMtuChangeCallback <: Callback1Argument<Int32> {
     }
 }
 
-class BLECharacteristicChangeCallback <: Callback1Argument<BLECharacteristic> {
-    public func invoke(err: ?BusinessException, characteristic: BLECharacteristic): Unit {
+class BLECharacteristicChangeCallback <: Callback1Argument<BleCharacteristic> {
+    public func invoke(err: ?BusinessException, characteristic: BleCharacteristic): Unit {
         loggerInfo( "characteristic ${characteristic.serviceUUID} has change")
     }
 }
 
-class BLEConnectionStateChangeCallback <: Callback1Argument<BLEConnectionChangeState> {
+class BLEConnectionStateChangeCallback <: Callback1Argument<BleConnectionChangeState> {
     let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
     let device = "0A:1B:2C:3D:4D:5F"
     var connectState = StateDisconnected
-    public func invoke(err: ?BusinessException, stateInfo: BLEConnectionChangeState): Unit {
+    public func invoke(err: ?BusinessException, stateInfo: BleConnectionChangeState): Unit {
         loggerInfo( "onGattServerStateChange: device=" + stateInfo.deviceId + ", state=" + stateInfo.state.toString())
         if (stateInfo.deviceId == device) {
             connectState = stateInfo.state
@@ -1324,8 +1324,8 @@ class DescriptorWriteCallback <: Callback1Argument<DescriptorWriteRequest> {
     }
 }
 
-class StateChangeCallback <: Callback1Argument<BLEConnectionChangeState> {
-    public func invoke(err: ?BusinessException, state: BLEConnectionChangeState): Unit {
+class StateChangeCallback <: Callback1Argument<BleConnectionChangeState> {
+    public func invoke(err: ?BusinessException, state: BleConnectionChangeState): Unit {
         loggerInfo( "onGattServerStateChange: device=" + state.deviceId + ", state=" + state.state.toString())
     }
 }

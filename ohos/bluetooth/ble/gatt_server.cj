@@ -68,7 +68,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func addService(service: GattService): Unit {
         var errorCode: Int32 = 0
@@ -83,7 +84,7 @@ public class GattServer <: RemoteDataLite {
     /**
      * Removes a specified service from the list of GATT services provided by this device.
      *
-     * @param { String } serviceUuid - Indicates the UUID of the service to remove.
+     * @param { String } serviceUUID - Indicates the UUID of the service to remove.
      * @throws { BusinessException} 201 - Permission denied.
      * @throws { BusinessException} 801 - Capability not supported.
      * @throws { BusinessException} 2900001 - Service stopped.
@@ -94,7 +95,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func removeService(serviceUUID: String): Unit {
         var errorCode: Int32 = 0
@@ -118,7 +120,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func close(): Unit {
         var errorCode: Int32 = 0
@@ -143,7 +146,9 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true,
+        workerthread: true
     ]
     public func notifyCharacteristicChanged(deviceId: String, notifyCharacteristic: NotifyCharacteristic): Unit {
         var errorCode: Int32 = 0
@@ -161,7 +166,7 @@ public class GattServer <: RemoteDataLite {
     /**
      * Sends a response to a specified read or write request to a given BLE peripheral device.
      *
-     * @param { ServerResponse } serverResponse - Indicates the response parameters {@link ServerResponse}.
+     * @param { ServerResponse } serverResponse - Indicates the response parameters ServerResponse.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -171,7 +176,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func sendResponse(serverResponse: ServerResponse): Unit {
         var errorCode: Int32 = 0
@@ -194,7 +200,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<CharacteristicReadRequest>): Unit {
         if (eventType != CharacteristicRead) {
@@ -219,7 +226,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<CharacteristicWriteRequest>): Unit {
         if (eventType != CharacteristicWrite) {
@@ -243,7 +251,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<DescriptorReadRequest>): Unit {
         if (eventType != DescriptorRead) {
@@ -267,7 +276,8 @@ public class GattServer <: RemoteDataLite {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<DescriptorWriteRequest>): Unit {
         if (eventType != DescriptorWrite) {
@@ -284,16 +294,17 @@ public class GattServer <: RemoteDataLite {
      * Subscribe server connection state changed event.
      *
      * @param { BluetoothBleGattServerCallbackType } eventType - Type of the connection state changed event to listen for.
-     * @param { Callback1Argument<BLEConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
+     * @param { Callback1Argument<BleConnectionChangeState> } callback - Callback used to listen for the connection state changed event.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      */
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
-    public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<BLEConnectionChangeState>): Unit {
+    public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<BleConnectionChangeState>): Unit {
         if (eventType != ConnectionStateChange) {
             BLUETOOTH_LOG.error("Invalid name ${eventType}, valid name is ConnectionStateChange")
             throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
@@ -308,7 +319,7 @@ public class GattServer <: RemoteDataLite {
      * Subscribe mtu changed event.
      *
      * @param { BluetoothBleGattServerCallbackType } eventType - Type of the mtu changed event to listen for.
-     * @param { Callback<Int32> } callback - Callback used to listen for the mtu changed event.
+     * @param { Callback1Argument<Int32> } callback - Callback used to listen for the mtu changed event.
      */
     @!APILevel[
         since: "22",
@@ -327,10 +338,10 @@ public class GattServer <: RemoteDataLite {
     }
 
     /**
-     * Unsubscribe mtu changed event.
+     * Unsubscribe gatt server callback event.
      *
      * @param { BluetoothBleGattServerCallbackType } eventType - Type of unsubscribe event.
-     * @param { ?CallbackObject } callback - Callback used to listen.
+     * @param { ?CallbackObject } [callback] - Callback used to listen.
      */
     @!APILevel[
         since: "22",

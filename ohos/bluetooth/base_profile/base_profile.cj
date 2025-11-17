@@ -49,7 +49,7 @@ public enum DisconnectCause {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ConnectFromKeyboard
+    ConnectShouldFromKeyboard
     | 
     /**
      * The connection needs to be initiated from the mouse side.
@@ -58,7 +58,7 @@ public enum DisconnectCause {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ConnectFromMouse
+    ConnectShouldFromMouse
     | 
     /**
      * The connection needs to be initiated from the car side.
@@ -67,7 +67,7 @@ public enum DisconnectCause {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ConnectFromCar
+    ConnectShouldFromCar
     | 
     /**
      * Too many devices are currently connected.
@@ -85,7 +85,7 @@ public enum DisconnectCause {
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    ConnectFailInternal
+    ConnectInternalFail
     | ...
 
     /**
@@ -94,11 +94,11 @@ public enum DisconnectCause {
     static func parse(cause: Int32) {
         match (cause) {
             case 0 => UserDisconnect
-            case 1 => ConnectFromKeyboard
-            case 2 => ConnectFromMouse
-            case 3 => ConnectFromCar
+            case 1 => ConnectShouldFromKeyboard
+            case 2 => ConnectShouldFromMouse
+            case 3 => ConnectShouldFromCar
             case 4 => TooManyConnectedDevices
-            case 5 => ConnectFailInternal
+            case 5 => ConnectInternalFail
             case _ => throw BusinessException(2900099, "Operation failed.")
         }
     }
@@ -174,9 +174,9 @@ public class StateChangeParam {
 ]
 public interface BaseProfile {
     /**
-     * Get connection strategy of this profile.
+     * Obtains the connected devices list of profile.
      *
-     * @returns { Array<String> } Returns the connected devices list.
+     * @returns { Array<String> } Returns the address of connected devices list.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -187,7 +187,8 @@ public interface BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     func getConnectedDevices(): Array<String>
 
@@ -195,7 +196,7 @@ public interface BaseProfile {
      * Obtains the profile connection state.
      *
      * @param { String } deviceId - Indicates device ID. For example, "11:22:33:AA:BB:FF".
-     * @returns { ProfileConnectionState } Returns the profile connection state.
+     * @returns { ProfileConnectionState } Returns the connection state.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -206,7 +207,8 @@ public interface BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     func getConnectionState(deviceId: String): ProfileConnectionState
 

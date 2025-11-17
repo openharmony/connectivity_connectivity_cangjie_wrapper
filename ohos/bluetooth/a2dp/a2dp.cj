@@ -81,7 +81,8 @@ public class A2dpSourceProfile <: BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getPlayingState(deviceId: String): PlayingState {
         var errorCode: Int32 = 0
@@ -100,7 +101,7 @@ public class A2dpSourceProfile <: BaseProfile {
     /**
      * Obtains the connected devices list of profile.
      *
-     * @returns { Array<String> } Returns the connected devices list.
+     * @returns { Array<String> } Returns the address of connected devices list.
      * @throws { BusinessException } 201 - Permission denied.
      * @throws { BusinessException } 801 - Capability not supported.
      * @throws { BusinessException } 2900001 - Service stopped.
@@ -111,7 +112,8 @@ public class A2dpSourceProfile <: BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getConnectedDevices(): Array<String> {
         var errorCode: Int32 = 0
@@ -143,7 +145,8 @@ public class A2dpSourceProfile <: BaseProfile {
     @!APILevel[
         since: "22",
         permission: "ohos.permission.ACCESS_BLUETOOTH",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
     ]
     public func getConnectionState(deviceId: String): ProfileConnectionState {
         var errorCode: Int32 = 0
@@ -496,7 +499,7 @@ public enum CodecSampleRate {
     CodecSampleRateNone
     |
     /**
-     * Codec sample rate 44.1k.
+     * Codec sample rate 44.1kHz.
      */
     @!APILevel[
         since: "22",
@@ -505,7 +508,7 @@ public enum CodecSampleRate {
     CodecSampleRate44100
     |
     /**
-     * Codec sample rate 48k.
+     * Codec sample rate 48kHz.
      */
     @!APILevel[
         since: "22",
@@ -514,7 +517,7 @@ public enum CodecSampleRate {
     CodecSampleRate48000
     |
     /**
-     * Codec sample rate 88.2k.
+     * Codec sample rate 88.2kHz.
      */
     @!APILevel[
         since: "22",
@@ -523,7 +526,7 @@ public enum CodecSampleRate {
     CodecSampleRate88200
     |
     /**
-     * Codec sample rate 96k.
+     * Codec sample rate 96kHz.
      */
     @!APILevel[
         since: "22",
@@ -532,7 +535,7 @@ public enum CodecSampleRate {
     CodecSampleRate96000
     |
     /**
-     * Codec sample rate 176.4k.
+     * Codec sample rate 176.4kHz.
      */
     @!APILevel[
         since: "22",
@@ -541,7 +544,7 @@ public enum CodecSampleRate {
     CodecSampleRate176400
     |
     /**
-     * Codec sample rate 192k.
+     * Codec sample rate 192kHz.
      */
     @!APILevel[
         since: "22",

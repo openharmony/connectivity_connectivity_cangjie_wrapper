@@ -45,19 +45,19 @@ class Test_baseProfile {
     func test_auto_enum_DisconnectCause() {
         let arr1: Array<DisconnectCause> = [
             UserDisconnect,
-            ConnectFromKeyboard,
-            ConnectFromMouse,
-            ConnectFromCar,
+            ConnectShouldFromKeyboard,
+            ConnectShouldFromMouse,
+            ConnectShouldFromCar,
             TooManyConnectedDevices,
-            ConnectFailInternal
+            ConnectInternalFail
         ]
         let arrStr: Array<String> = [
             "DisconnectCause.UserDisconnect",
-            "DisconnectCause.ConnectFromKeyboard",
-            "DisconnectCause.ConnectFromMouse",
-            "DisconnectCause.ConnectFromCar",
+            "DisconnectCause.ConnectShouldFromKeyboard",
+            "DisconnectCause.ConnectShouldFromMouse",
+            "DisconnectCause.ConnectShouldFromCar",
             "DisconnectCause.TooManyConnectedDevices",
-            "DisconnectCause.ConnectFailInternal"
+            "DisconnectCause.ConnectInternalFail"
         ]
         for (i in 0..arr1.size) {
             @Expect(arr1[i] == arr1[i])

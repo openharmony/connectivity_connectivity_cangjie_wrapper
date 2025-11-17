@@ -37,7 +37,7 @@ const BLE_ADV_TX_POWER_MEDIUM_VALUE: Int8 = -7
 ]
 public class ScanFilter {
     /**
-     * The address of a BLE peripheral device
+     * The address of a BLE peripheral device.
      */
     @!APILevel[
         since: "22",
@@ -46,7 +46,7 @@ public class ScanFilter {
     public var deviceId: String
 
     /**
-     * The name of a BLE peripheral device
+     * The name of a BLE peripheral device.
      */
     @!APILevel[
         since: "22",
@@ -55,7 +55,7 @@ public class ScanFilter {
     public var name: String
 
     /**
-     * The service UUID of a BLE peripheral device
+     * The service UUID of a BLE peripheral device.
      */
     @!APILevel[
         since: "22",
@@ -137,7 +137,19 @@ public class ScanFilter {
 
     /**
      * ScanFilter constructor.
-     */    
+     *
+     * @param { String } deviceId - The address of a BLE peripheral device.
+     * @param { String } name - The name of a BLE peripheral device.
+     * @param { String } serviceUUID - The service UUID of a BLE peripheral device.
+     * @param { String } serviceUUIDMask - Service UUID mask.
+     * @param { String } serviceSolicitationUUID - Service solicitation UUID.
+     * @param { String } serviceSolicitationUUIDMask - Service solicitation UUID mask.
+     * @param { Array<Byte> } serviceData - Service data.
+     * @param { Array<Byte> } serviceDataMask - Service data mask.
+     * @param { UInt16 } manufactureId - Manufacture id.
+     * @param { Array<Byte> } manufactureData - Manufacture data.
+     * @param { Array<Byte> } manufactureDataMask - Manufacture data mask.
+     */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
@@ -288,7 +300,7 @@ struct NativeScanOptions {
 ]
 public class ScanOptions {
     /**
-     * Time of delay for reporting the scan result
+     * Time of delay for reporting the scan result.
      */
     @!APILevel[
         since: "22",
@@ -297,7 +309,7 @@ public class ScanOptions {
     public var interval: Int32
 
     /**
-     * Bluetooth LE scan mode
+     * Bluetooth LE scan mode.
      */
     @!APILevel[
         since: "22",
@@ -306,7 +318,7 @@ public class ScanOptions {
     public var dutyMode: ScanDuty
 
     /**
-     * Match mode for Bluetooth LE scan filters hardware match
+     * Match mode for Bluetooth LE scan filters hardware match.
      */
     @!APILevel[
         since: "22",
@@ -328,8 +340,12 @@ public class ScanOptions {
     /**
      * ScanOptions constructor.
      *
-     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
-     */    
+     * @param { Int32 } interval - Time of delay for reporting the scan result.
+     * @param { ScanDuty } dutyMode - Bluetooth LE scan mode.
+     * @param { MatchMode } matchMode - Match mode for Bluetooth LE scan filters hardware match.
+     * @param { PhyType } phyType - Physical Layer used during scan.
+     * @param { ScanReportMode } reportMode - Report mode used during scan.
+     */
     @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
@@ -380,7 +396,7 @@ struct NativeAdvertiseSetting {
 public class AdvertiseSetting {
     /**
      * Minimum slot value for the advertising interval, which is 32 (20 ms)
-     * Maximum slot value for the advertising interval, which is 16777215} (10485.759375s)
+     * Maximum slot value for the advertising interval, which is 16777215 (10485.759375s)
      * Default slot value for the advertising interval, which is 1600 (1s)
      */
     @!APILevel[
@@ -411,6 +427,14 @@ public class AdvertiseSetting {
     
     /**
      * AdvertiseSetting constructor.
+     *
+     * @param { UInt16 } [interval] - Minimum slot value for the advertising interval, which is 32 (20 ms)
+     * Maximum slot value for the advertising interval, which is 16777215 (10485.759375s)
+     * Default slot value for the advertising interval, which is 1600 (1s)
+     * @param { Int8 } [txPower] - Minimum transmission power level for advertising, which is -127
+     * Maximum transmission power level for advertising, which is 1
+     * Default transmission power level for advertising, which is -7
+     * @param { Bool } connectable - Indicates whether the BLE is connectable, default is true
      */
     @!APILevel[
         since: "22",
@@ -539,7 +563,11 @@ public class AdvertiseData {
     /**
      * AdvertiseData constructor.
      *
-     * @throws { BusinessException } 2900099 - The feature is temporarily not supported.
+     * @param { Array<String> } serviceUUIDs - The specified service UUID list to this advertisement.
+     * @param { Array<ManufactureData> } manufactureData - The specified manufacturer data list to this advertisement.
+     * @param { Array<ServiceData> } serviceData - The specified service data list to this advertisement.
+     * @param { Bool } includeDeviceName - Indicates whether the device name will be included in the advertisement packet.
+     * @param { Bool } includeTxPower - Indicates whether the tx power will be included in the advertisement packet.
      */
     @!APILevel[
         since: "22",
@@ -612,7 +640,7 @@ struct NativeManufactureData {
 ]
 public class ManufactureData {
     /**
-     * Indicates the manufacturer ID assigned by Bluetooth SIG
+     * Indicates the manufacturer ID assigned by Bluetooth SIG.
      */
     @!APILevel[
         since: "22",
@@ -620,7 +648,7 @@ public class ManufactureData {
     ]
     public var manufactureId: UInt16
     /**
-     * Indicates the manufacturer data to add
+     * Indicates the manufacturer data to add.
      */
     @!APILevel[
         since: "22",
@@ -630,6 +658,9 @@ public class ManufactureData {
 
     /**
      * ManufactureData constructor.
+     *
+     * @param { UInt16 } manufactureId - Indicates the manufacturer ID assigned by Bluetooth SIG
+     * @param { Array<Byte> } manufactureValue - Indicates the manufacturer data to add
      */
     @!APILevel[
         since: "22",
@@ -675,7 +706,7 @@ struct NativeServiceData {
 ]
 public class ServiceData {
     /**
-     * Indicates the UUID of the service data to add
+     * Indicates the UUID of the service data to add.
      */
     @!APILevel[
         since: "22",
@@ -683,7 +714,7 @@ public class ServiceData {
     ]
     public var serviceUUID: String
     /**
-     * Indicates the service data to add
+     * Indicates the service data to add.
      */
     @!APILevel[
         since: "22",
@@ -692,7 +723,10 @@ public class ServiceData {
     public var serviceValue: Array<Byte>
 
     /**
-     * ServiceData constructor
+     * ServiceData constructor.
+     *
+     * @param { String } serviceUUID - Indicates the UUID of the service data to add
+     * @param { Array<Byte> } serviceValue - Indicates the service data to add
      */
     @!APILevel[
         since: "22",
@@ -783,6 +817,13 @@ public class AdvertisingParams {
 
     /**
      * AdvertisingParams constructor.
+     *
+     * @param { AdvertiseSetting } advertisingSettings - Indicates the advertising settings.
+     * @param { AdvertiseData } advertisingData - Indicates the advertising data.
+     * @param { AdvertiseData } advertisingResponse - Indicates the advertising response.
+     * @param { UInt16 } duration - Indicates the duration for advertising continuously.
+     * The duration, in 10ms unit. Valid range is from 1 (10ms) to 65535 (655,350 ms).
+     * If this parameter is not specified or is set to 0, advertisement is continuously sent.
      */
     @!APILevel[
         since: "22",
@@ -1036,7 +1077,8 @@ public enum MatchMode {
     MatchModeAggressive
     | 
     /**
-     * sticky mode
+     * Reports advertising packets only if their signal strength is high
+     * or they are transmitted intensively within a short period of time.
      */
     @!APILevel[
         since: "22",
@@ -1165,7 +1207,9 @@ public enum PhyType {
 ]
 public enum BluetoothBleCallbackType {
     /**
-     * Advertising State Change
+     * Event type. The value advertising indicate an advertising state change event.
+     * This event is triggered if the advertising state changes when startAdvertising,
+     * stopAdvertising, enableAdvertising or disableAdvertising is called.
      */
     @!APILevel[
         since: "22",
@@ -1174,7 +1218,7 @@ public enum BluetoothBleCallbackType {
     AdvertisingStateChange
     | 
     /**
-     * Ble Device Find
+     * ble device find changed.
      */
     @!APILevel[
         since: "22",
@@ -1219,8 +1263,8 @@ public enum ScanReportMode {
     Normal
     |
     /**
-     * Enables the batch mode in which advertisement packets are sent after the interval specified by {@link
-     * ScanOptions#interval}.
+     * Enables the batch mode in which advertisement packets are sent after the interval specified by
+     * interval.
      */
     @!APILevel[
         since: "22",

@@ -31,13 +31,14 @@ let LOGGER = HilogChannel(0, 0xD001560, "CJ-wifi")
 /**
  * Query the Wi-Fi status
  *
- * @returns { Bool } Returns {@code true} if the Wi-Fi is active, returns {@code false} otherwise.
+ * @returns { Bool } Returns true if the Wi-Fi is active, returns false otherwise.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2501000 - Operation failed.
  */
 @!APILevel[
     since: "22",
-    syscap: "SystemCapability.Communication.WiFi.STA"
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    throwexception: true
 ]
 public func isWifiActive(): Bool {
     var ret = false
@@ -61,7 +62,8 @@ public func isWifiActive(): Bool {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.STA"
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    throwexception: true
 ]
 public func getScanInfoList(): Array<WifiScanInfo> {
     var code = 0i32
@@ -87,7 +89,7 @@ public func getScanInfoList(): Array<WifiScanInfo> {
 /**
  * Initiate a P2P connection to a device with the specified configuration.
  *
- * @param { WifiP2PConfig } config - Indicates the P2P connection configuration.
+ * @param { WifiP2pConfig } config - Indicates the configuration for connecting to a specific group.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
  * @throws {BusinessException} 2801000 - Operation failed.
@@ -96,9 +98,10 @@ public func getScanInfoList(): Array<WifiScanInfo> {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.P2P"
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    throwexception: true
 ]
-public func p2pConnect(config: WifiP2PConfig): Unit {
+public func p2pConnect(config: WifiP2pConfig): Unit {
     let ct = CWifiP2PConfig(config)
     let code = unsafe { FfiWifiP2pConnect(ct) }
     ct.free()
@@ -119,7 +122,8 @@ public func p2pConnect(config: WifiP2PConfig): Unit {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.P2P"
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    throwexception: true
 ]
 public func p2pCancelConnect(): Unit {
     let code = unsafe { FfiWifiP2pCancelConnect() }
@@ -140,7 +144,8 @@ public func p2pCancelConnect(): Unit {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.P2P"
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    throwexception: true
 ]
 public func startDiscoverDevices(): Unit {
     let code = unsafe { FfiWifiStartDiscoverDevices() }
@@ -161,7 +166,8 @@ public func startDiscoverDevices(): Unit {
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.P2P"
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    throwexception: true
 ]
 public func stopDiscoverDevices(): Unit {
     let code = unsafe { FfiWifiStopDiscoverDevices() }
@@ -254,7 +260,8 @@ private func commonUnSubscribe<T>(callbackType: WifiCallbackType, callback!: ?T 
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.STA"
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    throwexception: true
 ]
 public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>): Unit {
     commonSubscribe1Arg(eventType, callback) {i: Int32 => i}
@@ -265,7 +272,7 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
  * All callback functions will be deregistered If there is no specific callback parameter.
  *
  * @param { WifiCallbackType } eventType - Indicates the Wi-Fi event type.
- * @param { ?CallbackObject } callback - Indicates the callback to unsubscribe. 
+ * @param { ?CallbackObject } [callback] - Indicates the callback to unsubscribe. 
  *                                       If not specified, all callbacks will be removed.
  * @throws {BusinessException} 201 - Permission denied.
  * @throws {BusinessException} 801 - Capability not supported.
@@ -274,7 +281,8 @@ public func on(eventType: WifiCallbackType, callback: Callback1Argument<Int32>):
 @!APILevel[
     since: "22",
     permission: "ohos.permission.GET_WIFI_INFO",
-    syscap: "SystemCapability.Communication.WiFi.STA"
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    throwexception: true
 ]
 public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None): Unit {
     commonUnSubscribe(eventType, callback: callback)

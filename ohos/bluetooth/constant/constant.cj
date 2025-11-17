@@ -37,26 +37,29 @@ public enum ProfileConnectionState {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateDisconnected
+    |
     /**
      * the current profile is being connected
      */
-    | @!APILevel[
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateConnecting
+    |
     /**
      * the current profile is connected
      */
-    | @!APILevel[
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     StateConnected
+    |
     /**
      * the current profile is being disconnected
      */
-    | @!APILevel[
+    @!APILevel[
         since: "22",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]

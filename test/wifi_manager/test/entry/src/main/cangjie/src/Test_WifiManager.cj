@@ -98,7 +98,7 @@ public class Test_WifiManager {
     @Tag[APILevel22, TestLevel0]
     func test_p2pconnect(): Unit {
         try {
-            let config = WifiP2PConfig("00:11:22:33:44:55", 2, "", "", GroupOwnerBand.GoBandAuto)
+            let config = WifiP2pConfig("00:11:22:33:44:55", 2, "", "", GroupOwnerBand.GoBandAuto)
             p2pConnect(config)
         } catch (e: Exception) {
             loggerInfo("test_p2pconnect error: ${e}")
