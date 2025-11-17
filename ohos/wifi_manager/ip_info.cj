@@ -18,6 +18,7 @@
 package ohos.wifi_manager
 
 import ohos.ffi.CArrUI8
+import ohos.business_exception.BusinessException
 
 foreign {
     func FfiWifiIsWifiActive(ret: CPointer<Bool>): Int32
@@ -124,7 +125,7 @@ struct CWifiP2PConfig {
                 LibC.free(passphrase)
                 LibC.free(groupName)
             }
-            throw e
+            throw BusinessException(2501000, "Operation failed.")
         }
     }
 

@@ -215,7 +215,7 @@ public class ScanFilter {
                 LibC.free<UInt8>(cServiceData.head)
                 LibC.free<UInt8>(cServiceDataMask.head)
                 LibC.free<UInt8>(cManufactureData.head)
-                throw e
+                throw BusinessException(2900010, getErrorMsg(2900010))
             }
         }
     }
@@ -585,7 +585,7 @@ public class AdvertiseData {
                 cServiceUUIDs.free()
                 cManufactureData.free()
                 cServiceData.free()
-                throw e
+                throw BusinessException(2900010, getErrorMsg(2900010))
             }
         }
     }
@@ -717,7 +717,7 @@ public class ServiceData {
             } catch (e: Exception) {
                 LibC.free(cUUID)
                 cValue.free()
-                throw e
+                throw BusinessException(2900010, getErrorMsg(2900010))
             }
         }
     }
@@ -816,7 +816,7 @@ public class AdvertisingParams {
             } catch (e: Exception) {
                 cAdvertisingData.free()
                 cAdvertisingResponse.free()
-                throw e
+                throw BusinessException(2900010, getErrorMsg(2900010))
             }
         }
     }
