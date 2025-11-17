@@ -177,7 +177,7 @@ public class GattService {
             LibC.free(cServiceUUID)
             cCharacteristics.free()
             cIncludeServices.free()
-            throw e
+            throw BusinessException(2900010, getErrorMsg(2900010))
         }
     }
 }
@@ -371,7 +371,7 @@ public class BLECharacteristic {
             LibC.free(cCharacteristicUUID)
             cCharacteristicValue.free()
             cDescriptors.free()
-            throw e
+            throw BusinessException(2900010, getErrorMsg(2900010))
         }
     }
 }
@@ -495,7 +495,7 @@ public class BLEDescriptor {
         } catch (e: Exception) {
             LibC.free(nativeServiceUUID)
             LibC.free(nativeCharacteristicUUID)
-            throw e
+            throw BusinessException(2900010, getErrorMsg(2900010))
         }
         NativeBLEDescriptor(
             nativeServiceUUID,
@@ -739,7 +739,7 @@ public class NotifyCharacteristic {
             LibC.free(cServiceUUID)
             LibC.free(cCharacteristicUUID)
             cCharacteristicValue.free()
-            throw e
+            throw BusinessException(2900010, getErrorMsg(2900010))
         }
     }
 }
@@ -846,7 +846,7 @@ public class ServerResponse {
         } catch (e: Exception) {
             LibC.free(cDeviceId)
             cValue.free()
-            throw e
+            throw BusinessException(2900010, getErrorMsg(2900010))
         }
     }
 }
