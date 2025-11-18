@@ -180,6 +180,9 @@ public class ScanFilter {
         this.manufactureDataMask = manufactureDataMask
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     func toNative(): NativeScanFilter {
         unsafe {
             var cDeviceId = CString(CPointer<UInt8>())
@@ -590,6 +593,9 @@ public class AdvertiseData {
         this.includeTxPower = includeTxPower
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     func toNative(): NativeAdvertiseData {
         var cServiceUUIDs: CArrString = CArrString(CPointer(), 0)
         var cManufactureData: CArrNativeManufactureData = CArrNativeManufactureData(CPointer(), 0)
@@ -740,6 +746,9 @@ public class ServiceData {
         this.serviceValue = serviceValue
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     func toNative(): NativeServiceData {
         var cUUID: CString = CString(CPointer())
         var cValue: CArrUI8 = CArrUI8(CPointer(), 0)
@@ -841,6 +850,9 @@ public class AdvertisingParams {
         this.duration = duration
     }
 
+    /**
+     * @throws { BusinessException } 2900010 - Resources have reached the upper limit.
+     */
     func toNative(): NativeAdvertisingParams {
         var cAdvertisingData: NativeAdvertiseData = advertisingData.toNative()
         var cAdvertisingResponse: NativeAdvertiseData = advertisingResponse.toNative()
