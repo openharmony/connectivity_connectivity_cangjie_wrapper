@@ -227,6 +227,7 @@ public class ScanFilter {
                 LibC.free<UInt8>(cServiceData.head)
                 LibC.free<UInt8>(cServiceDataMask.head)
                 LibC.free<UInt8>(cManufactureData.head)
+                LibC.free<UInt8>(cManufactureDataMask.head)
                 throw BusinessException(2900010, getErrorMsg(2900010))
             }
         }

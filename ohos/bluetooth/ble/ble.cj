@@ -109,6 +109,12 @@ public func startBleScanning(filters: Array<ScanFilter>, options!: ?ScanOptions 
         FfiBluetoothBleStartBleScan(cFilters, cOptions, inout errorCode)
         cFilters.free()
         LibC.free(cOptions)
+        if (arr.isNotNull()) {
+            for (i in 0..filtersSize) {
+                arr.read(i).free()
+            }
+        }
+        LibC.free<NativeScanFilter>(arr)
     }
     checkRet(errorCode)
 }
