@@ -458,7 +458,7 @@ public class GattClientDevice <: RemoteDataLite {
         let registerCall = Callback1Param<Int32, Unit>(wrapper)
         unsafe {
             let inputCharacteristic: NativeBLECharacteristic = characteristic.toNative()
-            FfiBluetoothBleGattClientDeviceSetCharacteristicChangeNotification(getID(), inputCharacteristic, enable,
+            FfiBluetoothBleGattClientDeviceSetCharacteristicChangeNotificationV2(getID(), inputCharacteristic, enable, registerCall.getID(),
                 inout errorCode)
             inputCharacteristic.free()
         }
@@ -498,7 +498,7 @@ public class GattClientDevice <: RemoteDataLite {
         let registerCall = Callback1Param<Int32, Unit>(wrapper)
         unsafe {
             let inputCharacteristic: NativeBLECharacteristic = characteristic.toNative()
-            FfiBluetoothBleGattClientDeviceSetCharacteristicChangeIndication(getID(), inputCharacteristic, enable,
+            FfiBluetoothBleGattClientDeviceSetCharacteristicChangeIndicationV2(getID(), inputCharacteristic, enable, registerCall.getID(),
                 inout errorCode)
             inputCharacteristic.free()
         }
