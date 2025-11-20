@@ -111,6 +111,9 @@ struct CWifiP2PConfig {
     let netId: Int32
     let deviceAddressType: Int32
 
+    /**
+     * @throws { BusinessException } 2501000 - Operation failed.
+     */
     init(cfg: WifiP2pConfig) {
         this.netId = cfg.netId
         this.goBand = cfg.goBand.getValue()
