@@ -44,7 +44,14 @@
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/wifi_manager:ohos.wifi_manager",
                 "//foundation/communication/connectivity_cangjie_wrapper/kit/ConnectivityKit:kit.ConnectivityKit"
             ],
-            "inner_kits": [],
+            "inner_kits": [
+                {
+                    "name": "//foundation/communication/connectivity_cangjie_wrapper:copy_sdk_connectivity_cangjie_libs"
+                },
+                {
+                    "name": "//foundation/communication/connectivity_cangjie_wrapper:copy_sdk_connectivity_cangjie_libs_kit"
+                }
+            ],
             "test": []
         }
     }
