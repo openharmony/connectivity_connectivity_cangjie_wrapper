@@ -17,6 +17,7 @@
 
 package ohos.bluetooth.a2dp
 
+import ohos.bluetooth.CallbackController
 import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG, OPERATION_FAILED}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
@@ -25,7 +26,6 @@ import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
 import ohos.labels.{APILevel, Hide}
 
-import std.collection.{ArrayList, HashMap}
 import std.deriving.Derive
 
 /**
@@ -49,8 +49,7 @@ public func createA2dpSrcProfile(): A2dpSourceProfile {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class A2dpSourceProfile <: BaseProfile {
-    private var registerState = false
-    private let callbackList = ArrayList<CallbackObject>()
+    private let controller = CallbackController()
 
     protected init() {}
 
@@ -58,9 +57,7 @@ public class A2dpSourceProfile <: BaseProfile {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            for (caller in callbackList) {
-                (caller as Callback1Argument<T>)?.invoke(None, cjType)
-            }
+            controller.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -176,7 +173,7 @@ public class A2dpSourceProfile <: BaseProfile {
     ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
-        if (!registerState) {
+        if (!controller.isEnabled()) {
             var errorCode: Int32 = 0
             let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
             unsafe {
@@ -185,16 +182,14 @@ public class A2dpSourceProfile <: BaseProfile {
             if (errorCode != SUCCESS_CODE) {
                 throw BusinessException(errorCode, getErrorMsg(errorCode))
             }
-            registerState = true
+            controller.enableController()
         } else {
-            for (idx in 0..callbackList.size) {
-                if (refEq(callback, callbackList[idx])) {
-                    BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
-                    return
-                }
+            if (controller.hasCallback(callback)) {
+                BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
+                return
             }
         }
-        callbackList.add(callback)
+        controller.addCallback(callback)
         return
     }
 
@@ -210,12 +205,14 @@ public class A2dpSourceProfile <: BaseProfile {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
-        for (idx in 0..callbackList.size) {
-            if (refEq(callback, callbackList[idx])) {
-                callbackList.remove(at: idx)
-            }
+        if (eventType != ConnectionStateChange) {
+            throw BusinessException(401, "Parameter error.")
         }
+        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
+        if (!controller.isEnabled()) {
+            return
+        }
+        controller.removeCallback(callback)
         return
     }
 
@@ -234,7 +231,7 @@ public class A2dpSourceProfile <: BaseProfile {
             throw BusinessException(401, "Parameter error.")
         }
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
-        callbackList.clear()
+        controller.removeAllCallback()
         return
     }
 }
