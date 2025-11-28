@@ -18,7 +18,7 @@
 package ohos.bluetooth.ble
 
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
-import ohos.bluetooth.{ BLUETOOTH_LOG, getErrorMsg, checkRet }
+import ohos.bluetooth.{ BLUETOOTH_LOG, getErrorMsg, checkRet, CallbackController }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{ SUCCESS_CODE , RemoteDataLite, releaseFFIData, Callback1Param}
 import ohos.labels.APILevel
@@ -34,15 +34,14 @@ import std.collection.{ArrayList, HashMap}
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattServer <: RemoteDataLite {
-    private let callbackMap = HashMap<BluetoothBleGattServerCallbackType, ArrayList<CallbackObject>>()
-    private let registerMap = HashMap<BluetoothBleGattServerCallbackType, Bool>(
+    private let callbackMap = HashMap<BluetoothBleGattServerCallbackType, CallbackController>(
         [
-            (CharacteristicRead, false),
-            (CharacteristicWrite, false),
-            (DescriptorRead, false),
-            (DescriptorWrite, false),
-            (ConnectionStateChange, false),
-            (ServerBleMtuChange, false)
+            (CharacteristicRead, CallbackController()),
+            (CharacteristicWrite, CallbackController()),
+            (DescriptorRead, CallbackController()),
+            (DescriptorWrite, CallbackController()),
+            (ConnectionStateChange, CallbackController()),
+            (ServerBleMtuChange, CallbackController())
         ]
     )
 
@@ -350,39 +349,23 @@ public class GattServer <: RemoteDataLite {
     ]
     public func off(eventType: BluetoothBleGattServerCallbackType, callback!: ?CallbackObject = None): Unit {
         BLUETOOTH_LOG.debug("unsubscribe ${eventType}")
-        if (!callbackMap.contains(eventType)) {
+        let controller = callbackMap[eventType]
+        if (!controller.isEnabled()) {
             return
         }
         if (let Some(v) <- callback) {
-            findCallbackObject(eventType, v, remove: true)
+            controller.removeCallback(v)
             return
         }
-        callbackMap[eventType].clear()
+        controller.removeAllCallback()
         return
     }
 
-    private func findCallbackObject(callbackType: BluetoothBleGattServerCallbackType, callback: CallbackObject,
-        remove!: Bool = false): Int64 {
-        let callbackList = callbackMap.get(callbackType) ?? return -1
-        for (idx in 0..callbackList.size) {
-            if (refEq(callback, callbackList[idx])) {
-                if (remove) {
-                    callbackList.remove(at: idx)
-                }
-                return idx
-            }
-        }
-        return -1
-    }
-
-    private func argWrapper1<CT, T>(callbackType: BluetoothBleGattServerCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+    private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T): Int64 where CT <: CType {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            let callbackList = callbackMap.get(callbackType) ?? ArrayList<CallbackObject>()
-            for (caller in callbackList) {
-                (caller as Callback1Argument<T>)?.invoke(None, cjType)
-            }
+            controller.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -399,16 +382,16 @@ public class GattServer <: RemoteDataLite {
     private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleGattServerCallbackType, callback: CallbackObject,
         ctor: (CT) -> T) where CT <: CType {
         BLUETOOTH_LOG.debug("subscribe ${callbackType}")
-        if (!registerMap[callbackType]) {
-            register(callbackType, argWrapper1<CT, T>(callbackType, ctor))
-            registerMap[callbackType] = true
+        let controller = callbackMap[callbackType]
+        if (!controller.isEnabled()) {
+            register(callbackType, argWrapper1<CT, T>(controller, ctor))
+            controller.enableController()
         } else {
-            if (findCallbackObject(callbackType, callback) >= 0) {
-                BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
-                return
-            }
+            if (controller.hasCallback(callback)) {
+            BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
+            return
         }
-        callbackMap.addIfAbsent(callbackType, ArrayList<CallbackObject>())
-        callbackMap[callbackType].add(callback)
+        }
+        controller.addCallback(callback)
     }
 }

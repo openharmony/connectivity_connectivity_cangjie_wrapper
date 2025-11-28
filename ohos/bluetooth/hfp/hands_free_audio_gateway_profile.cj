@@ -17,7 +17,7 @@
 
 package ohos.bluetooth.hfp
 
-import std.collection.ArrayList
+import ohos.bluetooth.CallbackController
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.bluetooth.{checkRet, BLUETOOTH_LOG, getErrorMsg}
@@ -55,8 +55,7 @@ public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class HandsFreeAudioGatewayProfile <: BaseProfile {
-    private var registerState = false
-    private let callbackList = ArrayList<CallbackObject>()
+    private let controller = CallbackController()
 
     protected init() {}
 
@@ -64,9 +63,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            for (caller in callbackList) {
-                (caller as Callback1Argument<T>)?.invoke(None, cjType)
-            }
+            controller.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -144,23 +141,21 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
-        if (!registerState) {
+        if (!controller.isEnabled()) {
             var errorCode: Int32 = 0
             let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
             unsafe {
                 FfiBluetoothHfpOn(eventType.getValue(), id, inout errorCode)
             }
             checkRet(errorCode)
-            registerState = true
+            controller.enableController()
         } else {
-            for (idx in 0..callbackList.size) {
-                if (refEq(callback, callbackList[idx])) {
-                    BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
-                    return
-                }
+            if (controller.hasCallback(callback)) {
+                BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
+                return
             }
         }
-        callbackList.add(callback)
+        controller.addCallback(callback)
         return
     }
 
@@ -176,12 +171,14 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
-        for (idx in 0..callbackList.size) {
-            if (refEq(callback, callbackList[idx])) {
-                callbackList.remove(at: idx)
-            }
+        if (eventType != ConnectionStateChange) {
+            throw BusinessException(401, "Parameter error.")
         }
+        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
+        if (!controller.isEnabled()) {
+            return
+        }
+        controller.removeCallback(callback)
         return
     }
 
@@ -201,7 +198,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
             throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
         }
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
-        callbackList.clear()
+        controller.removeAllCallback()
         return
     }
 }

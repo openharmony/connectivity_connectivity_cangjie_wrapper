@@ -17,13 +17,13 @@
 
 package ohos.bluetooth.ble
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg, CallbackController }
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
 import ohos.ffi.{ Callback1Param, SUCCESS_CODE, safeMalloc, cArr2cjArr }
 import ohos.labels.APILevel
 
-import std.collection.{ArrayList, HashMap}
+import std.collection.HashMap
 
 /**
  * create a Gatt server instance.
@@ -269,22 +269,8 @@ public func stopAdvertising(advertisingId: UInt32): Unit {
     checkRet(errorCode)
 }
 
-private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothBleCallbackType, ArrayList<CallbackObject>>()
-private let GLOBAL_REGISTER_MAP = HashMap<BluetoothBleCallbackType, Bool>(
-    [(AdvertisingStateChange, false), (BleDeviceFind, false)])
-
-private func findCallbackObject(callbackType: BluetoothBleCallbackType, callback: CallbackObject, remove!: Bool = false): Int64 {
-    let callbackList = GLOBAL_CALLBACK_MAP.get(callbackType) ?? return -1
-    for (idx in 0..callbackList.size) {
-        if (refEq(callback, callbackList[idx])) {
-            if (remove) {
-                callbackList.remove(at: idx)
-            }
-            return idx
-        }
-    }
-    return -1
-}
+private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothBleCallbackType, CallbackController>(
+    [(AdvertisingStateChange, CallbackController()), (BleDeviceFind, CallbackController())])
 
 private func register(callbackType: BluetoothBleCallbackType, id: Int64) {
     var errorCode: Int32 = 0
@@ -294,14 +280,11 @@ private func register(callbackType: BluetoothBleCallbackType, id: Int64) {
     checkRet(errorCode)
 }
 
-private func argWrapper1<CT, T>(callbackType: BluetoothBleCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T): Int64 where CT <: CType {
     let wrapper = {
         ctype: CT =>
         let cjType = ctor(ctype)
-        let callbackList = GLOBAL_CALLBACK_MAP.get(callbackType) ?? ArrayList<CallbackObject>()
-        for (caller in callbackList) {
-            (caller as Callback1Argument<T>)?.invoke(None, cjType)
-        }
+        controller.invokeCallback(cjType)
     }
     let registerCall = Callback1Param<CT, Unit>(wrapper)
     registerCall.getID()
@@ -310,17 +293,17 @@ private func argWrapper1<CT, T>(callbackType: BluetoothBleCallbackType, ctor: (C
 private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, callback: CallbackObject,
     ctor: (CT) -> T) where CT <: CType {
     BLUETOOTH_LOG.debug("subscribe ${callbackType}")
-    if (!GLOBAL_REGISTER_MAP[callbackType]) {
-        register(callbackType, argWrapper1<CT, T>(callbackType, ctor))
-        GLOBAL_REGISTER_MAP[callbackType] = true
+    let controller = GLOBAL_CALLBACK_MAP[callbackType]
+    if (!controller.isEnabled()) {
+        register(callbackType, argWrapper1<CT, T>(controller, ctor))
+        controller.enableController()
     } else {
-        if (findCallbackObject(callbackType, callback) >= 0) {
+        if (controller.hasCallback(callback)) {
             BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
             return
         }
     }
-    GLOBAL_CALLBACK_MAP.addIfAbsent(callbackType, ArrayList<CallbackObject>())
-    GLOBAL_CALLBACK_MAP[callbackType].add(callback)
+    controller.addCallback(callback)
 }
 
 /**
@@ -385,13 +368,14 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 ]
 public func off(eventType: BluetoothBleCallbackType, callback!: ?CallbackObject = None): Unit {
     BLUETOOTH_LOG.debug("unsubscribe stateChange")
-    if (!GLOBAL_CALLBACK_MAP.contains(eventType)) {
+    let controller = GLOBAL_CALLBACK_MAP[eventType]
+    if (!controller.isEnabled()) {
         return
     }
     if (let Some(v) <- callback) {
-        findCallbackObject(eventType, v, remove: true)
+        controller.removeCallback(v)
         return
     }
-    GLOBAL_CALLBACK_MAP[eventType].clear()
+    controller.removeAllCallback()
     return
 }
