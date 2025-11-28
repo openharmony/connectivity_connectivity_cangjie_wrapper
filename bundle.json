@@ -12,12 +12,7 @@
     "component": {
         "name": "connectivity_cangjie_wrapper",
         "subsystem": "communication",
-        "syscap": [
-            "SystemCapability.Communication.Bluetooth.Core",
-            "SystemCapability.Communication.WiFi.STA",
-            "SystemCapability.Communication.WiFi.P2P",
-            "SystemCapability.Communication.WiFi.Core"
-        ],
+        "syscap": [],
         "features": [],
         "adapted_system_type": [
             "standard"
