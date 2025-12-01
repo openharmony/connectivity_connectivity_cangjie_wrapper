@@ -461,6 +461,7 @@ class Test_ble {
         try {
             stopBleScanning()
         } catch (e: Exception) {
+            loggerInfo("test_stopBLEScan error ${e}")
             @Expect(false)
         }
     }
