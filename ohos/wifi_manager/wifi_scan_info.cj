@@ -200,13 +200,33 @@ public class WifiScanInfo {
         this.channelWidth = info.channelWidth
         this.centerFrequency0 = info.centerFrequency0
         this.centerFrequency1 = info.centerFrequency1
-        this.infoElems = unsafe {
-            cArr2cjArr<CWifiInfoElem, WifiInfoElement>(info.elemsSize, info.infoElems) {
-                elem => WifiInfoElement(elem)
+        this.infoElems = try {
+            unsafe {
+                cArr2cjArr<CWifiInfoElem, WifiInfoElement>(info.elemsSize, info.infoElems) {
+                    elem => WifiInfoElement(elem)
+                }
             }
+        } catch(e: Exception) {
+            LOGGER.error("infoElems init failed, ${e.message}")
+            Array<WifiInfoElement>()
         }
-        this.ssid = info.ssid.toString()
-        this.bssid = info.bssid.toString()
-        this.capabilities = info.capabilities.toString()
+        this.ssid = try {
+            info.ssid.toString()
+        } catch(e: Exception) {
+            LOGGER.error("ssid init failed, ${e.message}")
+            String.empty
+        }
+        this.bssid = try {
+            info.bssid.toString()
+        } catch(e: Exception) {
+            LOGGER.error("bssid init failed, ${e.message}")
+            String.empty
+        }
+        this.capabilities = try {
+            info.capabilities.toString()
+        } catch(e: Exception) {
+            LOGGER.error("capabilities init failed, ${e.message}")
+            String.empty
+        }
     }
 }

@@ -295,11 +295,14 @@ public enum WifiCategory {
      * @throws { BusinessException } 2501007 - Parameter validation failed.
      */
     static func parse(val: Int32): WifiCategory {
+        if (val <= 0) {
+            throw BusinessException(2501007, "Parameter validation failed.")
+        }
         match (val) {
             case 1 => Default
             case 2 => Wifi6
             case 3 => Wifi6Plus
-            case _ => throw BusinessException(2501007, "Parameter validation failed.")
+            case _ => Wifi6Plus
         }
     }
 }
