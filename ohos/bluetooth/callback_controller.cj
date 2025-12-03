@@ -31,7 +31,7 @@ protected class CallbackController {
     }
 
     protected func isEnabled(): Bool {
-        list.isSome()
+        return list.isSome()
     }
 
     protected func addCallback(callback: CallbackObject): Unit {
