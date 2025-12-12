@@ -16,19 +16,25 @@
 import("//build/ohos.gni")
 import("//build/templates/cangjie/cjc.gni")
 
-ohos_cangjie_shared_library("kit.ConnectivityKit") {
-  sources = [ "index.cj" ]
+ohos_cangjie_shared_library("ohos.bluetooth.access") {
+  sources = [
+    "access.cj",
+    "native.cj",
+    "callback.cj"
+  ]
+
+  external_deps = [ "bluetooth:cj_bluetooth_access_ffi" ]
+
+  cj_external_deps = [
+    "cangjie_ark_interop:ohos.ffi",
+    "cangjie_ark_interop:ohos.labels",
+    "hiviewdfx_cangjie_wrapper:ohos.hilog",
+    "cangjie_ark_interop:ohos.business_exception",
+    "cangjie_ark_interop:ohos.callback_invoke",
+  ]
 
   cj_deps = [
-    "../../ohos/bluetooth/base_profile:ohos.bluetooth.base_profile",
-    "../../ohos/bluetooth/ble:ohos.bluetooth.ble",
-    "../../ohos/bluetooth:ohos.bluetooth",
-    "../../ohos/bluetooth/connection:ohos.bluetooth.connection",
-    "../../ohos/bluetooth/constant:ohos.bluetooth.constant",
-    "../../ohos/bluetooth/hfp:ohos.bluetooth.hfp",
-    "../../ohos/bluetooth/access:ohos.bluetooth.access",
-    "../../ohos/bluetooth/a2dp:ohos.bluetooth.a2dp",
-    "../../ohos/wifi_manager:ohos.wifi_manager",
+    "../:ohos.bluetooth",
   ]
 
   subsystem_name = "communication"

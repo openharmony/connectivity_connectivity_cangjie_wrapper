@@ -15,18 +15,14 @@
 
 // The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
 
-package ohos.bluetooth.connection
+package ohos.bluetooth.access
 
 foreign {
     // global ffi function
-    func FfiBluetoothConSetLocalName(name: CString, errCode: CPointer<Int32>): Unit
+    func FfiBluetoothAccEnableBluetooth(errCode: CPointer<Int32>): Unit
 
-    func FfiBluetoothConGetRemoteDeviceName(deviceId: CString, errCode: CPointer<Int32>): CString
+    func FfiBluetoothAccGetState(errCode: CPointer<Int32>): Int32
 
-    func FfiBluetoothConStartBluetoothDiscovery(errCode: CPointer<Int32>): Unit
-
-    func FfiBluetoothConStopBluetoothDiscovery(errCode: CPointer<Int32>): Unit
-
-    // new on/off
-    func FfiBluetoothConOn(callbackType: Int32, id: Int64, errCode: CPointer<Int32>): Unit
+    //on/off
+    func FfiBluetoothAccOn(callbackType: Int32, id: Int64, errCode: CPointer<Int32>): Unit
 }
