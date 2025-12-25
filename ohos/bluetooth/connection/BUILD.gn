@@ -20,6 +20,7 @@ ohos_cangjie_shared_library("ohos.bluetooth.connection") {
   sources = [
     "connection.cj",
     "native.cj",
+    "callback.cj"
   ]
 
   external_deps = [ "bluetooth:cj_bluetooth_connection_ffi" ]
@@ -28,6 +29,8 @@ ohos_cangjie_shared_library("ohos.bluetooth.connection") {
     "cangjie_ark_interop:ohos.ffi",
     "cangjie_ark_interop:ohos.labels",
     "hiviewdfx_cangjie_wrapper:ohos.hilog",
+    "cangjie_ark_interop:ohos.business_exception",
+    "cangjie_ark_interop:ohos.callback_invoke",
   ]
 
   cj_deps = [

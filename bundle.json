@@ -36,6 +36,7 @@
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/connection:ohos.bluetooth.connection",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/constant:ohos.bluetooth.constant",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/hfp:ohos.bluetooth.hfp",
+                "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/access:ohos.bluetooth.access",
                 "//foundation/communication/connectivity_cangjie_wrapper/ohos/wifi_manager:ohos.wifi_manager",
                 "//foundation/communication/connectivity_cangjie_wrapper/kit/ConnectivityKit:kit.ConnectivityKit"
             ],
