@@ -154,7 +154,7 @@ public class WifiScanInfo {
     ]
     public var supportedWifiCategory: WifiCategory
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var isHiLinkProNetwork: Option<Bool> = None
 
     /**
