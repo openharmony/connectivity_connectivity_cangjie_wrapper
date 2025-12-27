@@ -1425,7 +1425,7 @@ public class BleConnectionChangeState {
     ]
     public var state: ProfileConnectionState
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var reason: Option<GattDisconnectReason> = None
 
     init(
@@ -1680,18 +1680,18 @@ public class GattPermissions {
     }
 }
 
-@!Hide
+@!Hide[isChecked: true]
 enum GattDisconnectReason {
-    @!Hide
+    @!Hide[isChecked: true]
     CONN_TIMEOUT
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CONN_TERMINATE_PEER_USER
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CONN_TERMINATE_LOCAL_HOST
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CONN_UNKNOWN
     | ...
 }

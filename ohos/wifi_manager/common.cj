@@ -272,10 +272,10 @@ public enum WifiCategory {
     ]
     Wifi6Plus
     |
-    @!Hide
+    @!Hide[isChecked: true]
     Wifi7
     |
-    @!Hide
+    @!Hide[isChecked: true]
     Wifi7Plus
     | ...
 
