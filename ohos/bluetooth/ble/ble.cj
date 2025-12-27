@@ -18,9 +18,9 @@
 package ohos.bluetooth.ble
 
 import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg, CallbackController }
-import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
+import ohos.business_exception.BusinessException
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
-import ohos.ffi.{ Callback1Param, SUCCESS_CODE, safeMalloc, cArr2cjArr }
+import ohos.ffi.{ Callback1Param, safeMalloc, cArr2cjArr }
 import ohos.labels.APILevel
 
 import std.collection.HashMap

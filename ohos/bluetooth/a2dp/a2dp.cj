@@ -21,7 +21,7 @@ import ohos.bluetooth.CallbackController
 import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG, OPERATION_FAILED}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
-import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
+import ohos.business_exception.BusinessException
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
 import ohos.labels.{APILevel, Hide}
