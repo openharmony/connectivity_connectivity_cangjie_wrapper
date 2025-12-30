@@ -20,10 +20,10 @@ package ohos.bluetooth.ble
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
 import ohos.bluetooth.{ BLUETOOTH_LOG, getErrorMsg, checkRet, CallbackController }
 import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
-import ohos.ffi.{ SUCCESS_CODE , RemoteDataLite, releaseFFIData, Callback1Param}
+import ohos.ffi.{RemoteDataLite, releaseFFIData, Callback1Param}
 import ohos.labels.APILevel
 
-import std.collection.{ArrayList, HashMap}
+import std.collection.HashMap
 
 /**
  * Manages GATT server. Before calling an Gatt server method, you must use createGattServer to create an GattServer
