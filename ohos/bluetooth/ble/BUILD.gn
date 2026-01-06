@@ -17,14 +17,19 @@ import("//build/ohos.gni")
 import("//build/templates/cangjie/cjc.gni")
 
 ohos_cangjie_shared_library("ohos.bluetooth.ble") {
-  sources = [
-    "ble.cj",
-    "gatt_client_device.cj",
-    "gatt_server.cj",
-    "gatt_util.cj",
-    "native.cj",
-    "util.cj",
-  ]
+  
+  if (is_mingw || is_mac){
+    sources = [ "../../../mock/ohos.bluetooth.ble.cj" ]
+  } else {
+    sources = [
+      "ble.cj",
+      "gatt_client_device.cj",
+      "gatt_server.cj",
+      "gatt_util.cj",
+      "native.cj",
+      "util.cj",
+    ]
+  }
 
   external_deps = [ "bluetooth:cj_bluetooth_ble_ffi" ]
 
