@@ -930,12 +930,18 @@ struct NativeScanResult {
     ) {}
 
     func toObject(): ScanResult {
+        var name: String
+        try {
+            name = deviceName.toString()
+        } catch (_) {
+            name = ""
+        }
         unsafe {
             ScanResult(
                 deviceId.toString(),
                 rssi,
                 cArr2cjArr<UInt8, Byte>(data.size, data.head, {i => i}),
-                deviceName.toString(),
+                name,
                 connectable
             )
         }
