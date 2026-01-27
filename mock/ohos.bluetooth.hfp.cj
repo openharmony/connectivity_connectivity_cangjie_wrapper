@@ -20,34 +20,62 @@ import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.callback_invoke.{CallbackObject, Callback1Argument}
 import ohos.labels.APILevel
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
     return HandsFreeAudioGatewayProfile()
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class HandsFreeAudioGatewayProfile <: BaseProfile {
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func getConnectedDevices(): Array<String> {
         return Array()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func getConnectionState(deviceId: String): ProfileConnectionState {
         return ProfileConnectionState.StateDisconnected
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func off(eventType: ProfileCallbackType): Unit {
         return ()
     }
