@@ -17,33 +17,60 @@ package ohos.bluetooth.constant
 
 import ohos.labels.APILevel
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum ProfileConnectionState {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     StateDisconnected
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     StateConnecting
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     StateConnected
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     StateDisconnecting
     | ...
 }
 
 extend ProfileConnectionState <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend ProfileConnectionState <: Equatable<ProfileConnectionState> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: ProfileConnectionState): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: ProfileConnectionState): Bool {
         return true
     }
