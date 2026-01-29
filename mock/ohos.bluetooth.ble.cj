@@ -20,89 +20,176 @@ import ohos.business_exception.AsyncCallback
 import ohos.callback_invoke.{Callback1Argument, CallbackObject}
 import ohos.labels.APILevel
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public func createGattServer(): GattServer {
     return GattServer()
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
+]
 public func createGattClientDevice(deviceId: String): GattClientDevice {
     return GattClientDevice()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
+]
 public func startBleScanning(filters: Array<ScanFilter>, options!: ?ScanOptions = None): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
+]
 public func stopBleScanning(): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
+]
 public func startAdvertising(setting: AdvertiseSetting, advData: AdvertiseData, advResponse!: ?AdvertiseData = None): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
+]
 public func stopAdvertising(): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
+]
 public func startAdvertising(advertisingParams: AdvertisingParams): UInt32 {
     return 0
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true,
+    workerthread: true
+]
 public func stopAdvertising(advertisingId: UInt32): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<AdvertisingStateChangeInfo>): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<Array<ScanResult>>): Unit {
     return ()
 }
 
-@!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    permission: "ohos.permission.ACCESS_BLUETOOTH",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public func off(eventType: BluetoothBleCallbackType, callback!: ?CallbackObject = None): Unit {
     return ()
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class GattClientDevice {
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func connect(): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func disconnect(): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func close(): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true,
+        workerthread: true
+    ]
     public func getDeviceName(): String {
         return String()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func getServices(callback: AsyncCallback<Array<GattService>>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func readCharacteristicValue(
         characteristic: BleCharacteristic,
         callback: AsyncCallback<BleCharacteristic>
@@ -110,50 +197,94 @@ public class GattClientDevice {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func readDescriptorValue(descriptor: BleDescriptor, callback: AsyncCallback<BleDescriptor>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func writeCharacteristicValue(characteristic: BleCharacteristic, writeType: GattWriteType,
         callback: AsyncCallback<Unit>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func writeDescriptorValue(descriptor: BleDescriptor, callback: AsyncCallback<Unit>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func getRssiValue(callback: AsyncCallback<Int32>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func setBleMtuSize(mtu: Int32): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func setCharacteristicChangeNotification(characteristic: BleCharacteristic, enable: Bool,
         callback: AsyncCallback<Unit>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func setCharacteristicChangeIndication(characteristic: BleCharacteristic, enable: Bool,
         callback: AsyncCallback<Unit>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<BleCharacteristic>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func on(
         eventType: BluetoothBleGattClientDeviceCallbackType,
         callback: Callback1Argument<BleConnectionChangeState>
@@ -161,12 +292,20 @@ public class GattClientDevice {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func on(eventType: BluetoothBleGattClientDeviceCallbackType, callback: Callback1Argument<Int32>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func off(eventType: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
         return ()
     }
@@ -176,65 +315,127 @@ public class GattClientDevice {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class GattServer {
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func addService(service: GattService): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func removeService(serviceUUID: String): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func close(): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true, workerthread: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true,
+        workerthread: true
+    ]
     public func notifyCharacteristicChanged(deviceId: String, notifyCharacteristic: NotifyCharacteristic): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func sendResponse(serverResponse: ServerResponse): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<CharacteristicReadRequest>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType,
         callback: Callback1Argument<CharacteristicWriteRequest>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<DescriptorReadRequest>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<DescriptorWriteRequest>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<BleConnectionChangeState>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func on(eventType: BluetoothBleGattServerCallbackType, callback: Callback1Argument<Int32>): Unit {
         return ()
     }
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func off(eventType: BluetoothBleGattServerCallbackType, callback!: ?CallbackObject = None): Unit {
         return ()
     }
@@ -244,21 +445,39 @@ public class GattServer {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class GattService {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var isPrimary: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristics: Array<BleCharacteristic>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var includeServices: Array<GattService>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUID: String,
         isPrimary: Bool,
@@ -273,24 +492,45 @@ public class GattService {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class BleCharacteristic {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicValue: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var descriptors: Array<BleDescriptor>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var properties: GattProperties
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUID: String,
         characteristicUUID: String,
@@ -318,21 +558,39 @@ public class BleCharacteristic {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class BleDescriptor {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var descriptorUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var descriptorValue: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUID: String,
         characteristicUUID: String,
@@ -349,24 +607,45 @@ public class BleDescriptor {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class GattProperties {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var write: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var writeNoResponse: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var read: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var notify: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var indicate: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         write!: Bool = true,
         writeNoResponse!: Bool = true,
@@ -386,21 +665,39 @@ public class GattProperties {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class NotifyCharacteristic {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicValue: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var confirm: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUID: String,
         characteristicUUID: String,
@@ -415,24 +712,45 @@ public class NotifyCharacteristic {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ServerResponse {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var transId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var status: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var offset: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var value: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         deviceId: String,
         transId: Int32,
@@ -449,49 +767,86 @@ public class ServerResponse {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum GattWriteType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Write
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     WriteNoResponse
     | ...
 }
 
 extend GattWriteType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend GattWriteType <: Equatable<GattWriteType> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: GattWriteType): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: GattWriteType): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class CharacteristicReadRequest {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var transId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var offset: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
     
     public init() {
@@ -504,30 +859,57 @@ public class CharacteristicReadRequest {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class CharacteristicWriteRequest {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var transId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var offset: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var isPrepared: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var needRsp: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var value: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
     
     public init() {
@@ -543,24 +925,45 @@ public class CharacteristicWriteRequest {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class DescriptorReadRequest {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var transId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var offset: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var descriptorUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
     
     public init() {
@@ -574,33 +977,63 @@ public class DescriptorReadRequest {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class DescriptorWriteRequest {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var transId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var offset: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var isPrepared: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var needRsp: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var value: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var descriptorUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var characteristicUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
     
     public init() {
@@ -617,12 +1050,21 @@ public class DescriptorWriteRequest {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class BleConnectionChangeState {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var state: ProfileConnectionState
     
     public init() {
@@ -632,113 +1074,207 @@ public class BleConnectionChangeState {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum BluetoothBleGattServerCallbackType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     CharacteristicRead
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     CharacteristicWrite
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     DescriptorRead
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     DescriptorWrite
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectionStateChange
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ServerBleMtuChange
     | ...
 }
 
 extend BluetoothBleGattServerCallbackType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend BluetoothBleGattServerCallbackType <: Hashable {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func hashCode(): Int64 {
         return 0
     }
 }
 
 extend BluetoothBleGattServerCallbackType <: Equatable<BluetoothBleGattServerCallbackType> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: BluetoothBleGattServerCallbackType): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: BluetoothBleGattServerCallbackType): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum BluetoothBleGattClientDeviceCallbackType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     BleCharacteristicChange
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     BleConnectionStateChange
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ClientBleMtuChange
     | ...
 }
 
 extend BluetoothBleGattClientDeviceCallbackType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend BluetoothBleGattClientDeviceCallbackType <: Hashable {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func hashCode(): Int64 {
         return 0
     }
 }
 
 extend BluetoothBleGattClientDeviceCallbackType <: Equatable<BluetoothBleGattClientDeviceCallbackType> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: BluetoothBleGattClientDeviceCallbackType): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: BluetoothBleGattClientDeviceCallbackType): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class GattPermissions {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var read: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var readEncrypted: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var readEncryptedMitm: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var write: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var writeEncrypted: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var writeEncryptedMitm: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var writeSigned: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var writeSignedMitm: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         read!: Bool = true,
         readEncrypted!: Bool = false,
@@ -762,12 +1298,18 @@ public class GattPermissions {
 }
 
 extend GattPermissions <: Equatable<GattPermissions> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: GattPermissions): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: GattPermissions): Bool {
         return true
     }
@@ -775,42 +1317,81 @@ extend GattPermissions <: Equatable<GattPermissions> {
 
 extend GattPermissions {}
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ScanFilter {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var name: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUIDMask: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceSolicitationUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceSolicitationUUIDMask: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceData: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceDataMask: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureId: UInt16
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureData: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureDataMask: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         deviceId!: String = "",
         name!: String = "",
@@ -839,21 +1420,39 @@ public class ScanFilter {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ScanOptions {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var interval: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var dutyMode: ScanDuty
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var matchMode: MatchMode
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var phyType: PhyType
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         interval!: Int32 = 0,
         dutyMode!: ScanDuty = ScanModeLowPower,
@@ -869,18 +1468,33 @@ public class ScanOptions {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class AdvertiseSetting {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var interval: UInt16
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var txPower: Int8
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var connectable: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(interval!: UInt16 = 1600, txPower!: Int8 = -7,
         connectable!: Bool = true) {
         super()
@@ -890,21 +1504,39 @@ public class AdvertiseSetting {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class AdvertiseData {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUIDs: Array<String>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureData: Array<ManufactureData>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceData: Array<ServiceData>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var includeDeviceName: Bool
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUIDs: Array<String>,
         manufactureData: Array<ManufactureData>,
@@ -920,15 +1552,27 @@ public class AdvertiseData {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ManufactureData {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureId: UInt16
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var manufactureValue: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         manufactureId: UInt16,
         manufactureValue: Array<Byte>
@@ -939,15 +1583,27 @@ public class ManufactureData {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ServiceData {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceUUID: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var serviceValue: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         serviceUUID: String,
         serviceValue: Array<Byte>
@@ -958,21 +1614,39 @@ public class ServiceData {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class AdvertisingParams {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var advertisingSettings: AdvertiseSetting
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var advertisingData: AdvertiseData
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var advertisingResponse: AdvertiseData
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var duration: UInt16
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public init(
         advertisingSettings: AdvertiseSetting,
         advertisingData: AdvertiseData,
@@ -1003,12 +1677,21 @@ public class AdvertisingParams {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class AdvertisingStateChangeInfo {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var advertisingId: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var state: AdvertisingState
     
     public init() {
@@ -1018,21 +1701,39 @@ public class AdvertisingStateChangeInfo {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class ScanResult {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var rssi: Int32
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var data: Array<Byte>
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceName: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var connectable: Bool
     
     public init() {
@@ -1045,186 +1746,323 @@ public class ScanResult {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum ScanDuty {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ScanModeLowPower
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ScanModeBalanced
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ScanModeLowLatency
     | ...
 }
 
 extend ScanDuty <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend ScanDuty <: Equatable<ScanDuty> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: ScanDuty): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: ScanDuty): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum MatchMode {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     MatchModeAggressive
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     MatchModeSticky
     | ...
 }
 
 extend MatchMode <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend MatchMode <: Equatable<MatchMode> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: MatchMode): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: MatchMode): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum AdvertisingState {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Started
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Enabled
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Disabled
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Stopped
     | ...
 }
 
 extend AdvertisingState <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend AdvertisingState <: Equatable<AdvertisingState> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: AdvertisingState): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: AdvertisingState): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum PhyType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     PhyLe1M
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     PhyLeAllSupported
     | ...
 }
 
 extend PhyType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend PhyType <: Equatable<PhyType> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: PhyType): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: PhyType): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum BluetoothBleCallbackType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     AdvertisingStateChange
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     BleDeviceFind
     | ...
 }
 
 extend BluetoothBleCallbackType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend BluetoothBleCallbackType <: Hashable {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func hashCode(): Int64 {
         return 0
     }
 }
 
 extend BluetoothBleCallbackType <: Equatable<BluetoothBleCallbackType> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: BluetoothBleCallbackType): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: BluetoothBleCallbackType): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum ScanReportMode {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Normal
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     Batch
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     FenceSensitivityLow
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     FenceSensitivityHigh
     | ...
 }
 
 extend ScanReportMode <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend ScanReportMode <: Equatable<ScanReportMode> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: ScanReportMode): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: ScanReportMode): Bool {
         return true
     }

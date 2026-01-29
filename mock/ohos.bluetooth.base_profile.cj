@@ -19,51 +19,98 @@ import ohos.bluetooth.constant.ProfileConnectionState
 import ohos.callback_invoke.{CallbackObject, Callback1Argument}
 import ohos.labels.APILevel
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum DisconnectCause {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     UserDisconnect
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectShouldFromKeyboard
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectShouldFromMouse
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectShouldFromCar
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     TooManyConnectedDevices
-    | @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    |
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectInternalFail
     | ...
 }
 
 extend DisconnectCause <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
 }
 
 extend DisconnectCause <: Equatable<DisconnectCause> {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func ==(other: DisconnectCause): Bool {
         return true
     }
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public operator func !=(other: DisconnectCause): Bool {
         return true
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public class StateChangeParam {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var deviceId: String
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var state: ProfileConnectionState
 
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public var cause: DisconnectCause
     
     public init() {
@@ -74,32 +121,66 @@ public class StateChangeParam {
     }
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public interface BaseProfile {
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     func getConnectedDevices(): Array<String>
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core", throwexception: true]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core",
+        throwexception: true
+    ]
     func getConnectionState(deviceId: String): ProfileConnectionState
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     func off(eventType: ProfileCallbackType, callback: CallbackObject): Unit
 
-    @!APILevel[since: "22", permission: "ohos.permission.ACCESS_BLUETOOTH", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        permission: "ohos.permission.ACCESS_BLUETOOTH",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     func off(eventType: ProfileCallbackType): Unit
 }
 
-@!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+@!APILevel[
+    since: "22",
+    syscap: "SystemCapability.Communication.Bluetooth.Core"
+]
 public enum ProfileCallbackType {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     ConnectionStateChange | ...
 }
 
 extend ProfileCallbackType <: ToString {
-    @!APILevel[since: "22", syscap: "SystemCapability.Communication.Bluetooth.Core"]
+    @!APILevel[
+        since: "22",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
     public func toString(): String {
         return String()
     }
