@@ -17,11 +17,11 @@
 
 package ohos.bluetooth.access
 
-import std.collection.{ArrayList, HashMap}
+import std.collection.HashMap
 import ohos.bluetooth.{BLUETOOTH_LOG, OPERATION_FAILED, getErrorMsg}
 import ohos.business_exception.BusinessException
 import ohos.ffi.{Callback1Param, SUCCESS_CODE}
-import ohos.callback_invoke.{CallbackObject, Callback1Argument}
+import ohos.callback_invoke.{Callback1Argument, CallbackList}
 import ohos.labels.APILevel
 import std.deriving.Derive
 
@@ -37,6 +37,8 @@ let BLUETOOTH_STATE_MAP = HashMap<Int32, BluetoothState>(
         (6, StateBleTurningOn)
     ]
 )
+private let GLOBAL_CALLBACK_MAP = HashMap<Int32, CallbackList>(
+    [(REGISTER_STATE_CHANGE_TYPE, CallbackList())])
 
 /**
  * The enum of bluetooth state.
@@ -116,16 +118,11 @@ public enum BluetoothState {
     }
 }
 
-private var registerState = false
-private let CALLBACK_LIST = ArrayList<CallbackObject>()
-
-private func argWrapper1<CT, T>(ctor: (CT) -> T): Int64 where CT <: CType {
+private func argWrapper1<CT, T>(callbackList: CallbackList, ctor: (CT) -> T): Int64 where CT <: CType {
     let wrapper = {
         ctype: CT =>
         let cjType = ctor(ctype)
-        for (caller in CALLBACK_LIST) {
-            (caller as Callback1Argument<T>)?.invoke(None, cjType)
-        }
+        callbackList.invokeCallback(cjType)
     }
     let registerCall = Callback1Param<CT, Unit>(wrapper)
     registerCall.getID()
@@ -145,26 +142,23 @@ private func argWrapper1<CT, T>(ctor: (CT) -> T): Int64 where CT <: CType {
 ]
 public func onStateChange(callback: Callback1Argument<BluetoothState>): Unit {
     BLUETOOTH_LOG.debug("subscribe StateChange callback")
-    if (!registerState) {
-        var errorCode: Int32 = 0
-        let id = argWrapper1({state: Int32 => BluetoothState.parse(state)})
-        unsafe {
-            FfiBluetoothAccOn(REGISTER_STATE_CHANGE_TYPE, id, inout errorCode)
-        }
-        if (errorCode != SUCCESS_CODE) {
-            throw BusinessException(errorCode, getErrorMsg(errorCode))
-        }
-        registerState = true
-    } else {
-        for (idx in 0..CALLBACK_LIST.size) {
-            if (refEq(callback, CALLBACK_LIST[idx])) {
-                BLUETOOTH_LOG.info("The stateChange callback is registered, no need to re-registered")
-                return
+    let callbackList = GLOBAL_CALLBACK_MAP[REGISTER_STATE_CHANGE_TYPE]
+    callbackList.addCallback(
+        callback,
+        onInitialize: { =>
+            var errorCode: Int32 = 0
+            let id = argWrapper1(callbackList, {state: Int32 => BluetoothState.parse(state)})
+            unsafe {
+                FfiBluetoothAccOn(REGISTER_STATE_CHANGE_TYPE, id, inout errorCode)
             }
+            if (errorCode != SUCCESS_CODE) {
+                throw BusinessException(errorCode, getErrorMsg(errorCode))
+            }
+        },
+        onFailed: { =>
+            BLUETOOTH_LOG.warn("The stateChange callback is registered, no need to re-registered.")
         }
-    }
-    CALLBACK_LIST.add(callback)
-    return
+    )
 }
 
 /**
@@ -180,14 +174,17 @@ public func onStateChange(callback: Callback1Argument<BluetoothState>): Unit {
     throwexception: true
 ]
 public func offStateChange(callback!: ?Callback1Argument<BluetoothState> = None): Unit {
-    BLUETOOTH_LOG.debug("unsubscribe StateChange stateChange")
+    BLUETOOTH_LOG.debug("unsubscribe stateChange")
+    let callbackList = GLOBAL_CALLBACK_MAP[REGISTER_STATE_CHANGE_TYPE]
     if (let Some(v) <- callback) {
-        for (idx in 0..CALLBACK_LIST.size) {
-            if (refEq(v, CALLBACK_LIST[idx])) {
-                CALLBACK_LIST.remove(at: idx)
+        callbackList.removeCallback(
+            v,
+            onFailed: {
+                => BLUETOOTH_LOG.warn("The connectionStateChange callback has not been registered.")
             }
-        }
+        )
+        return
     }
-    CALLBACK_LIST.clear()
+    callbackList.removeAllCallback()
     return
 }
