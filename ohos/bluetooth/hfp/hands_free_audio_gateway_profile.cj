@@ -17,9 +17,8 @@
 
 package ohos.bluetooth.hfp
 
-import ohos.bluetooth.CallbackController
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
-import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
+import ohos.callback_invoke.{ CallbackObject, Callback1Argument, CallbackList }
 import ohos.bluetooth.{checkRet, BLUETOOTH_LOG, getErrorMsg}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
@@ -55,7 +54,7 @@ public func createHfpAgProfile(): HandsFreeAudioGatewayProfile {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class HandsFreeAudioGatewayProfile <: BaseProfile {
-    private let controller = CallbackController()
+    private let callbackList = CallbackList()
 
     protected init() {}
 
@@ -63,7 +62,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            controller.invokeCallback(cjType)
+            callbackList.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -141,22 +140,20 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
     ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
-        if (!controller.isEnabled()) {
-            var errorCode: Int32 = 0
-            let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
-            unsafe {
-                FfiBluetoothHfpOn(eventType.getValue(), id, inout errorCode)
+        callbackList.addCallback(
+            callback,
+            onInitialize: { =>
+                var errorCode: Int32 = 0
+                let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
+                unsafe {
+                    FfiBluetoothHfpOn(eventType.getValue(), id, inout errorCode)
+                }
+                checkRet(errorCode)
+            },
+            onFailed: { =>
+                BLUETOOTH_LOG.warn("The connectionStateChange callback is registered, no need to re-registered.")
             }
-            checkRet(errorCode)
-            controller.enableController()
-        } else {
-            if (controller.hasCallback(callback)) {
-                BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
-                return
-            }
-        }
-        controller.addCallback(callback)
-        return
+        )
     }
 
     /**
@@ -174,12 +171,12 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
         if (eventType != ConnectionStateChange) {
             throw BusinessException(401, "Parameter error.")
         }
-        BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
-        if (!controller.isEnabled()) {
-            return
-        }
-        controller.removeCallback(callback)
-        return
+        callbackList.removeCallback(
+            callback,
+            onFailed: {
+                => BLUETOOTH_LOG.warn("The connectionStateChange callback has not been registered.")
+            }
+        )
     }
 
     /**
@@ -198,7 +195,7 @@ public class HandsFreeAudioGatewayProfile <: BaseProfile {
             throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
         }
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
-        controller.removeAllCallback()
+        callbackList.removeAllCallback()
         return
     }
 }
