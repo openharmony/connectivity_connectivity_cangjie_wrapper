@@ -17,9 +17,9 @@
 
 package ohos.bluetooth.ble
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg, OPERATION_FAILED, CallbackController }
+import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg, OPERATION_FAILED }
 import ohos.business_exception.{ BusinessException, AsyncCallback, ERR_PARAMETER_ERROR }
-import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
+import ohos.callback_invoke.{ CallbackObject, Callback1Argument, CallbackList }
 import ohos.ffi.{ Callback1Param, RemoteDataLite, RetDataI32, SUCCESS_CODE, cArr2cjArr, releaseFFIData }
 import ohos.labels.APILevel
 
@@ -34,11 +34,11 @@ import std.collection.HashMap
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class GattClientDevice <: RemoteDataLite {
-    private let callbackMap = HashMap<BluetoothBleGattClientDeviceCallbackType, CallbackController>(
+    private let callbackMap = HashMap<BluetoothBleGattClientDeviceCallbackType, CallbackList>(
         [
-            (BleCharacteristicChange, CallbackController()),
-            (BleConnectionStateChange, CallbackController()),
-            (ClientBleMtuChange, CallbackController())
+            (BleCharacteristicChange, CallbackList()),
+            (BleConnectionStateChange, CallbackList()),
+            (ClientBleMtuChange, CallbackList())
         ]
     )
 
@@ -587,23 +587,25 @@ public class GattClientDevice <: RemoteDataLite {
     ]
     public func off(eventType: BluetoothBleGattClientDeviceCallbackType, callback!: ?CallbackObject = None): Unit {
         BLUETOOTH_LOG.debug("unsubscribe ${eventType}")
-        let controller = callbackMap[eventType]
-        if (!controller.isEnabled()) {
-            return
-        }
+        let callbackList = callbackMap[eventType]
         if (let Some(v) <- callback) {
-            controller.removeCallback(v)
+            callbackList.removeCallback(
+                v,
+                onFailed: {
+                    => BLUETOOTH_LOG.warn("The ${eventType} callback has not been registered.")
+                }
+            )
             return
         }
-        controller.removeAllCallback()
+        callbackList.removeAllCallback()
         return
     }
 
-    private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T): Int64 where CT <: CType {
+    private func argWrapper1<CT, T>(callbackList: CallbackList, ctor: (CT) -> T): Int64 where CT <: CType {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            controller.invokeCallback(cjType)
+            callbackList.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -620,16 +622,15 @@ public class GattClientDevice <: RemoteDataLite {
     private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleGattClientDeviceCallbackType,
         callback: CallbackObject, ctor: (CT) -> T) where CT <: CType {
         BLUETOOTH_LOG.debug("subscribe ${callbackType}")
-        let controller = callbackMap[callbackType]
-        if (!controller.isEnabled()) {
-            register(callbackType, argWrapper1<CT, T>(controller, ctor))
-            controller.enableController()
-        } else {
-            if (controller.hasCallback(callback)) {
-            BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
-            return
-        }
-        }
-        controller.addCallback(callback)
+        let callbackList = callbackMap[callbackType]
+        callbackList.addCallback(
+            callback,
+            onInitialize: { =>
+                register(callbackType, argWrapper1<CT, T>(callbackList, ctor))
+            },
+            onFailed: { =>
+                BLUETOOTH_LOG.warn("The ${callbackType} callback is registered, no need to re-registered.")
+            }
+        )
     }
 }
