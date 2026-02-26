@@ -17,7 +17,12 @@ import("//build/ohos.gni")
 import("//build/templates/cangjie/cjc.gni")
 
 ohos_cangjie_shared_library("ohos.bluetooth.base_profile") {
-  sources = [ "base_profile.cj" ]
+  
+  if (is_mingw || is_mac){
+    sources = [ "../../../mock/ohos.bluetooth.base_profile.cj" ]
+  } else {
+    sources = [ "base_profile.cj" ]
+  }
 
   external_deps = []
 

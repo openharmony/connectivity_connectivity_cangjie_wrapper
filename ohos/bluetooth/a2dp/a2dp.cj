@@ -17,11 +17,12 @@
 
 package ohos.bluetooth.a2dp
 
+import ohos.bluetooth.CallbackController
 import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG, OPERATION_FAILED}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
-import ohos.business_exception.{BusinessException}
-import ohos.callback_invoke.{CallbackObject, Callback1Argument, CallbackList}
+import ohos.business_exception.BusinessException
+import ohos.callback_invoke.{ CallbackObject, Callback1Argument }
 import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
 import ohos.labels.{APILevel, Hide}
 
@@ -48,7 +49,7 @@ public func createA2dpSrcProfile(): A2dpSourceProfile {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class A2dpSourceProfile <: BaseProfile {
-    private let callbackList = CallbackList()
+    private let controller = CallbackController()
 
     protected init() {}
 
@@ -56,7 +57,7 @@ public class A2dpSourceProfile <: BaseProfile {
         let wrapper = {
             ctype: CT =>
             let cjType = ctor(ctype)
-            callbackList.invokeCallback(cjType)
+            controller.invokeCallback(cjType)
         }
         let registerCall = Callback1Param<CT, Unit>(wrapper)
         registerCall.getID()
@@ -172,22 +173,24 @@ public class A2dpSourceProfile <: BaseProfile {
     ]
     public func on(eventType: ProfileCallbackType, callback: Callback1Argument<StateChangeParam>): Unit {
         BLUETOOTH_LOG.debug("subscribe connectionStateChange")
-        callbackList.addCallback(
-            callback,
-            onInitialize: { =>
-                var errorCode: Int32 = 0
-                let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
-                unsafe {
-                    FfiBluetoothA2dpOn(eventType.getValue(), id, inout errorCode)
-                }
-                if (errorCode != SUCCESS_CODE) {
-                    throw BusinessException(errorCode, getErrorMsg(errorCode))
-                }
-            },
-            onFailed: { =>
-                BLUETOOTH_LOG.warn("The connectionStateChange callback is registered, no need to re-registered.")
+        if (!controller.isEnabled()) {
+            var errorCode: Int32 = 0
+            let id = argWrapper1({param: NativeStateChangeParam => param.toObject()})
+            unsafe {
+                FfiBluetoothA2dpOn(eventType.getValue(), id, inout errorCode)
             }
-        )
+            if (errorCode != SUCCESS_CODE) {
+                throw BusinessException(errorCode, getErrorMsg(errorCode))
+            }
+            controller.enableController()
+        } else {
+            if (controller.hasCallback(callback)) {
+                BLUETOOTH_LOG.info("The connectionStateChange callback is registered, no need to re-registered")
+                return
+            }
+        }
+        controller.addCallback(callback)
+        return
     }
 
     /**
@@ -206,12 +209,11 @@ public class A2dpSourceProfile <: BaseProfile {
             throw BusinessException(401, "Parameter error.")
         }
         BLUETOOTH_LOG.debug("unsubscribe ${eventType} connectionStateChange")
-        callbackList.removeCallback(
-            callback,
-            onFailed: {
-                => BLUETOOTH_LOG.warn("The connectionStateChange callback has not been registered.")
-            }
-        )
+        if (!controller.isEnabled()) {
+            return
+        }
+        controller.removeCallback(callback)
+        return
     }
 
     /**
@@ -229,7 +231,7 @@ public class A2dpSourceProfile <: BaseProfile {
             throw BusinessException(401, "Parameter error.")
         }
         BLUETOOTH_LOG.debug("unsubscribe connectionStateChange")
-        callbackList.removeAllCallback()
+        controller.removeAllCallback()
         return
     }
 }
@@ -318,10 +320,10 @@ public class CodecInfo {
     ]
     public var codecSampleRate: CodecSampleRate
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var codecBitRate: CodecBitRate = CodecBitRate.CodecBitRateAbr
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var codecFrameLength: CodecFrameLength = CodecFrameLength.CodecFrameLength10ms
 
     init(
@@ -382,10 +384,10 @@ public enum CodecType {
     ]
     CodecTypeL2hc
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CodecTypeL2hcst
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CodecTypeLdac
     | ...
 }
@@ -549,60 +551,60 @@ public enum CodecSampleRate {
     | ...
 }
 
-@!Hide
+@!Hide[isChecked: true]
 enum CodecBitRate {
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate96000
     |
 
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate128000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate192000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate256000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate320000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate480000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate640000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate960000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRateAbr
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate1500000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate2300000
     | ...
 }
 
-@!Hide
+@!Hide[isChecked: true]
 enum CodecFrameLength {
-    @!Hide
+    @!Hide[isChecked: true]
     CodecFrameLength5ms
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecFrameLength10ms
     | ...
 }
