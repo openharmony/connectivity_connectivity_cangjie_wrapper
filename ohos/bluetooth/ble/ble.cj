@@ -17,9 +17,9 @@
 
 package ohos.bluetooth.ble
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg, CallbackController }
+import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
 import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
-import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
+import ohos.callback_invoke.{ Callback1Argument, CallbackObject, CallbackList }
 import ohos.ffi.{ Callback1Param, SUCCESS_CODE, safeMalloc, cArr2cjArr }
 import ohos.labels.APILevel
 
@@ -269,8 +269,8 @@ public func stopAdvertising(advertisingId: UInt32): Unit {
     checkRet(errorCode)
 }
 
-private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothBleCallbackType, CallbackController>(
-    [(AdvertisingStateChange, CallbackController()), (BleDeviceFind, CallbackController())])
+private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothBleCallbackType, CallbackList>(
+    [(AdvertisingStateChange, CallbackList()), (BleDeviceFind, CallbackList())])
 
 private func register(callbackType: BluetoothBleCallbackType, id: Int64) {
     var errorCode: Int32 = 0
@@ -280,11 +280,11 @@ private func register(callbackType: BluetoothBleCallbackType, id: Int64) {
     checkRet(errorCode)
 }
 
-private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T): Int64 where CT <: CType {
+private func argWrapper1<CT, T>(callbackList: CallbackList, ctor: (CT) -> T): Int64 where CT <: CType {
     let wrapper = {
         ctype: CT =>
         let cjType = ctor(ctype)
-        controller.invokeCallback(cjType)
+        callbackList.invokeCallback(cjType)
     }
     let registerCall = Callback1Param<CT, Unit>(wrapper)
     registerCall.getID()
@@ -293,17 +293,16 @@ private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T)
 private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothBleCallbackType, callback: CallbackObject,
     ctor: (CT) -> T) where CT <: CType {
     BLUETOOTH_LOG.debug("subscribe ${callbackType}")
-    let controller = GLOBAL_CALLBACK_MAP[callbackType]
-    if (!controller.isEnabled()) {
-        register(callbackType, argWrapper1<CT, T>(controller, ctor))
-        controller.enableController()
-    } else {
-        if (controller.hasCallback(callback)) {
-            BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
-            return
+    let callbackList = GLOBAL_CALLBACK_MAP[callbackType]
+    callbackList.addCallback(
+        callback,
+        onInitialize: { =>
+            register(callbackType, argWrapper1<CT, T>(callbackList, ctor))
+        },
+        onFailed: { =>
+            BLUETOOTH_LOG.warn("The ${callbackType} callback is registered, no need to re-registered.")
         }
-    }
-    controller.addCallback(callback)
+    )
 }
 
 /**
@@ -368,14 +367,16 @@ public func on(eventType: BluetoothBleCallbackType, callback: Callback1Argument<
 ]
 public func off(eventType: BluetoothBleCallbackType, callback!: ?CallbackObject = None): Unit {
     BLUETOOTH_LOG.debug("unsubscribe stateChange")
-    let controller = GLOBAL_CALLBACK_MAP[eventType]
-    if (!controller.isEnabled()) {
-        return
-    }
+    let callbackList = GLOBAL_CALLBACK_MAP[eventType]
     if (let Some(v) <- callback) {
-        controller.removeCallback(v)
+        callbackList.removeCallback(
+            v,
+            onFailed: {
+                => BLUETOOTH_LOG.warn("The ${eventType} callback has not been registered.")
+            }
+        )
         return
     }
-    controller.removeAllCallback()
+    callbackList.removeAllCallback()
     return
 }

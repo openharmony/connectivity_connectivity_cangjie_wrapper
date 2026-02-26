@@ -25,3 +25,4 @@ public import ohos.bluetooth.connection.*
 public import ohos.wifi_manager.*
 public import ohos.bluetooth.a2dp.*
 public import ohos.bluetooth.hfp.*
+public import ohos.bluetooth.access.*
