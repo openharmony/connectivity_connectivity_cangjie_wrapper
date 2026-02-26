@@ -17,11 +17,11 @@
 
 package ohos.bluetooth.connection
 
-import std.collection.HashMap
+import std.collection.{ArrayList, HashMap}
 import ohos.business_exception.BusinessException
-import ohos.callback_invoke.{CallbackObject, Callback1Argument, CallbackList}
-import ohos.bluetooth.{BLUETOOTH_LOG, OPERATION_FAILED, getErrorMsg, checkRet}
-import ohos.ffi.{CArrString, Callback1Param}
+import ohos.callback_invoke.{CallbackObject, Callback1Argument}
+import ohos.bluetooth.{BLUETOOTH_LOG, OPERATION_FAILED, getErrorMsg}
+import ohos.ffi.{CArrString, Callback1Param, SUCCESS_CODE}
 import ohos.labels.APILevel
 import std.deriving.Derive
 
@@ -38,40 +38,64 @@ enum BluetoothConnectionCallbackType {
     }
 }
 
-private let GLOBAL_CALLBACK_MAP = HashMap<BluetoothConnectionCallbackType, CallbackList>(
-    [(BlueToothDeviceFind, CallbackList())])
+private let CALLBACK_MAP = HashMap<BluetoothConnectionCallbackType, ArrayList<CallbackObject>>()
+private let REGISTER_MAP = HashMap<BluetoothConnectionCallbackType, Bool>(
+    [
+        (BlueToothDeviceFind, false)
+    ]
+)
 
 private func register(callbackType: BluetoothConnectionCallbackType, id: Int64) {
     var errorCode: Int32 = 0
     unsafe {
         FfiBluetoothConOn(callbackType.getValue(), id, inout errorCode)
     }
-    checkRet(errorCode)
+    if (errorCode != SUCCESS_CODE) {
+        throw BusinessException(errorCode, getErrorMsg(errorCode))
+    }
+}
+
+private func argWrapper1<CT, T>(callbackType: BluetoothConnectionCallbackType, ctor: (CT) -> T): Int64 where CT <: CType {
+    let wrapper = {
+        ctype: CT =>
+        let cjType = ctor(ctype)
+        let callbackList = CALLBACK_MAP.get(callbackType) ?? ArrayList<CallbackObject>()
+        for (caller in callbackList) {
+            (caller as Callback1Argument<T>)?.invoke(None, cjType)
+        }
+    }
+    let registerCall = Callback1Param<CT, Unit>(wrapper)
+    registerCall.getID()
+}
+
+private func findCallbackObject(callbackType: BluetoothConnectionCallbackType, callback: CallbackObject,
+    remove!: Bool = false): Int64 {
+    let callbackList = CALLBACK_MAP.get(callbackType) ?? return -1
+    for (idx in 0..callbackList.size) {
+        if (refEq(callback, callbackList[idx])) {
+            if (remove) {
+                callbackList.remove(at: idx)
+            }
+            return idx
+        }
+    }
+    return -1
 }
 
 private func commonSubscribe1Arg<CT, T>(callbackType: BluetoothConnectionCallbackType, callback: CallbackObject,
     ctor: (CT) -> T) where CT <: CType {
     BLUETOOTH_LOG.debug("subscribe ${callbackType}")
-    let callbackList = GLOBAL_CALLBACK_MAP[callbackType]
-    callbackList.addCallback(
-        callback,
-        onInitialize: { =>
-            register(callbackType, argWrapper1<CT, T>(callbackList, ctor))
-        },
-        onFailed: { =>
-            BLUETOOTH_LOG.warn("The ${callbackType} callback is registered, no need to re-registered.")
+    if (!REGISTER_MAP[callbackType]) {
+        register(callbackType, argWrapper1<CT, T>(callbackType, ctor))
+        REGISTER_MAP[callbackType] = true
+    } else {
+        if (findCallbackObject(callbackType, callback) >= 0) {
+            BLUETOOTH_LOG.info("The ${callbackType} callback is registered, no need to re-registered")
+            return
         }
-    )
-}
-
-private func argWrapper1<CT, T>(callbackList: CallbackList, ctor: (CT) -> T): Int64 where CT <: CType {
-    let wrapper = {
-        ctype: CT =>
-        let cjType = ctor(ctype)
-        callbackList.invokeCallback(cjType)
     }
-    let registerCall = Callback1Param<CT, Unit>(wrapper)
-    registerCall.getID()
+    CALLBACK_MAP.addIfAbsent(callbackType, ArrayList<CallbackObject>())
+    CALLBACK_MAP[callbackType].add(callback)
 }
 
 protected unsafe func cArrString2ArrString(cArr: CArrString): Array<String> {
@@ -107,10 +131,12 @@ protected unsafe func cArrString2ArrString(cArr: CArrString): Array<String> {
     throwexception: true
 ]
 public func onBluetoothDeviceFind(callback: Callback1Argument<Array<String>>): Unit {
-    BLUETOOTH_LOG.debug("subscribe BluetoothDeviceFind callback")
-    commonSubscribe1Arg<CArrString, Array<String>>(BlueToothDeviceFind, callback) {
-        devices: CArrString => unsafe { cArrString2ArrString(devices) }
+    unsafe {
+        commonSubscribe1Arg(BlueToothDeviceFind, callback) {
+            devices: CArrString => cArrString2ArrString(devices)
+        }
     }
+    return
 }
 
 /**
@@ -128,17 +154,14 @@ public func onBluetoothDeviceFind(callback: Callback1Argument<Array<String>>): U
     throwexception: true
 ]
 public func offBluetoothDeviceFind(callback!: ?Callback1Argument<Array<String>> = None): Unit {
-    BLUETOOTH_LOG.debug("unsubscribe BluetoothDeviceFind")
-    let callbackList = GLOBAL_CALLBACK_MAP[BlueToothDeviceFind]
-    if (let Some(v) <- callback) {
-        callbackList.removeCallback(
-            v,
-            onFailed: {
-                => BLUETOOTH_LOG.warn("The BlueToothDeviceFind callback has not been registered.")
-            }
-        )
+    BLUETOOTH_LOG.debug("unsubscribe BlueToothDeviceFind")
+    if (!CALLBACK_MAP.contains(BlueToothDeviceFind)) {
         return
     }
-    callbackList.removeAllCallback()
+    if (let Some(v) <- callback) {
+        findCallbackObject(BlueToothDeviceFind, v, remove: true)
+        return
+    }
+    CALLBACK_MAP[BlueToothDeviceFind].clear()
     return
 }
