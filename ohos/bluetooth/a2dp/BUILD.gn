@@ -17,10 +17,15 @@ import("//build/ohos.gni")
 import("//build/templates/cangjie/cjc.gni")
 
 ohos_cangjie_shared_library("ohos.bluetooth.a2dp") {
-  sources = [
-    "a2dp.cj",
-    "native.cj",
-  ]
+  
+  if (is_mingw || is_mac){
+    sources = [ "../../../mock/ohos.bluetooth.a2dp.cj" ]
+  } else {
+    sources = [
+      "a2dp.cj",
+      "native.cj",
+    ]
+  }
 
   external_deps = [ "bluetooth:cj_bluetooth_a2dp_ffi" ]
 

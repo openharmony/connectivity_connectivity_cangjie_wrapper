@@ -20,8 +20,8 @@ package ohos.bluetooth.a2dp
 import ohos.bluetooth.{getErrorMsg, BLUETOOTH_LOG, OPERATION_FAILED}
 import ohos.bluetooth.base_profile.{NativeStateChangeParam, StateChangeParam, BaseProfile, ProfileCallbackType}
 import ohos.bluetooth.constant.ProfileConnectionState
-import ohos.business_exception.{BusinessException}
-import ohos.callback_invoke.{CallbackObject, Callback1Argument, CallbackList}
+import ohos.business_exception.{ BusinessException, ERR_PARAMETER_ERROR }
+import ohos.callback_invoke.{ CallbackObject, Callback1Argument, CallbackList }
 import ohos.ffi.{Callback1Param, SUCCESS_CODE, cArr2cjArr}
 import ohos.labels.{APILevel, Hide}
 
@@ -318,10 +318,10 @@ public class CodecInfo {
     ]
     public var codecSampleRate: CodecSampleRate
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var codecBitRate: CodecBitRate = CodecBitRate.CodecBitRateAbr
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var codecFrameLength: CodecFrameLength = CodecFrameLength.CodecFrameLength10ms
 
     init(
@@ -382,10 +382,10 @@ public enum CodecType {
     ]
     CodecTypeL2hc
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CodecTypeL2hcst
     |
-    @!Hide
+    @!Hide[isChecked: true]
     CodecTypeLdac
     | ...
 }
@@ -549,60 +549,60 @@ public enum CodecSampleRate {
     | ...
 }
 
-@!Hide
+@!Hide[isChecked: true]
 enum CodecBitRate {
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate96000
     |
 
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate128000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate192000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate256000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate320000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate480000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate640000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate960000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRateAbr
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate1500000
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecBitRate2300000
     | ...
 }
 
-@!Hide
+@!Hide[isChecked: true]
 enum CodecFrameLength {
-    @!Hide
+    @!Hide[isChecked: true]
     CodecFrameLength5ms
     |
     
-    @!Hide
+    @!Hide[isChecked: true]
     CodecFrameLength10ms
     | ...
 }

@@ -17,7 +17,7 @@
 
 package ohos.bluetooth.ble
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, OPERATION_FAILED, checkRet, getErrorMsg }
+import ohos.bluetooth.{OPERATION_FAILED, getErrorMsg }
 import ohos.business_exception.BusinessException
 import ohos.labels.{APILevel, Hide}
 import ohos.ffi.{CArrUI8, CArrString, cjArr2CArr, cArr2cjArr}
@@ -930,12 +930,18 @@ struct NativeScanResult {
     ) {}
 
     func toObject(): ScanResult {
+        var name: String
+        try {
+            name = deviceName.toString()
+        } catch (_) {
+            name = ""
+        }
         unsafe {
             ScanResult(
                 deviceId.toString(),
                 rssi,
                 cArr2cjArr<UInt8, Byte>(data.size, data.head, {i => i}),
-                deviceName.toString(),
+                name,
                 connectable
             )
         }
@@ -991,22 +997,22 @@ public class ScanResult {
     ]
     public var connectable: Bool
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var advertiseFlags: Option<Int32> = None
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var manufacturerDataMap: Option<HashMap<Int32, Array<UInt8>>> = None
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var serviceDataMap: Option<HashMap<String, Array<UInt8>>> = None
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var serviceUuids: Option<Array<String>> = None
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var txPowerLevel: Option<Int32> = None
 
-    @!Hide
+    @!Hide[isChecked: true]
     internal var advertisingDataMap: Option<HashMap<Int32, Array<UInt8>>> = None
 
     init(
