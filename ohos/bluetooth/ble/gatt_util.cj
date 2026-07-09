@@ -219,14 +219,6 @@ struct NativeBLECharacteristic {
         this.properties = properties
     }
 
-    init() {
-        this.serviceUUID = CString(CPointer())
-        this.characteristicUUID = CString(CPointer())
-        this.characteristicValue = CArrUI8(CPointer(), 0)
-        this.descriptors = CArrBLEDescriptor(CPointer(), 0)
-        this.properties = NativeGattProperties()
-    }
-
     func toObject(): BleCharacteristic {
         BleCharacteristic(
             // Universally Unique Identifier translation does not throw exception.

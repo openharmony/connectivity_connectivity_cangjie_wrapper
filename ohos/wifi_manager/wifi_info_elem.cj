@@ -46,11 +46,6 @@ public class WifiInfoElement {
     ]
     public var content: Array<UInt8>
 
-    init(eid: UInt32, content: Array<UInt8>) {
-        this.eid = eid
-        this.content = content
-    }
-
     init(info: CWifiInfoElem) {
         this.eid = info.eid
         this.content = unsafe {

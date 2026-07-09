@@ -507,13 +507,6 @@ struct NativeAdvertiseData {
         this.includeDeviceName = includeDeviceName
     }
 
-    init() {
-        this.serviceUUIDs = CArrString(CPointer(), 0)
-        this.manufactureData = CArrNativeManufactureData(CPointer(), 0)
-        this.serviceData = CArrNativeServiceData(CPointer(), 0)
-        this.includeDeviceName = false
-    }
-
     unsafe func free() {
         serviceUUIDs.free()
         manufactureData.free()
