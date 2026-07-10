@@ -166,28 +166,6 @@ public class WifiScanInfo {
     ]
     public var isHiLinkNetwork: Bool
 
-    init(ssid: String, bssid: String, bssidType: DeviceAddressType, capabilities: String,
-        securityType: WifiSecurityType, rssi: Int32, band: Int32, frequency: Int32,
-        channelWidth: Int32, centerFrequency0: Int32, centerFrequency1: Int32,
-        infoElems: Array<WifiInfoElement>, timestamp: Int64, supportedWifiCategory: WifiCategory,
-        isHiLinkNetwork: Bool) {
-        this.ssid = ssid
-        this.bssid = bssid
-        this.bssidType = bssidType
-        this.capabilities = capabilities
-        this.securityType = securityType
-        this.rssi = rssi
-        this.band = band
-        this.frequency = frequency
-        this.channelWidth = channelWidth
-        this.centerFrequency0 = centerFrequency0
-        this.centerFrequency1 = centerFrequency1
-        this.infoElems = infoElems
-        this.timestamp = timestamp
-        this.supportedWifiCategory = supportedWifiCategory
-        this.isHiLinkNetwork = isHiLinkNetwork
-    }
-
     init(info: CWifiScanInfo) {
         this.supportedWifiCategory = WifiCategory.parse(info.supportedWifiCategory)
         this.securityType = WifiSecurityType.parse(info.securityType)
