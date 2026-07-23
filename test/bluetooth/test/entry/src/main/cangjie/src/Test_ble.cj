@@ -1185,6 +1185,215 @@ class Test_ble {
         }
     }
 
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_ScanOptions_unsupported_reportMode() {
+        try {
+            let scanOptions = ScanOptions(interval: 0, dutyMode: ScanModeLowPower,
+                matchMode: MatchModeAggressive, phyType: PhyLe1M, reportMode: ScanReportMode.Batch)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_AdvertiseData_unsupported_includeTxPower() {
+        try {
+            let advertiseData = AdvertiseData([], [], [], includeTxPower: true)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_AdvertisingParams_default_response() {
+        let advertiseSetting = AdvertiseSetting(interval: 32, txPower: 0, connectable: true)
+        let advertisingData = AdvertiseData([], [], [])
+        let advertisingParams = AdvertisingParams(advertiseSetting, advertisingData, duration: 0)
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_on_AdvertisingStateChange_wrong_eventType() {
+        try {
+            let callback = AdvertisingStateChange()
+            on(BleDeviceFind, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_on_BleDeviceFind_wrong_eventType() {
+        try {
+            let callback = BLEDeviceFindCallback()
+            on(BluetoothBleCallbackType.AdvertisingStateChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_off_without_callback() {
+        try {
+            off(BleDeviceFind)
+        } catch (e: BusinessException) {
+            @Expect(false)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_CharacteristicRead_wrong_eventType() {
+        try {
+            let callback = CharacteristicReadCallback()
+            gattServer.on(CharacteristicWrite, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_CharacteristicWrite_wrong_eventType() {
+        try {
+            let callback = CharacteristicWriteCallback()
+            gattServer.on(CharacteristicRead, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_DescriptorRead_wrong_eventType() {
+        try {
+            let callback = DescriptorReadCallback()
+            gattServer.on(DescriptorWrite, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_DescriptorWrite_wrong_eventType() {
+        try {
+            let callback = DescriptorWriteCallback()
+            gattServer.on(DescriptorRead, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_ConnectionStateChange_wrong_eventType() {
+        try {
+            let callback = StateChangeCallback()
+            gattServer.on(ServerBleMtuChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_on_ServerBleMtuChange_wrong_eventType() {
+        try {
+            let callback = BLEMtuChangeCallback()
+            gattServer.on(BluetoothBleGattServerCallbackType.ConnectionStateChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_off_with_callback() {
+        try {
+            let callback = BLEMtuChangeCallback()
+            gattServer.off(ServerBleMtuChange, callback: callback)
+        } catch (e: BusinessException) {
+            @Expect(false)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_on_BleCharacteristicChange_wrong_eventType() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLECharacteristicChangeCallback()
+            gattClient.on(BleConnectionStateChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_on_BleConnectionStateChange_wrong_eventType() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLEConnectionStateChangeCallback()
+            gattClient.on(BleCharacteristicChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_on_ClientBleMtuChange_wrong_eventType() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLEMtuChangeCallback()
+            gattClient.on(BleCharacteristicChange, callback)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_off_without_callback() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            gattClient.off(BleCharacteristicChange)
+        } catch (e: BusinessException) {
+            @Expect(false)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_off_with_callback() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLECharacteristicChangeCallback()
+            gattClient.off(BleCharacteristicChange, callback: callback)
+        } catch (e: BusinessException) {
+            @Expect(false)
+        }
+    }
 }
 
 class BLEMtuChangeCallback <: Callback1Argument<Int32> {
