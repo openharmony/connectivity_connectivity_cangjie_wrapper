@@ -1394,6 +1394,213 @@ class Test_ble {
             @Expect(false)
         }
     }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_BleCharacteristic_unsupported_permissions() {
+        try {
+            let customPermissions = GattPermissions(read: false, write: false)
+            let characteristic = BleCharacteristic("11", "11", [], [], properties: GattProperties(), permissions: customPermissions)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_BleCharacteristic_unsupported_characteristicValueHandle() {
+        try {
+            let characteristic = BleCharacteristic("11", "11", [], [], characteristicValueHandle: 1)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_BleDescriptor_unsupported_descriptorHandle() {
+        try {
+            let descriptor = BleDescriptor("11", "11", "11", [], descriptorHandle: 1)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_BleDescriptor_unsupported_permissions() {
+        try {
+            let customPermissions = GattPermissions(read: false, write: false)
+            let descriptor = BleDescriptor("11", "11", "11", [], permissions: customPermissions)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattProperties_unsupported_broadcast() {
+        try {
+            let properties = GattProperties(broadcast: true)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattProperties_unsupported_authenticatedSignedWrite() {
+        try {
+            let properties = GattProperties(authenticatedSignedWrite: true)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattProperties_unsupported_extendedProperties() {
+        try {
+            let properties = GattProperties(extendedProperties: true)
+            @Expect(false)
+        } catch (e: BusinessException) {
+            @Expect(true)
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_startBLEScan_ScanModeBalanced() {
+        try {
+            let scanFilter = ScanFilter()
+            let scanOptions = ScanOptions(interval: 0, dutyMode: ScanModeBalanced,
+                matchMode: MatchModeAggressive, phyType: PhyLe1M, reportMode: ScanReportMode.Normal)
+            startBleScanning([scanFilter], options: scanOptions)
+        } catch (e: Exception) {
+            loggerInfo("test_startBLEScan_ScanModeBalanced error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_startBLEScan_ScanModeLowLatency() {
+        try {
+            let scanFilter = ScanFilter()
+            let scanOptions = ScanOptions(interval: 0, dutyMode: ScanModeLowLatency,
+                matchMode: MatchModeAggressive, phyType: PhyLe1M, reportMode: ScanReportMode.Normal)
+            startBleScanning([scanFilter], options: scanOptions)
+        } catch (e: Exception) {
+            loggerInfo("test_startBLEScan_ScanModeLowLatency error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_startBLEScan_MatchModeSticky() {
+        try {
+            let scanFilter = ScanFilter()
+            let scanOptions = ScanOptions(interval: 0, dutyMode: ScanModeLowPower,
+                matchMode: MatchModeSticky, phyType: PhyLe1M, reportMode: ScanReportMode.Normal)
+            startBleScanning([scanFilter], options: scanOptions)
+        } catch (e: Exception) {
+            loggerInfo("test_startBLEScan_MatchModeSticky error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_startBLEScan_PhyLeAllSupported() {
+        try {
+            let scanFilter = ScanFilter()
+            let scanOptions = ScanOptions(interval: 0, dutyMode: ScanModeLowPower,
+                matchMode: MatchModeAggressive, phyType: PhyLeAllSupported, reportMode: ScanReportMode.Normal)
+            startBleScanning([scanFilter], options: scanOptions)
+        } catch (e: Exception) {
+            loggerInfo("test_startBLEScan_PhyLeAllSupported error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_duplicate_callback() {
+        try {
+            let server = createGattServer()
+            let callback = BLEMtuChangeCallback()
+            server.on(ServerBleMtuChange, callback)
+            server.on(ServerBleMtuChange, callback)
+        } catch (e: Exception) {
+            loggerInfo("test_GattServer_duplicate_callback error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_duplicate_callback() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLECharacteristicChangeCallback()
+            gattClient.on(BleCharacteristicChange, callback)
+            gattClient.on(BleCharacteristicChange, callback)
+        } catch (e: Exception) {
+            loggerInfo("test_GattClient_duplicate_callback error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_ble_duplicate_callback() {
+        try {
+            let callback = BLEDeviceFindCallback()
+            on(BleDeviceFind, callback)
+            on(BleDeviceFind, callback)
+        } catch (e: Exception) {
+            loggerInfo("test_ble_duplicate_callback error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_ble_off_after_on_without_callback() {
+        try {
+            let callback = BLEDeviceFindCallback()
+            on(BleDeviceFind, callback)
+            off(BleDeviceFind)
+        } catch (e: Exception) {
+            loggerInfo("test_ble_off_after_on_without_callback error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattServer_off_after_on_with_callback() {
+        try {
+            let server = createGattServer()
+            let callback = BLEMtuChangeCallback()
+            server.on(ServerBleMtuChange, callback)
+            server.off(ServerBleMtuChange, callback: callback)
+        } catch (e: Exception) {
+            loggerInfo("test_GattServer_off_after_on_with_callback error ${e}")
+        }
+    }
+
+    @TestCase
+    @Tag[APILevel22, TestLevel0]
+    func test_GattClient_off_after_on_without_callback() {
+        try {
+            let gattClient = createGattClientDevice("0A:1B:2C:3D:4D:5F")
+            let callback = BLECharacteristicChangeCallback()
+            gattClient.on(BleCharacteristicChange, callback)
+            gattClient.off(BleCharacteristicChange)
+        } catch (e: Exception) {
+            loggerInfo("test_GattClient_off_after_on_without_callback error ${e}")
+        }
+    }
 }
 
 class BLEMtuChangeCallback <: Callback1Argument<Int32> {
