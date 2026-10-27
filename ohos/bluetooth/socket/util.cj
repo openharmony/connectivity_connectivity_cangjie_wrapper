@@ -29,7 +29,7 @@ public type ArrayBuffer = Array<Byte>
  * Describes the spp parameters.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class SppOptions {
@@ -37,7 +37,7 @@ public class SppOptions {
      * Indicates the UUID in the SDP record.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var uuid: String
@@ -46,7 +46,7 @@ public class SppOptions {
      * Indicates secure channel or not.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var secure: Bool
@@ -55,7 +55,7 @@ public class SppOptions {
      * Indicates the SPP link type.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var sppType: SppType
@@ -68,7 +68,7 @@ public class SppOptions {
      * @param { SppType } sppType - Indicates the SPP link type.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(uuid: String, secure: Bool, sppType: SppType) {
@@ -83,7 +83,7 @@ public class SppOptions {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum SppType {
@@ -91,7 +91,7 @@ public enum SppType {
      * RFCOMM.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppRfcomm
@@ -100,7 +100,7 @@ public enum SppType {
      * L2CAP of the BR type.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppL2cap
@@ -109,7 +109,7 @@ public enum SppType {
      * L2CAP of the BLE type.
      */
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppL2capBle
