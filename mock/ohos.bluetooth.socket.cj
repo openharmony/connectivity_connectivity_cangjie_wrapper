@@ -18,7 +18,6 @@
 package ohos.bluetooth.socket
 
 import ohos.business_exception.AsyncCallback
-import ohos.callback_invoke.Callback1Argument
 import ohos.labels.APILevel
 
 import std.deriving.Derive
@@ -32,30 +31,30 @@ public type ArrayBuffer = Array<Byte>
  * Describes the spp parameters.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class SppOptions {
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var uuid: String
 
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var secure: Bool
 
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public var sppType: SppType
 
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(uuid: String, secure: Bool, sppType: SppType) {
@@ -70,24 +69,24 @@ public class SppOptions {
  */
 @Derive[ToString, Equatable]
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum SppType {
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppRfcomm
     |
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppL2cap
     |
     @!APILevel[
-        since: "26.2.0",
+        since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppL2capBle
@@ -98,7 +97,7 @@ public enum SppType {
  * Creates a Bluetooth server listening socket.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
@@ -111,7 +110,7 @@ public func sppListen(name: String, options: SppOptions, callback: AsyncCallback
  * Waits for a remote device to connect.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -123,7 +122,7 @@ public func sppAccept(serverSocket: Int32, callback: AsyncCallback<Int32>): Unit
  * Connects to a remote device over the socket.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
@@ -136,7 +135,7 @@ public func sppConnect(deviceId: String, options: SppOptions, callback: AsyncCal
  * Obtain the device id in the client socket.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -148,7 +147,7 @@ public func getDeviceId(clientSocket: Int32): String {
  * Disables an spp server socket and releases related resources.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -160,7 +159,7 @@ public func sppCloseServerSocket(socket: Int32): Unit {
  * Disables an spp client socket and releases related resources.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -172,7 +171,7 @@ public func sppCloseClientSocket(socket: Int32): Unit {
  * Write data through the socket.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -181,25 +180,13 @@ public func sppWrite(clientSocket: Int32, data: ArrayBuffer): Unit {
 }
 
 /**
- * Subscribe the event reported when data is read from the socket.
+ * Asynchronous interface for reading data from the socket.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
-public func onSppRead(clientSocket: Int32, callback: Callback1Argument<ArrayBuffer>): Unit {
-    return ()
-}
-
-/**
- * Unsubscribe the event reported when data is read from the socket.
- */
-@!APILevel[
-    since: "26.2.0",
-    syscap: "SystemCapability.Communication.Bluetooth.Core",
-    throwexception: true
-]
-public func offSppRead(clientSocket: Int32, callback!: ?Callback1Argument<ArrayBuffer> = None): Unit {
+public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffer>): Unit {
     return ()
 }

@@ -87,7 +87,7 @@ struct CSppOption {
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
@@ -135,7 +135,7 @@ public func sppListen(name: String, options: SppOptions, callback: AsyncCallback
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -166,7 +166,7 @@ public func sppAccept(serverSocket: Int32, callback: AsyncCallback<Int32>): Unit
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     permission: "ohos.permission.ACCESS_BLUETOOTH",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
@@ -209,7 +209,7 @@ public func sppConnect(deviceId: String, options: SppOptions, callback: AsyncCal
  * @returns { String } Returns the connected device id.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -236,7 +236,7 @@ public func getDeviceId(clientSocket: Int32): String {
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -255,7 +255,7 @@ public func sppCloseServerSocket(socket: Int32): Unit {
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -275,7 +275,7 @@ public func sppCloseClientSocket(socket: Int32): Unit {
  * @throws { BusinessException } 2900099 - Operation failed.
  */
 @!APILevel[
-    since: "26.2.0",
+    since: "26.1.0",
     syscap: "SystemCapability.Communication.Bluetooth.Core",
     throwexception: true
 ]
@@ -311,6 +311,33 @@ private class SppReadBucket {
     }
 }
 
+/**
+ * One-shot callback used by sppReadAsync.
+ */
+private class SppReadAsyncCallback <: Callback1Argument<ArrayBuffer> {
+    let clientSocket: Int32
+    let callback: AsyncCallback<ArrayBuffer>
+
+    init(clientSocket: Int32, callback: AsyncCallback<ArrayBuffer>) {
+        this.clientSocket = clientSocket
+        this.callback = callback
+    }
+
+    public func invoke(err: ?BusinessException, data: ArrayBuffer): Unit {
+        try {
+            offSppReadInternal(clientSocket, callback: this)
+        } catch (e: Exception) {
+            callback(Some(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))), None<ArrayBuffer>)
+            return
+        }
+        if (let Some(e) <- err) {
+            callback(Some(e), None<ArrayBuffer>)
+        } else {
+            callback(None<BusinessException>, Some(data))
+        }
+    }
+}
+
 private let SPP_READ_BUCKETS = HashMap<Int32, SppReadBucket>()
 private let SPP_READ_BUCKETS_MUT = Mutex()
 
@@ -329,6 +356,25 @@ private func toCallbackTypeName(callbackType: BluetoothSocketCallbackType): CStr
 }
 
 /**
+ * Asynchronous interface for reading data from the socket.
+ *
+ * @param { Int32 } clientSocket - Indicates the client socket ID, returned by **sppAccept** or **sppConnect**.
+ * @param { AsyncCallback<ArrayBuffer> } callback - Callback used to return the spp read data.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2901054 - IO error.
+ * @throws { BusinessException } 2900099 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.Bluetooth.Core",
+    throwexception: true
+]
+public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffer>): Unit {
+    onSppReadInternal(clientSocket, SppReadAsyncCallback(clientSocket, callback))
+    return
+}
+
+/**
  * Subscribe the event reported when data is read from the socket.
  *
  * @param { Int32 } clientSocket - Client socket ID, which is obtained by **sppAccept** or **sppConnect**.
@@ -337,12 +383,7 @@ private func toCallbackTypeName(callbackType: BluetoothSocketCallbackType): CStr
  * @throws { BusinessException } 2901054 - IO error.
  * @throws { BusinessException } 2900099 - Operation failed.
  */
-@!APILevel[
-    since: "26.2.0",
-    syscap: "SystemCapability.Communication.Bluetooth.Core",
-    throwexception: true
-]
-public func onSppRead(clientSocket: Int32, callback: Callback1Argument<ArrayBuffer>): Unit {
+func onSppReadInternal(clientSocket: Int32, callback: Callback1Argument<ArrayBuffer>): Unit {
     synchronized(SPP_READ_BUCKETS_MUT) {
         if (let Some(bucket) <- SPP_READ_BUCKETS.get(clientSocket)) {
             if (bucket.controller.hasCallback(callback)) {
@@ -380,12 +421,7 @@ public func onSppRead(clientSocket: Int32, callback: Callback1Argument<ArrayBuff
  * @param { ?Callback1Argument<ArrayBuffer> } callback - Callback used to listen for the spp read event.
  * @throws { BusinessException } 801 - Capability not supported.
  */
-@!APILevel[
-    since: "26.2.0",
-    syscap: "SystemCapability.Communication.Bluetooth.Core",
-    throwexception: true
-]
-public func offSppRead(clientSocket: Int32, callback!: ?Callback1Argument<ArrayBuffer> = None): Unit {
+func offSppReadInternal(clientSocket: Int32, callback!: ?Callback1Argument<ArrayBuffer> = None): Unit {
     synchronized(SPP_READ_BUCKETS_MUT) {
         if (let Some(bucket) <- SPP_READ_BUCKETS.get(clientSocket)) {
             if (let Some(v) <- callback) {
