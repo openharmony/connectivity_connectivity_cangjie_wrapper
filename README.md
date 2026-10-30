@@ -20,6 +20,7 @@ Interface layer description:
 
 - Low-Power Bluetooth Interface: Cangjie public interfaces based on low-power Bluetooth encapsulation exposed to developers.
 - Bluetooth Profile Interface: Cangjie public interfaces based on Bluetooth Profile encapsulation exposed to developers.
+- Bluetooth Socket Interface: Cangjie public interfaces based on Bluetooth socket (Serial Port Profile, SPP) capabilities exposed to developers, covering server listening, client connection, data transfer, and peer device address query.
 - Bluetooth Constant Interface: Cangjie public interfaces based on Bluetooth constants exposed to developers.
 - Basic WLAN Functionality Interface: Cangjie public interfaces based on WLAN basic functionality encapsulation exposed to developers.
 
@@ -27,6 +28,7 @@ Framework layer description:
 
 - Low-Power Bluetooth Wrapper: Bluetooth Low Energy is a Bluetooth technology that can communicate in low power consumption situations. This encapsulation layer is a Cangjie encapsulation implementation of low-power Bluetooth functionality based on the Bluetooth component.
 - Bluetooth Profile Wrapper: Bluetooth Profile is a universal file transfer protocol based on Bluetooth that allows file transfer between devices, such as a2dp, hfp, etc. This encapsulation layer is a Cangjie encapsulation implementation of Bluetooth Profile functionality based on the Bluetooth component.
+- Bluetooth Socket Wrapper: This encapsulation layer is a Cangjie encapsulation implementation of Bluetooth socket (SPP) functionality based on the Bluetooth component, covering server listening, client connection, data transfer, and peer device address query.
 - Bluetooth Constants: Defines public constants related to Bluetooth.
 - Basic WLAN Functionality Wrapper: Provides P2P (peer-to-peer) functionality, a point-to-point connection technology that can directly establish a TCP/IP link between two STAs. This encapsulation layer is a Cangjie encapsulation implementation of WLAN basic functionality based on the WLAN component.
 
@@ -54,7 +56,8 @@ foundation/communication/connectivity_cangjie_wrapper
 │   │   ├── connection               # Bluetooth connection interfaces
 │   │   ├── constant                 # Bluetooth constant definitions
 │   │   ├── error_message.cj         # Bluetooth error message definitions
-│   │   └── hfp                      # hfp Profile interfaces
+│   │   ├── hfp                      # hfp Profile interfaces
+│   │   └── socket                   # Bluetooth socket interfaces
 │   └── wifi_manager                 # Cangjie wifi code implementation
 └── test                             # Test code
     ├── bluetooth                    # Bluetooth UT tests
@@ -85,6 +88,10 @@ For details, please refer to [a2dp API](https://gitcode.com/openharmony-sig/arkc
 
 For details, please refer to [hfp API](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_en/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
 
+-   Socket (Bluetooth socket)
+
+The Serial Port Profile (SPP) is a Bluetooth protocol for socket connection and data transfer between devices. The current API provides capabilities to create a server listening socket, accept a connection, initiate a client connection, read and write data, and query the peer device address.
+
 For relevant guidance, please refer to [Overview of Bluetooth Service Development](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_en/connectivity/bluetooth/cj-bluetooth-overview.md)
 
 ### Wifi api
@@ -101,7 +108,7 @@ For relevant guidance, please refer to [WLAN Development Guide](https://gitcode.
 
 Compared with the API capabilities provided by ArkTS, the following functions are not supported:
 
-- Bluetooth services do not yet provide Bluetooth socket, hid, pan, pbap, map Profile related functions.
+- Bluetooth services do not yet provide hid, pan, pbap, map Profile related functions.
 - Wifi services do not yet provide STA mode and AP mode related functions.
 
 ## Code Contribution
