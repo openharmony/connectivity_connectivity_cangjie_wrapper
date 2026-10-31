@@ -17,14 +17,10 @@
 
 package ohos.bluetooth.socket
 
-import ohos.bluetooth.{ BLUETOOTH_LOG, checkRet, getErrorMsg, CallbackController, OPERATION_FAILED }
+import ohos.bluetooth.{ checkRet, getErrorMsg, OPERATION_FAILED }
 import ohos.business_exception.{ AsyncCallback, BusinessException }
-import ohos.callback_invoke.Callback1Argument
-import ohos.ffi.{ CArrUI8, Callback1Param, SUCCESS_CODE, cArr2cjArr }
+import ohos.ffi.{ CArrUI8, SUCCESS_CODE, cArr2cjArr }
 import ohos.labels.APILevel
-
-import std.collection.HashMap
-import std.sync.Mutex
 
 foreign {
     func FfiBluetoothSocketSppListen(name: CString, options: CSppOption, errCode: CPointer<Int32>): Int32
@@ -41,9 +37,7 @@ foreign {
 
     func FfiBluetoothSocketSppWrite(clientSocket: Int32, data: CArrUI8, errCode: CPointer<Int32>): Unit
 
-    func FfiBluetoothSocketOn(`type`: CString, clientSocket: Int32, cbId: Int64, errCode: CPointer<Int32>): Unit
-
-    func FfiBluetoothSocketOff(`type`: CString, clientSocket: Int32, cbId: Int64, errCode: CPointer<Int32>): Unit
+    func FfiBluetoothSocketSppRead(clientSocket: Int32, size: CPointer<Int64>, errCode: CPointer<Int32>): CPointer<UInt8>
 }
 
 /**
@@ -293,73 +287,14 @@ public func sppWrite(clientSocket: Int32, data: ArrayBuffer): Unit {
 }
 
 /**
- * The spp read callbacks registered for one client socket.
- */
-private class SppReadBucket {
-    let controller: CallbackController
-    let callbackId: Int64
-
-    /**
-     * Creates the bucket of a client socket.
-     *
-     * @param { CallbackController } controller - Indicates the controller of the socket callbacks.
-     * @param { Int64 } callbackId - Indicates the ID of the native callback object.
-     */
-    init(controller: CallbackController, callbackId: Int64) {
-        this.controller = controller
-        this.callbackId = callbackId
-    }
-}
-
-/**
- * One-shot callback used by sppReadAsync.
- */
-private class SppReadAsyncCallback <: Callback1Argument<ArrayBuffer> {
-    let clientSocket: Int32
-    let callback: AsyncCallback<ArrayBuffer>
-
-    init(clientSocket: Int32, callback: AsyncCallback<ArrayBuffer>) {
-        this.clientSocket = clientSocket
-        this.callback = callback
-    }
-
-    public func invoke(err: ?BusinessException, data: ArrayBuffer): Unit {
-        try {
-            offSppReadInternal(clientSocket, callback: this)
-        } catch (e: Exception) {
-            callback(Some(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED))), None<ArrayBuffer>)
-            return
-        }
-        if (let Some(e) <- err) {
-            callback(Some(e), None<ArrayBuffer>)
-        } else {
-            callback(None<BusinessException>, Some(data))
-        }
-    }
-}
-
-private let SPP_READ_BUCKETS = HashMap<Int32, SppReadBucket>()
-private let SPP_READ_BUCKETS_MUT = Mutex()
-
-private func argWrapper1<CT, T>(controller: CallbackController, ctor: (CT) -> T): Int64 where CT <: CType {
-    let wrapper = {
-        ctype: CT =>
-        let cjType = ctor(ctype)
-        controller.invokeCallback(cjType)
-    }
-    let registerCall = Callback1Param<CT, Unit>(wrapper)
-    registerCall.getID()
-}
-
-private func toCallbackTypeName(callbackType: BluetoothSocketCallbackType): CString {
-    unsafe { LibC.mallocCString(callbackType.getValue()) }
-}
-
-/**
  * Asynchronous interface for reading data from the socket.
+ *
+ * Only one read can be pending for a client socket; a second call while a read is pending
+ * fails with **401**. A read that fails on the native side fails with **2901054**.
  *
  * @param { Int32 } clientSocket - Indicates the client socket ID, returned by **sppAccept** or **sppConnect**.
  * @param { AsyncCallback<ArrayBuffer> } callback - Callback used to return the spp read data.
+ * @throws { BusinessException } 401 - Parameter error.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2901054 - IO error.
  * @throws { BusinessException } 2900099 - Operation failed.
@@ -370,79 +305,27 @@ private func toCallbackTypeName(callbackType: BluetoothSocketCallbackType): CStr
     throwexception: true
 ]
 public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffer>): Unit {
-    onSppReadInternal(clientSocket, SppReadAsyncCallback(clientSocket, callback))
-    return
-}
-
-/**
- * Subscribe the event reported when data is read from the socket.
- *
- * @param { Int32 } clientSocket - Client socket ID, which is obtained by **sppAccept** or **sppConnect**.
- * @param { Callback1Argument<ArrayBuffer> } callback - Callback used to listen for the spp read event.
- * @throws { BusinessException } 801 - Capability not supported.
- * @throws { BusinessException } 2901054 - IO error.
- * @throws { BusinessException } 2900099 - Operation failed.
- */
-func onSppReadInternal(clientSocket: Int32, callback: Callback1Argument<ArrayBuffer>): Unit {
-    synchronized(SPP_READ_BUCKETS_MUT) {
-        if (let Some(bucket) <- SPP_READ_BUCKETS.get(clientSocket)) {
-            if (bucket.controller.hasCallback(callback)) {
-                BLUETOOTH_LOG.info("The sppRead callback is registered, no need to re-registered")
-                return
-            }
-            bucket.controller.addCallback(callback)
+    spawn {
+        var size: Int64 = 0
+        var errorCode: Int32 = 0
+        let data = unsafe { FfiBluetoothSocketSppRead(clientSocket, inout size, inout errorCode) }
+        if (errorCode == 401) {
+            callback(BusinessException(401, "Parameter error."), None<ArrayBuffer>)
             return
         }
-        let controller = CallbackController()
-        controller.enableController()
-        controller.addCallback(callback)
-        let callbackId = argWrapper1<CArrUI8, ArrayBuffer>(controller, {param: CArrUI8 =>
-            unsafe { cArr2cjArr<UInt8, Byte>(param.size, param.head, {i => i}) }
-        })
-        var errorCode: Int32 = 0
+        if (errorCode != SUCCESS_CODE) {
+            callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<ArrayBuffer>)
+            return
+        }
+        var bytes: Array<Byte> = Array<Byte>()
         unsafe {
-            try (cType = toCallbackTypeName(BluetoothSocketCallbackType.SppRead).asResource()) {
-                FfiBluetoothSocketOn(cType.value, clientSocket, callbackId, inout errorCode)
+            try {
+                bytes = cArr2cjArr<UInt8, Byte>(size, data, {i => i})
+            } finally {
+                LibC.free(data)
             }
         }
-        checkRet(errorCode)
-        SPP_READ_BUCKETS[clientSocket] = SppReadBucket(controller, callbackId)
-    }
-    return
-}
-
-/**
- * Unsubscribe the event reported when data is read from the socket.
- *
- * Note: the native layer does not join the detached read thread when the observer is removed.
- * An immediate re-subscription on the same socket may therefore race with the old thread.
- *
- * @param { Int32 } clientSocket - Client socket ID, which is obtained by **sppAccept** or **sppConnect**.
- * @param { ?Callback1Argument<ArrayBuffer> } callback - Callback used to listen for the spp read event.
- * @throws { BusinessException } 801 - Capability not supported.
- */
-func offSppReadInternal(clientSocket: Int32, callback!: ?Callback1Argument<ArrayBuffer> = None): Unit {
-    synchronized(SPP_READ_BUCKETS_MUT) {
-        if (let Some(bucket) <- SPP_READ_BUCKETS.get(clientSocket)) {
-            if (let Some(v) <- callback) {
-                if (bucket.controller.removeCallback(v) < 0) {
-                    return
-                }
-                if (!bucket.controller.isEmpty()) {
-                    return
-                }
-            } else {
-                bucket.controller.removeAllCallback()
-            }
-            var errorCode: Int32 = 0
-            unsafe {
-                try (cType = toCallbackTypeName(BluetoothSocketCallbackType.SppRead).asResource()) {
-                    FfiBluetoothSocketOff(cType.value, clientSocket, 0, inout errorCode)
-                }
-            }
-            checkRet(errorCode)
-            SPP_READ_BUCKETS.remove(clientSocket)
-        }
+        callback(None<BusinessException>, bytes)
     }
     return
 }
