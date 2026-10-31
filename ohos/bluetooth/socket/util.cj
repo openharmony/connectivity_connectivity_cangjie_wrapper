@@ -129,27 +129,3 @@ public enum SppType {
         }
     }
 }
-
-/**
- * The enum of the Bluetooth socket callback type.
- */
-@Derive[ToString, Equatable]
-enum BluetoothSocketCallbackType {
-    /**
-     * Type of the spp read event to listen for.
-     */
-    SppRead
-    | ...
-
-    /**
-     * Converts the BluetoothSocketCallbackType to the name known by the native layer.
-     *
-     * @returns { String } Returns the native callback type name.
-     */
-    func getValue(): String {
-        match (this) {
-            case SppRead => "sppRead"
-            case _ => throw IllegalArgumentException("The type is not supported.")
-        }
-    }
-}

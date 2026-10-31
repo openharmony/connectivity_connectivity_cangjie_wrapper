@@ -80,7 +80,7 @@ protected class CallbackController {
 
     protected func invokeCallback<T>(cjType: T): Unit {
         // Snapshot under the lock, then invoke user callbacks without holding it.
-        // A callback may call offSppReadInternal and re-enter removeCallback; holding listMut
+        // A callback may remove itself (re-enter removeCallback); holding listMut
         // across the user call would deadlock. The hasCallback check also skips a
         // callback that was unsubscribed by an earlier callback in this dispatch.
         let snapshot = ArrayList<CallbackObject>()
