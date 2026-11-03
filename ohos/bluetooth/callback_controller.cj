@@ -34,13 +34,6 @@ protected class CallbackController {
         list.isSome()
     }
 
-    // Tells whether no callback is registered, the controller may be enabled with an empty list.
-    protected func isEmpty(): Bool {
-        synchronized(listMut) {
-            return (list?.size ?? 0) == 0
-        }
-    }
-
     protected func addCallback(callback: CallbackObject): Unit {
         synchronized(listMut) {
             list?.add(callback)
