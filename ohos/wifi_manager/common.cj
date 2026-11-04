@@ -18,8 +18,8 @@
 package ohos.wifi_manager
 
 import ohos.labels.{APILevel, Hide}
-import std.deriving.Derive
 import ohos.business_exception.BusinessException
+import std.deriving.Derive
 
 const EVENT_STA_POWER_STATE_CHANGE = "wifiStateChange"
 const EVENT_STA_CONN_STATE_CHANGE = "wifiConnectionChange"
@@ -36,6 +36,25 @@ const EVENT_P2P_DISCOVERY_CHANGE = "p2pDiscoveryChange"
 // syscap code
 const SYSCAP_WIFI_CORE = 2400000i32
 const SYSCAP_WIFI_STA = 2500000i32
+
+// Upper bound of the user action timeout dialog, aligned with native MAX_DIALOG_TIMEOUT.
+const MAX_DIALOG_TIMEOUT = 30i32
+
+// safeMalloc reports out-of-memory as 2501000 (STA domain). P2P APIs must
+// surface the same condition in the P2P domain (2801000) instead.
+func toP2pBusinessException(e: BusinessException): BusinessException {
+    if (e.code == 2501000) {
+        BusinessException(2801000, "Operation failed.")
+    } else if (e.code == 2501001) {
+        BusinessException(2801001, "Wi-Fi P2P disabled.")
+    } else if (e.code >= 2500000 && e.code < 2600000) {
+        // P2P only documents 2801000/2801001; fold other STA-domain codes into
+        // the generic P2P failure instead of inventing undocumented codes.
+        BusinessException(2801000, "Operation failed.")
+    } else {
+        e
+    }
+}
 const SYSCAP_WIFI_P2P = 2800000i32
 
 /**

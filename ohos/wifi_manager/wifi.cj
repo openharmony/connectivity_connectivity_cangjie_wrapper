@@ -18,6 +18,7 @@
 package ohos.wifi_manager
 
 import ohos.business_exception.BusinessException
+import ohos.business_exception.AsyncCallback
 import ohos.callback_invoke.{ Callback1Argument, CallbackObject }
 import ohos.ffi.{SUCCESS_CODE, cArr2cjArr, Callback1Param}
 import ohos.hilog.HilogChannel
@@ -48,6 +49,27 @@ public func isWifiActive(): Bool {
         throw BusinessException(err[0], "isWifiActive failed: ${err[1]}")
     }
     ret
+}
+
+/**
+ * Scan Wi-Fi hotspot.
+ *
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    permission: "ohos.permission.SET_WIFI_INFO",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    throwexception: true
+]
+public func startScan(): Unit {
+    let code = unsafe { FfiWifiStartScan() }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+        throw BusinessException(err[0], "startScan failed: ${err[1]}")
+    }
 }
 
 /**
@@ -102,8 +124,8 @@ public func getScanInfoList(): Array<WifiScanInfo> {
     throwexception: true
 ]
 public func p2pConnect(config: WifiP2pConfig): Unit {
-    let ct = CWifiP2PConfig(config)
-    let code = unsafe { FfiWifiP2pConnect(ct) }
+    var ct = CWifiP2PConfig(config)
+    let code = unsafe { FfiWifiP2pConnect(inout ct) }
     ct.free()
     if (code != SUCCESS_CODE) {
         let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
@@ -289,6 +311,648 @@ public func off(eventType: WifiCallbackType, callback!: ?CallbackObject = None):
 }
 
 /**
+ * Add a specified candidate hotspot configuration and returns the networkId.
+ * This method adds one configuration at a time. After this configuration is added,
+ *     your device will determine whether to connect to the hotspot.
+ * The app must be in the foreground.
+ *
+ * @param { WifiDeviceConfig } config - candidate config.
+ * @returns { Unit } Returns {@code networkId} if the configuration is added; returns {@code -1} otherwise.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.SET_WIFI_INFO",
+    throwexception: true
+]
+public func addCandidateConfig(config: WifiDeviceConfig, callback: AsyncCallback<Int32>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        var value: ?Int32 = None
+        try {
+            let ct = CWifiDeviceConfig(config)
+            try {
+                var ret = 0i32
+                let code = unsafe { FfiWifiAddCandidateConfig(ct, inout ret) }
+                if (code != SUCCESS_CODE) {
+                    let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+                    error = BusinessException(err[0], "addCandidateConfig failed: ${err[1]}")
+                } else {
+                    value = ret
+                }
+            } finally {
+                ct.free()
+            }
+        } catch (e: BusinessException) {
+            error = e
+        } catch (e: Exception) {
+            error = BusinessException(2501000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, value)
+        }
+    }
+}
+
+/**
+ * Remove a specified candidate hotspot configuration, only the configuration which is added by ourself is allowed
+ * to be removed.
+ * The app must be in the foreground.
+ *
+ * @param { Int32 } networkId - Network ID which will be removed.
+ * @param { AsyncCallback<Unit> } callback - Indicates call back of removeCandidateConfig.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ * @throws { BusinessException } 2501001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.SET_WIFI_INFO",
+    throwexception: true
+]
+public func removeCandidateConfig(networkId: Int32, callback: AsyncCallback<Unit>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        try {
+            let code = unsafe { FfiWifiRemoveCandidateConfig(networkId) }
+            if (code != SUCCESS_CODE) {
+                let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+                error = BusinessException(err[0], "removeCandidateConfig failed: ${err[1]}")
+            }
+        } catch (e: BusinessException) {
+            error = e
+        } catch (e: Exception) {
+            error = BusinessException(2501000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, ())
+        }
+    }
+}
+
+/**
+ * Obtain the list of all existed candidate Wi-Fi configurations which added by ourself.
+ * You can obtain only the Wi-Fi configurations you created on your own application.
+ *
+ * @returns { Array<WifiDeviceConfig> } Returns the list of all existed Wi-Fi configurations you created on your application.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getCandidateConfigs(): Array<WifiDeviceConfig> {
+    var code = 0i32
+    var arr: Array<WifiDeviceConfig> = Array<WifiDeviceConfig>()
+    unsafe {
+        let ret = FfiWifiGetCandidateConfigsV2(inout code)
+        if (code != SUCCESS_CODE) {
+            ret.free()
+            let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+            throw BusinessException(err[0], "getCandidateConfigs failed: ${err[1]}")
+        }
+        try {
+            arr = cArr2cjArr<CWifiDeviceConfig, WifiDeviceConfig>(ret.size, ret.head) {
+                cfg => cfg.toWifiDeviceConfig()
+            }
+        } finally {
+            ret.free()
+        }
+    }
+    arr
+}
+
+/**
+ * Connect to the specified candidate hotspot using connect settings.
+ *
+ * @param { ConnectSettings } settings - Indicates the connection settings.
+ * @param { AsyncCallback<Unit> } callback - Indicates callback of connectToCandidateConfig.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ * @throws { BusinessException } 2501001 - Wi-Fi STA disabled.
+ * @throws { BusinessException } 2501005 - The user does not respond.
+ * @throws { BusinessException } 2501006 - The user refused the action.
+ * @throws { BusinessException } 2501007 - Parameter validation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.SET_WIFI_INFO",
+    throwexception: true
+]
+public func connectToCandidateConfig(settings: ConnectSettings, callback: AsyncCallback<Unit>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        // Reject an explicit out-of-range user action timeout with 401 (invalid
+        // parameter), matching ArkTS, instead of treating it as "unset".
+        var invalidTimeout = false
+        match (settings.userActionTimeout) {
+            case Some(t) => invalidTimeout = t <= 0 || t > MAX_DIALOG_TIMEOUT
+            case None => ()
+        }
+        if (invalidTimeout) {
+            error = BusinessException(401, "Parameter error.")
+        } else {
+            try {
+                var ct = CWifiConnectSettings(settings)
+                let code = unsafe { FfiWifiConnectToCandidateConfigWithSettings(inout ct) }
+                if (code != SUCCESS_CODE) {
+                    let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+                    error = BusinessException(err[0], "connectToCandidateConfig failed: ${err[1]}")
+                }
+            } catch (e: BusinessException) {
+                error = e
+            } catch (e: Exception) {
+                error = BusinessException(2501000, "Operation failed.")
+            }
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, ())
+        }
+    }
+}
+
+/**
+ * Calculate the Wi-Fi signal level based on the Wi-Fi RSSI and frequency band.
+ *
+ * @param { Int32 } rssi - Indicates the Wi-Fi RSSI.
+ * @param { Int32 } band - Indicates the Wi-Fi frequency band.
+ * @returns { UInt32 } Returns Wi-Fi signal level ranging from 0 to 4.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getSignalLevel(rssi: Int32, band: Int32): UInt32 {
+    var ret = 0u32
+    let code = unsafe { FfiWifiGetSignalLevel(rssi, band, inout ret) }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+        throw BusinessException(err[0], "getSignalLevel failed: ${err[1]}")
+    }
+    ret
+}
+
+/**
+ * Obtain connection information about the Wi-Fi connection.
+ * If the app does not have the ohos.permission.GET_WIFI_PEERS_MAC permission, a random bssid is returned.
+ *
+ * @returns { WifiLinkedInfo } Returns the Wi-Fi linked information.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ * @throws { BusinessException } 2501001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getLinkedInfoSync(): WifiLinkedInfo {
+    let ptr = safeMalloc<CWifiLinkedInfo>()
+    var info = WifiLinkedInfo()
+    try {
+        let code = unsafe { FfiWifiGetLinkedInfo(ptr) }
+        if (code != SUCCESS_CODE) {
+            let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+            throw BusinessException(err[0], "getLinkedInfoSync failed: ${err[1]}")
+        }
+        let ret = unsafe { ptr.read() }
+        try {
+            info = ret.toWifiLinkedInfo()
+        } finally {
+            ret.free()
+        }
+    } finally {
+        unsafe { LibC.free(ptr) }
+    }
+    info
+}
+
+/**
+ * Check whether the Wi-Fi connection has been set up.
+ *
+ * @returns { Bool } Returns {@code true} if a Wi-Fi connection has been set up, returns {@code false} otherwise.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func isConnected(): Bool {
+    var ret = false
+    let code = unsafe { FfiWifiIsConnected(inout ret) }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+        throw BusinessException(err[0], "isConnected failed: ${err[1]}")
+    }
+    ret
+}
+
+/**
+ * Check whether the device supports a specified feature.
+ *
+ * @param { Int64 } featureId Indicates the ID of the feature.
+ * @returns { Bool } Returns {@code true} if this device supports the specified feature, returns {@code false} otherwise.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2401000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.Core",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func isFeatureSupported(featureId: Int64): Bool {
+    var ret = false
+    let code = unsafe { FfiWifiIsFeatureSupported(featureId, inout ret) }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_CORE)
+        throw BusinessException(err[0], "isFeatureSupported failed: ${err[1]}")
+    }
+    ret
+}
+
+/**
+ * Obtain the IPv4 information of the Wi-Fi connection.
+ * The IP information includes the host IP address, gateway address, and DNS information.
+ *
+ * @returns { IpInfo } Returns the IP information of the Wi-Fi connection.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getIpInfo(): IpInfo {
+    let ptr = safeMalloc<CIpInfo>()
+    var info = IpInfo()
+    try {
+        let code = unsafe { FfiWifiGetIpInfo(ptr) }
+        if (code != SUCCESS_CODE) {
+            let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+            throw BusinessException(err[0], "getIpInfo failed: ${err[1]}")
+        }
+        info = unsafe { ptr.read().toIpInfo() }
+    } finally {
+        unsafe { LibC.free(ptr) }
+    }
+    info
+}
+
+/**
+ * Obtain the IPv6 information of the Wi-Fi connection.
+ * The IPv6 information includes the host IP address, gateway address, and DNS information.
+ *
+ * @returns { Ipv6Info } Returns the IPv6 information of the Wi-Fi connection.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getIpv6Info(): Ipv6Info {
+    let ptr = safeMalloc<CIpv6Info>()
+    var info = Ipv6Info()
+    try {
+        let code = unsafe { FfiWifiGetIpv6Info(ptr) }
+        if (code != SUCCESS_CODE) {
+            let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+            throw BusinessException(err[0], "getIpv6Info failed: ${err[1]}")
+        }
+        let ret = unsafe { ptr.read() }
+        try {
+            info = ret.toIpv6Info()
+        } finally {
+            ret.free()
+        }
+    } finally {
+        unsafe { LibC.free(ptr) }
+    }
+    info
+}
+
+/**
+ * Obtain the country code of the device.
+ *
+ * @returns { String } Returns the country code of this device.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2401000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.Core",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getCountryCode(): String {
+    var code = 0i32
+    let cstr = unsafe { FfiWifiGetCountryCode(inout code) }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_CORE)
+        throw BusinessException(err[0], "getCountryCode failed: ${err[1]}")
+    }
+    try {
+        cstr.toString()
+    } finally {
+        unsafe { LibC.free(cstr) }
+    }
+}
+
+/**
+ * Check whether the current device supports the specified band.
+ *
+ * @param { WifiBandType } bandType - Indicates the band type.
+ * @returns { Bool } Returns {@code true} if the specified band is supported, returns {@code false} otherwise.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2501000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.STA",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func isBandTypeSupported(bandType: WifiBandType): Bool {
+    var ret = false
+    let code = unsafe { FfiWifiIsBandTypeSupported(wifiBandTypeValue(bandType), inout ret) }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_STA)
+        throw BusinessException(err[0], "isBandTypeSupported failed: ${err[1]}")
+    }
+    ret
+}
+
+/**
+ * Obtain information about the P2P connection.
+ *
+ * @param { AsyncCallback<WifiP2pLinkedInfo> } callback - Indicates callback of function.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ * @throws { BusinessException } 2801001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getP2pLinkedInfo(callback: AsyncCallback<WifiP2pLinkedInfo>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        var value: ?WifiP2pLinkedInfo = None
+        try {
+            let ptr = safeMalloc<CWifiP2pLinkedInfo>()
+            try {
+                let code = unsafe { FfiWifiGetP2pLinkedInfo(ptr) }
+                if (code != SUCCESS_CODE) {
+                    let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+                    error = BusinessException(err[0], "getP2pLinkedInfo failed: ${err[1]}")
+                } else {
+                    let ret = unsafe { ptr.read() }
+                    try {
+                        value = ret.toWifiP2pLinkedInfo()
+                    } finally {
+                        ret.free()
+                    }
+                }
+            } finally {
+                unsafe { LibC.free(ptr) }
+            }
+        } catch (e: BusinessException) {
+            error = toP2pBusinessException(e)
+        } catch (e: Exception) {
+            error = BusinessException(2801000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, value)
+        }
+    }
+}
+
+/**
+ * Obtain information about the current p2p group.
+ *
+ * @param { AsyncCallback<WifiP2pGroupInfo> } callback - Indicates callback of function.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getCurrentGroup(callback: AsyncCallback<WifiP2pGroupInfo>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        var value: ?WifiP2pGroupInfo = None
+        try {
+            let ptr = safeMalloc<CWifiP2pGroupInfo>()
+            try {
+                let code = unsafe { FfiWifiGetCurrentGroup(ptr) }
+                if (code != SUCCESS_CODE) {
+                    let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+                    error = BusinessException(err[0], "getCurrentGroup failed: ${err[1]}")
+                } else {
+                    let ret = unsafe { ptr.read() }
+                    try {
+                        value = ret.toWifiP2pGroupInfo()
+                    } finally {
+                        ret.free()
+                    }
+                }
+            } finally {
+                unsafe { LibC.free(ptr) }
+            }
+        } catch (e: BusinessException) {
+            error = toP2pBusinessException(e)
+        } catch (e: Exception) {
+            error = BusinessException(2801000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, value)
+        }
+    }
+}
+
+/**
+ * Obtain the information about the found devices.
+ *
+ * @param { AsyncCallback<Array<WifiP2pDevice>> } callback - Indicates callback of function.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ * @throws { BusinessException } 2801001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getP2pPeerDevices(callback: AsyncCallback<Array<WifiP2pDevice>>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        var value: ?Array<WifiP2pDevice> = None
+        try {
+            var code = 0i32
+            let ret = unsafe { FfiWifiGetP2pPeerDevices(inout code) }
+            if (code != SUCCESS_CODE) {
+                let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+                error = BusinessException(err[0], "getP2pPeerDevices failed: ${err[1]}")
+            } else {
+                value = ret.toCjArrAndFree()
+            }
+        } catch (e: BusinessException) {
+            error = toP2pBusinessException(e)
+        } catch (e: Exception) {
+            error = BusinessException(2801000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, value)
+        }
+    }
+}
+
+/**
+ * Obtain the information about own device information.
+ * DeviceAddress in the returned WifiP2pDevice will be set "00:00:00:00:00:00",
+ * if ohos.permission.GET_WIFI_LOCAL_MAC is not granted.
+ *
+ * @param { AsyncCallback<WifiP2pDevice> } callback - Indicates callback of function.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ * @throws { BusinessException } 2801001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func getP2pLocalDevice(callback: AsyncCallback<WifiP2pDevice>): Unit {
+    spawn {
+        var error: ?BusinessException = None
+        var value: ?WifiP2pDevice = None
+        try {
+            let ptr = safeMalloc<CWifiP2pDevice>()
+            try {
+                let code = unsafe { FfiWifiGetP2pLocalDevice(ptr) }
+                if (code != SUCCESS_CODE) {
+                    let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+                    error = BusinessException(err[0], "getP2pLocalDevice failed: ${err[1]}")
+                } else {
+                    let ret = unsafe { ptr.read() }
+                    try {
+                        value = ret.toWifiP2pDevice()
+                    } finally {
+                        ret.free()
+                    }
+                }
+            } finally {
+                unsafe { LibC.free(ptr) }
+            }
+        } catch (e: BusinessException) {
+            error = toP2pBusinessException(e)
+        } catch (e: Exception) {
+            error = BusinessException(2801000, "Operation failed.")
+        }
+        match (error) {
+            case Some(e) => callback(e, None)
+            case None => callback(None, value)
+        }
+    }
+}
+
+/**
+ * Create a P2P group.
+ *
+ * @param { WifiP2pConfig } config - Indicates the configuration for a group.
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ * @throws { BusinessException } 2801001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func createGroup(config: WifiP2pConfig): Unit {
+    var ct = CWifiP2PConfig(config)
+    let code = unsafe { FfiWifiCreateGroup(inout ct) }
+    ct.free()
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+        throw BusinessException(err[0], "createGroup failed: ${err[1]}")
+    }
+}
+
+/**
+ * Remove a P2P group.
+ *
+ * @throws { BusinessException } 201 - Permission denied.
+ * @throws { BusinessException } 801 - Capability not supported.
+ * @throws { BusinessException } 2801000 - Operation failed.
+ * @throws { BusinessException } 2801001 - Wi-Fi STA disabled.
+ */
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Communication.WiFi.P2P",
+    permission: "ohos.permission.GET_WIFI_INFO",
+    throwexception: true
+]
+public func removeGroup(): Unit {
+    let code = unsafe { FfiWifiRemoveGroup() }
+    if (code != SUCCESS_CODE) {
+        let err = getCodeAndMsg(code, SYSCAP_WIFI_P2P)
+        throw BusinessException(err[0], "removeGroup failed: ${err[1]}")
+    }
+}
+
+/**
  * WiFi registration event type.
  */
 @Derive[ToString, Equatable, Hashable]
@@ -310,7 +974,7 @@ public enum WifiCallbackType {
 
     func getValue(): String {
         match(this) {
-            case WifiScanStateChange => "wifiStateChange"
+            case WifiScanStateChange => "wifiScanStateChange"
             case _ => throw BusinessException(2501007, "Parameter validation failed.")
         }
     }
