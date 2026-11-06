@@ -23,11 +23,22 @@ ohos_cangjie_shared_library("ohos.wifi_manager") {
   } else {
     sources = [
       "common.cj",
+      "wifi_26x_enums.cj",
+      "connect_settings.cj",
       "error_code.cj",
       "ip_info.cj",
       "wifi_info_elem.cj",
       "wifi_p2p_config.cj",
       "wifi_scan_info.cj",
+      "wifi_eap_config.cj",
+      "wifi_device_config.cj",
+      "wifi_wapi_config.cj",
+      "wifi_linked_info.cj",
+      "ipv6_info.cj",
+      "wifi_p2p_device.cj",
+      "wifi_p2p_group_info.cj",
+      "wifi_p2p_linked_info.cj",
+      "enum_values.cj",
       "wifi.cj",
     ]
   }
