@@ -38,6 +38,8 @@ foreign {
     func FfiBluetoothSocketSppWrite(clientSocket: Int32, data: CArrUI8, errCode: CPointer<Int32>): Unit
 
     func FfiBluetoothSocketSppRead(clientSocket: Int32, size: CPointer<Int64>, errCode: CPointer<Int32>): CPointer<UInt8>
+
+    func FfiBluetoothSocketSppFreeReadData(data: CPointer<UInt8>): Unit
 }
 
 /**
@@ -322,7 +324,7 @@ public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffe
             try {
                 bytes = cArr2cjArr<UInt8, Byte>(size, data, {i => i})
             } finally {
-                LibC.free(data)
+                FfiBluetoothSocketSppFreeReadData(data)
             }
         }
         callback(None<BusinessException>, bytes)
