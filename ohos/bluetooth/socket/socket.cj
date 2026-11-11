@@ -172,30 +172,42 @@ public func sppConnect(deviceId: String, options: SppOptions, callback: AsyncCal
     let secure = options.secure
     let sppType = options.sppType
     spawn {
-        var errorCode: Int32 = 0
-        var fd: Int32 = 0
-        try {
-            unsafe {
-                try (cDeviceId = LibC.mallocCString(deviceId).asResource()) {
-                    let cOptions = CSppOption(uuid, secure, sppType)
-                    try {
-                        fd = FfiBluetoothSocketSppConnect(cDeviceId.value, cOptions, inout errorCode)
-                    } finally {
-                        cOptions.free()
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            callback(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED)), None<Int32>)
-            return
-        }
-        if (errorCode != SUCCESS_CODE) {
-            callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<Int32>)
-        } else {
-            callback(None<BusinessException>, fd)
-        }
+        connectAndCallback(deviceId, uuid, secure, sppType, callback)
     }
     return
+}
+
+func connectAndCallback(deviceId: String, uuid: String, secure: Bool, sppType: SppType,
+                        callback: AsyncCallback<Int32>): Unit {
+    let result = try {
+        connectRaw(deviceId, uuid, secure, sppType)
+    } catch (e: Exception) {
+        callback(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED)), None<Int32>)
+        return
+    }
+    let (fd, errorCode) = result
+    if (errorCode != SUCCESS_CODE) {
+        callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<Int32>)
+    } else {
+        callback(None<BusinessException>, fd)
+    }
+}
+
+func connectRaw(deviceId: String, uuid: String, secure: Bool, sppType: SppType): (Int32, Int32) {
+    let cDeviceId = unsafe { LibC.mallocCString(deviceId) }
+    try {
+        return connectWithOptions(cDeviceId, uuid, secure, sppType)
+    } finally {
+        unsafe { LibC.free(cDeviceId) }
+    }
+}
+
+func connectWithOptions(cDeviceId: CString, uuid: String, secure: Bool, sppType: SppType): (Int32, Int32) {
+    var errorCode: Int32 = 0
+    let cOptions = CSppOption(uuid, secure, sppType)
+    let fd = unsafe { FfiBluetoothSocketSppConnect(cDeviceId, cOptions, inout errorCode) }
+    cOptions.free()
+    return (fd, errorCode)
 }
 
 /**
