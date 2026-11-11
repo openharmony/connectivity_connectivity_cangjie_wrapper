@@ -19,7 +19,7 @@ package ohos.bluetooth.socket
 
 import ohos.bluetooth.{ checkRet, getErrorMsg, OPERATION_FAILED }
 import ohos.business_exception.{ AsyncCallback, BusinessException }
-import ohos.ffi.{ CArrUI8, SUCCESS_CODE, cArr2cjArr }
+import ohos.ffi.{ CArrUI8, SUCCESS_CODE }
 import ohos.labels.APILevel
 
 foreign {
@@ -319,13 +319,9 @@ public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffe
             callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<ArrayBuffer>)
             return
         }
-        var bytes: Array<Byte> = Array<Byte>()
+        let bytes = Array<Byte>(size, { i => unsafe { data.read(i) } })
         unsafe {
-            try {
-                bytes = cArr2cjArr<UInt8, Byte>(size, data, {i => i})
-            } finally {
-                FfiBluetoothSocketSppFreeReadData(data)
-            }
+            FfiBluetoothSocketSppFreeReadData(data)
         }
         callback(None<BusinessException>, bytes)
     }
