@@ -35,32 +35,67 @@ public type ArrayBuffer = Array<Byte>
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class SppOptions {
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    public var uuid: String
+    private var uuid_: String
+    private var secure_: Bool
+    private var sppType_: SppType
 
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    public var secure: Bool
-
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    public var sppType: SppType
-
+    /** Creates SPP socket options. */
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(uuid: String, secure: Bool, sppType: SppType) {
-        this.uuid = uuid
-        this.secure = secure
-        this.sppType = sppType
+        this.uuid_ = uuid
+        this.secure_ = secure
+        this.sppType_ = sppType
+    }
+
+    /**
+     * Indicates the UUID in the SDP record.
+     */
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public mut prop uuid: String {
+        get() {
+            return uuid_
+        }
+        set(value) {
+            uuid_ = value
+        }
+    }
+
+    /**
+     * Indicates secure channel or not.
+     */
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public mut prop secure: Bool {
+        get() {
+            return secure_
+        }
+        set(value) {
+            secure_ = value
+        }
+    }
+
+    /**
+     * Indicates the SPP link type.
+     */
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public mut prop sppType: SppType {
+        get() {
+            return sppType_
+        }
+        set(value) {
+            sppType_ = value
+        }
     }
 }
 
@@ -73,18 +108,27 @@ public class SppOptions {
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public enum SppType {
+    /**
+     * SppRfcomm.
+     */
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppRfcomm
     |
+    /**
+     * SppL2cap.
+     */
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     SppL2cap
     |
+    /**
+     * SppL2capBle.
+     */
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"

@@ -33,6 +33,21 @@ public type ArrayBuffer = Array<Byte>
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class SppOptions {
+    private var uuid_: String
+    private var secure_: Bool
+    private var sppType_: SppType
+
+    /** Creates SPP socket options. */
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Communication.Bluetooth.Core"
+    ]
+    public init(uuid: String, secure: Bool, sppType: SppType) {
+        this.uuid_ = uuid
+        this.secure_ = secure
+        this.sppType_ = sppType
+    }
+
     /**
      * Indicates the UUID in the SDP record.
      */
@@ -40,7 +55,14 @@ public class SppOptions {
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var uuid: String
+    public mut prop uuid: String {
+        get() {
+            return uuid_
+        }
+        set(value) {
+            uuid_ = value
+        }
+    }
 
     /**
      * Indicates secure channel or not.
@@ -49,7 +71,14 @@ public class SppOptions {
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var secure: Bool
+    public mut prop secure: Bool {
+        get() {
+            return secure_
+        }
+        set(value) {
+            secure_ = value
+        }
+    }
 
     /**
      * Indicates the SPP link type.
@@ -58,23 +87,13 @@ public class SppOptions {
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
-    public var sppType: SppType
-
-    /**
-     * Creates SPP socket options.
-     *
-     * @param { String } uuid - Indicates the UUID in the SDP record.
-     * @param { Bool } secure - Indicates secure channel or not.
-     * @param { SppType } sppType - Indicates the SPP link type.
-     */
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Communication.Bluetooth.Core"
-    ]
-    public init(uuid: String, secure: Bool, sppType: SppType) {
-        this.uuid = uuid
-        this.secure = secure
-        this.sppType = sppType
+    public mut prop sppType: SppType {
+        get() {
+            return sppType_
+        }
+        set(value) {
+            sppType_ = value
+        }
     }
 }
 
@@ -88,7 +107,7 @@ public class SppOptions {
 ]
 public enum SppType {
     /**
-     * RFCOMM.
+     * SppRfcomm.
      */
     @!APILevel[
         since: "26.1.0",
@@ -97,7 +116,7 @@ public enum SppType {
     SppRfcomm
     |
     /**
-     * L2CAP of the BR type.
+     * SppL2cap.
      */
     @!APILevel[
         since: "26.1.0",
@@ -106,7 +125,7 @@ public enum SppType {
     SppL2cap
     |
     /**
-     * L2CAP of the BLE type.
+     * SppL2capBle.
      */
     @!APILevel[
         since: "26.1.0",
