@@ -279,11 +279,8 @@ public func sppWrite(clientSocket: Int32, data: ArrayBuffer): Unit {
     var errorCode: Int32 = 0
     unsafe {
         let raw = acquireArrayRawData(data)
-        try {
-            FfiBluetoothSocketSppWrite(clientSocket, CArrUI8(raw.pointer, data.size), inout errorCode)
-        } finally {
-            releaseArrayRawData(raw)
-        }
+        FfiBluetoothSocketSppWrite(clientSocket, CArrUI8(raw.pointer, data.size), inout errorCode)
+        releaseArrayRawData(raw)
     }
     checkRet(errorCode)
 }
