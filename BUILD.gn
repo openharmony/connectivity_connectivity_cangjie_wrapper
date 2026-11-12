@@ -21,7 +21,8 @@ connectivity_cangjie_wrapper_packages_ohos = [
     "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/constant:ohos.bluetooth.constant",
     "//foundation/communication/connectivity_cangjie_wrapper/ohos/wifi_manager:ohos.wifi_manager",
     "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/ble:ohos.bluetooth.ble",
-    "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/a2dp:ohos.bluetooth.a2dp"
+    "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/a2dp:ohos.bluetooth.a2dp",
+    "//foundation/communication/connectivity_cangjie_wrapper/ohos/bluetooth/socket:ohos.bluetooth.socket"
 ]
 connectivity_cangjie_wrapper_packages_kit = [
     "//foundation/communication/connectivity_cangjie_wrapper/kit/ConnectivityKit:kit.ConnectivityKit",

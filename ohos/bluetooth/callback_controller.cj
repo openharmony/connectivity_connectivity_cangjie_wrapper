@@ -72,11 +72,21 @@ protected class CallbackController {
     }
 
     protected func invokeCallback<T>(cjType: T): Unit {
-        if (let Some(callbackList) <- list) {
-            synchronized(listMut) {
+        // Snapshot under the lock, then invoke user callbacks without holding it.
+        // A callback may remove itself (re-enter removeCallback); holding listMut
+        // across the user call would deadlock. The hasCallback check also skips a
+        // callback that was unsubscribed by an earlier callback in this dispatch.
+        let snapshot = ArrayList<CallbackObject>()
+        synchronized(listMut) {
+            if (let Some(callbackList) <- list) {
                 for (caller in callbackList) {
-                    (caller as Callback1Argument<T>)?.invoke(None, cjType)
+                    snapshot.add(caller)
                 }
+            }
+        }
+        for (caller in snapshot) {
+            if (hasCallback(caller)) {
+                (caller as Callback1Argument<T>)?.invoke(None, cjType)
             }
         }
     }

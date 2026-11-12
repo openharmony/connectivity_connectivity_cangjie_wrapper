@@ -22,6 +22,7 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 - 蓝牙baseProfile接口：蓝牙Profile一种基于蓝牙的通用文件传输协议，提供了不同的蓝牙技术协议的基础公共方法的仓颉公开接口声明。
 - 蓝牙a2dp接口：提供基于增强音频分发协议（Advanced Audio Distribution Profile，A2DP）的蓝牙媒体音频能力，支持获取媒体播放状态和连接状态的仓颉公开接口声明。
 - 蓝牙hfp接口：提供基于免提协议（Hands-Free Profile， HFP）的蓝牙通话音频能力的仓颉公开接口声明。
+- 蓝牙socket接口：提供基于串口协议（Serial Port Profile，SPP）的蓝牙套接字能力的仓颉公开接口声明，支持服务端监听、客户端连接、数据读写与对端设备地址查询。
 - 蓝牙常量接口：提供了蓝牙各Profile、设备类型相关的常量定义的仓颉公开接口声明。
 - WLAN基础功能接口：提供了P2P（peer-to-peer，可以在两台 STA 之间直接建立 TCP/IP 链接）功能的仓颉公开接口声明。
 
@@ -31,6 +32,7 @@ WLAN服务：无线局域网（Wireless Local Area Networks，WLAN），是通�
 - 蓝牙baseProfile封装：提供了不同的蓝牙技术协议的抽象封装。
 - 蓝牙a2dp封装：实现了基于a2dp协议的播放状态和连接状态查询。
 - 蓝牙hfp封装：实现了基于hfp协议的蓝牙通话音频能力。
+- 蓝牙socket封装：实现了基于socket协议的服务端监听、客户端连接、数据读写与对端设备地址查询。
 - 蓝牙常量：定义了蓝牙相关的公共常量。
 - WLAN基础功能封装：提供P2P功能，一种点对点连接技术。该封装层是基于WLAN组件对WLAN基础功能进行仓颉封装实现。
 
@@ -57,7 +59,8 @@ foundation/communication/connectivity_cangjie_wrapper
 │   │   ├── ble                      # 低功耗蓝牙相关接口
 │   │   ├── constant                 # 蓝牙常量定义
 │   │   ├── error_message.cj         # 蓝牙错误信息定义
-│   │   └── hfp                      # hfp Profile相关接口
+│   │   ├── hfp                      # hfp Profile相关接口
+│   │   └── socket                   # 蓝牙socket相关接口
 │   └── wifi_manager                 # 仓颉wifi接口存放目录
 └── test                             # 测试代码  
     ├── bluetooth                    # 蓝牙UT测试
@@ -86,6 +89,12 @@ A2DP即为高级音频分发配置文件。它是一种蓝牙协议，允许无�
 
 详情请参见: [hfp API参考](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/API_Reference/source_zh_cn/apis/ConnectivityKit/cj-apis-bluetooth-hfp.md)。
 
+-   Socket（蓝牙套接字）
+
+SPP（Serial Port Profile，串口协议）是蓝牙设备间进行套接字连接与数据传输的协议。当前提供创建服务端监听、接受连接、发起客户端连接、读写数据以及查询对端设备地址的能力。
+
+详情请参见: [socket API参考](https://gitcode.com/openharmony/docs_cangjie/blob/master/zh-cn/application-dev/reference/ConnectivityKit/cj-apis-bluetooth-socket.md)。
+
 
 相关指导请参见: [蓝牙服务开发概述](https://gitcode.com/openharmony-sig/arkcompiler_cangjie_ark_interop/blob/master/doc/Dev_Guide/source_zh_cn/connectivity/bluetooth/cj-bluetooth-overview.md)
 
@@ -107,7 +116,6 @@ P2P模式即为Wi-Fi Direct，Wi-Fi Direct 是一种点对点连接技术，它�
 - [管理安全单元（SecureElement，简称SE）](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/connectivity/nfc/nfc-se-access-guide.md)
 
 蓝牙服务中暂不支持
-- [蓝牙socket](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-socket.md)：一种蓝牙套接字功能，可实现设备间连接和数据传输。
 - [蓝牙hid](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-hid.md)：基于人机接口协议（Human Interface Device Profile，HID）技术的蓝牙人机交互能力，支持获取连接状态。
 - [蓝牙pan](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-pan.md)：基于蓝牙个人局域网协议（Personal Area Networking，PAN）的蓝牙共享网络能力。
 - [蓝牙pbap](https://gitcode.com/openharmony/docs/blob/master/zh-cn/application-dev/reference/apis-connectivity-kit/js-apis-bluetooth-pbap.md)：基于电话簿访问协议（Phone Book Access Profile，PBAP）的蓝牙电话簿访问能力。
