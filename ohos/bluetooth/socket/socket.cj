@@ -93,30 +93,38 @@ public func sppListen(name: String, options: SppOptions, callback: AsyncCallback
     let secure = options.secure
     let sppType = options.sppType
     spawn {
-        var errorCode: Int32 = 0
-        var fd: Int32 = 0
-        try {
-            unsafe {
-                try (cName = LibC.mallocCString(name).asResource()) {
-                    let cOptions = CSppOption(uuid, secure, sppType)
-                    try {
-                        fd = FfiBluetoothSocketSppListen(cName.value, cOptions, inout errorCode)
-                    } finally {
-                        cOptions.free()
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            callback(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED)), None<Int32>)
-            return
-        }
-        if (errorCode != SUCCESS_CODE) {
-            callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<Int32>)
-        } else {
-            callback(None<BusinessException>, fd)
-        }
+        listenAndCallback(name, uuid, secure, sppType, callback)
     }
     return
+}
+
+func listenAndCallback(name: String, uuid: String, secure: Bool, sppType: SppType,
+                       callback: AsyncCallback<Int32>): Unit {
+    let result = try {
+        listenRaw(name, uuid, secure, sppType)
+    } catch (e: Exception) {
+        callback(BusinessException(OPERATION_FAILED, getErrorMsg(OPERATION_FAILED)), None<Int32>)
+        return
+    }
+    let (fd, errorCode) = result
+    if (errorCode != SUCCESS_CODE) {
+        callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<Int32>)
+    } else {
+        callback(None<BusinessException>, fd)
+    }
+}
+
+func listenRaw(name: String, uuid: String, secure: Bool, sppType: SppType): (Int32, Int32) {
+    let cName = unsafe { LibC.mallocCString(name) }
+    var errorCode: Int32 = 0
+    try {
+        let cOptions = CSppOption(uuid, secure, sppType)
+        let fd = unsafe { FfiBluetoothSocketSppListen(cName, cOptions, inout errorCode) }
+        cOptions.free()
+        return (fd, errorCode)
+    } finally {
+        unsafe { LibC.free(cName) }
+    }
 }
 
 /**
