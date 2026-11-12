@@ -35,19 +35,12 @@ public type ArrayBuffer = Array<Byte>
     syscap: "SystemCapability.Communication.Bluetooth.Core"
 ]
 public class SppOptions {
-    private var uuid_: String
-    private var secure_: Bool
-    private var sppType_: SppType
-
     /** Creates SPP socket options. */
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Communication.Bluetooth.Core"
     ]
     public init(uuid: String, secure: Bool, sppType: SppType) {
-        this.uuid_ = uuid
-        this.secure_ = secure
-        this.sppType_ = sppType
     }
 
     /**
@@ -59,11 +52,9 @@ public class SppOptions {
     ]
     public mut prop uuid: String {
         get() {
-            return uuid_
+            return ""
         }
-        set(value) {
-            uuid_ = value
-        }
+        set(value) {}
     }
 
     /**
@@ -75,11 +66,9 @@ public class SppOptions {
     ]
     public mut prop secure: Bool {
         get() {
-            return secure_
+            return false
         }
-        set(value) {
-            secure_ = value
-        }
+        set(value) {}
     }
 
     /**
@@ -91,11 +80,9 @@ public class SppOptions {
     ]
     public mut prop sppType: SppType {
         get() {
-            return sppType_
+            return SppType.SppRfcomm
         }
-        set(value) {
-            sppType_ = value
-        }
+        set(value) {}
     }
 }
 
