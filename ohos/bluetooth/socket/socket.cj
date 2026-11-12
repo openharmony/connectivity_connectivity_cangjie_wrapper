@@ -313,7 +313,7 @@ public func sppWrite(clientSocket: Int32, data: ArrayBuffer): Unit {
  *
  * @param { Int32 } clientSocket - Indicates the client socket ID, returned by **sppAccept** or **sppConnect**.
  * @param { AsyncCallback<ArrayBuffer> } callback - Callback used to return the spp read data.
- * @throws { BusinessException } 401 - Parameter error.
+ * @throws { BusinessException } 401 - Parameter error. Parameter verification failed.
  * @throws { BusinessException } 801 - Capability not supported.
  * @throws { BusinessException } 2901054 - IO error.
  * @throws { BusinessException } 2900099 - Operation failed.
@@ -328,10 +328,6 @@ public func sppReadAsync(clientSocket: Int32, callback: AsyncCallback<ArrayBuffe
         var size: Int64 = 0
         var errorCode: Int32 = 0
         let data = unsafe { FfiBluetoothSocketSppRead(clientSocket, inout size, inout errorCode) }
-        if (errorCode == 401) {
-            callback(BusinessException(401, "Parameter error."), None<ArrayBuffer>)
-            return
-        }
         if (errorCode != SUCCESS_CODE) {
             callback(BusinessException(errorCode, getErrorMsg(errorCode)), None<ArrayBuffer>)
             return
